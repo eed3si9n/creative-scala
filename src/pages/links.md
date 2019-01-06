@@ -4,6 +4,7 @@
 [underscore-github]: https://github.com/underscoreio
 [underscore-gitter]: https://gitter.im/underscoreio/scala
 [underscore]: http://underscore.io
+[eed3si9n-issues]: https://github.com/eed3si9n/creative-scala/issues
 [twitter-dave]: http://twitter.com/davegurnell
 [twitter-jono]: http://twitter.com/jonoabroad
 [twitter-noel]: http://twitter.com/noelwelsh

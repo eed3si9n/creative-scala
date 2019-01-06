@@ -1,104 +1,100 @@
-# Foreword {-}
+# 序文 {-}
 
-Creative Scala is aimed at developers who have no prior experience in Scala.
-It is designed to give you a fun introduction to functional programming.
-We assume you have some very basic familiarity with another programming language but little or no experience with Scala or other functional languages.
+Creative Scala は、Scala 歴ゼロのデベロッパー向けに書かれています。
+関数型プログラミングを楽しく学べることを目指しました。
+あなたが他のプログラミング言語の初歩は少しかじったことがあることを前提としますが、Scala やその他の関数型言語には慣れ親しんでいないことを想定しています。
 
-We have three goals with this book:
+この本の 3つの目標は:
 
-1. To give an introduction to functional programming so that you can calculate and reason about programs, and pick up and understand other introductory books on functional programming.
+1. 関数型プログラミングを紹介して、あなたがプログラムを計算したり筋道を立てて推論できるようになることで、他の関数型プログラミングに関する入門書に進めるようになること。
+2. Scala を使って自分の興味のあることに探検していくのに十分な Scala を教えること。
+3. これらを 2次元コンピューターグラフィックスを使って楽しく、優しく、興味深い方法で提供すること。
 
-2. To teach you enough Scala that you can explore your own interests in and using Scala.
+この 3点です。
 
-3. To present all this in a fun, gentle, and interesting way via two-dimensional computer graphics.
+私たちの動機は自分たちがプログラミングを学んだり、関数型プログラミングを勉強したり、商用デベロッパーに Scala を教えてきた経験から来ています。
 
-Our motivation comes from our own experience learning programming, studying functional programming, and teaching Scala to commercial developers.
+まず、私たちは、関数型プログラミングが未来であることを信じています。
+プログラミング経験が浅いことを前提としているので、関数型プログラミングとあなたが経験したことがあるかもしれないオブジェクト指向プログラミングの違いの詳細はここでは割愛させていただきます。
+コンピュータのプログラムについて考えたり書いたりするにはいくつの方法があり、私たちは関数型プログラミングという方法を選んだとだけ言っておきましょう。
 
-Firstly, we believe that functional programming is the future.
-Since we're assuming you have little programming experience we won't go into the details of the differences between functional programming and object-oriented programming that you may have already experienced.
-Suffice to say there are different ways to think about and write computer programs, and we've chosen the functional programming approach.
+関数型プログラミングを選んだ理由のほうが興味深いと思います。
+プログラミングを教えるのにありがちな方法として私たちが「構文のごった煮」方式と呼んでいるものがあります。
+この方式ではプログラミング言語は、(変数、for ループ、while ループ、メソッドなど) 構文機能の集合として教えられ、いつどの機能を使うのかは生徒に任せられます。
+大学生としてプログラミングを習ったり、社会人としてプログラミングを教える立場になった両方の場合において私たちはこの方式が失敗するのを見てきました。生徒が問題をコードに体系的に分解するすべを持たないからです。
+拙い授業の結果として多くの生徒が脱落する結果となりました。
+残った生徒は、私たちのように既に広いプログラミング経験を持つ人が多かったと思います。
 
-The reason for choosing functional programming are more interesting.
-It's common to teach programming by what we call the "bag of syntax" approach.
-In this approach a programming language is taught a collection of syntactical features (variables, for loops, while loops, methods) and students are left to figure out on their own when to use each feature.
-We've seen this method fail both when we were undergraduates learning programming, and as postgraduates teaching programming, as students simply have no systematic way to break down a problem and turn it into code.
-The result is that many students dropped out due to the poor quality of teaching.
-The students that remained tended to, like us, already have extensive programming experience.
+小学校の算数の時間の筆算の足し算のことを思い出してください。
+これは暗算で足すには数が大きい場合に数字を足すための基本の方法です。
+なので、例えば 266 + 385 を足すには桁をそろえて書き出して、10 を超えたら繰り上げを行うなどといった具合です。
+算数は好きな授業じゃなかったかもしれませんが、いくつかの重要な教訓が隠されています。
+第一は、問題を解くための体系的な方法が与えられたということです。
+問題が筆算の足し算で解けると気がつけば、答えを**計算**することができます。
+第二点は、筆算の足し算を使うのになぜ正しいのかを理解している必要は無いということです (知っていることに越したことは無いですが)。
+手順さえ正しく従えば、正しい答えを得ることができます。
 
-Let's think back to primary school maths, specifically column addition.
-This is the basic way we're taught to add up numbers when they're too big to do in our head.
-So, for example, adding up 266 + 385, we would line up the columns, carry the tens and so on.
-Now maybe maths wasn't your favorite subject but there are some important lessons here.
-The first is that we're given a systematic way to arrive at the solution.
-We can *calculate* the solution once we realise this is a problem that requires column addition.
-The second point is that we don't even have to understand why column addition works (though it helps) to use it.
-So long as we follow the steps we'll get the correct answer.
+関数型プログラミングの優れているのは、それが筆算の足し算のようになっていることです。
+私たちは、正しく従えば正しく答えを得ることが保証されているレシピをいくつか持っています。
+私たちは、これをプログラムを**計算**すると言います。
+これは、プログラミングに創造性が欠けると言っているわけではありません。しかし、問題の構造をよく理解するのがチャレンジであって、それができたらすぐにレシピを使うことができます。
+コードそのものは興味深い部分では無いのです。
 
-The remarkable thing about functional programming is that it works like column addition.
-We have recipes that are guaranteed to give us the correct answer if we follow them correctly.
-We call this *calculating* a program.
-This is not to say that programming is without creativity, but the challenge is to understand the structure of the problem and once we've done that the recipe we should use follows immediately.
-The code itself is not the interesting part.
+私たちは Scala を使って関数型プログラミングを教えますが、Scala そのものを教えるわけではありません。
+Scala は今需要がある言語です。
+Scala プログラマーは様々な産業において比較的簡単に職を探すことができ、それは Scala を習うための重要な動機となります。
+Scala の人気の理由の 1つとして Scala がオブジェクト指向プログラミングという古いプログラミングの方法と関数型プログラミングの 2つをまたいでいる言語だということが挙げられます。
+多くのコードがオブジェクト指向スタイルで書かれていて、そのスタイルに慣れ親しんだプログラマーも多くいます。
+Scala は、オブジェクト指向プログラミングから関数型プログラミングへ緩やかに移行する方法を与えてくれます。
+しかし、これは Scala が大きな言語であることも意味し、オブジェクト指向の部分と関数型の部分の相互作用には分かりづらいこともあります。
+私たちは、関数型プログラミングの方がオブジェクト指向プログラミングよりもずっと効果的で、新しいプログラマーが同時にオブジェクト指向のテクニックを教えて混乱させる必要は無いと思っています。
+それは、後からでも遅くはないと思います。
+そのため、この本では完全に Scala の関数型プログラミングの部分だけを使うことにします。
 
-We're teaching functional programming using Scala, but not Scala itself.
-Scala is a language that is in demand right now.
-Scala programmers can relatively easily get jobs in a variety of industries, and this is an important motivation for learning Scala.
-One of the reasons for Scala's popularity is that is straddles object-oriented programming, the old way of programming, and functional programming.
-There is a lot of code written in an object-oriented style, and a lot of programmers who are used to that style.
-Scala gives a gentle way from object-oriented programming to functional programming.
-However this means Scala is a large language, and the interaction between the object-oriented and functional parts can be confusing.
-We believe that functional programming is much more effective than object-oriented programming, and for new programmers there is no need to add the confusion of learning object-oriented techniques at the same time.
-That can come later.
-Therefore this book is exclusively using the functional programming parts of Scala.
+私たちは、関数型プログラミングと Scala を探検するにあたって、楽しんでもらえるを願ってコンピューター・グラフィックスという方法を選びました。
+Scala には多くの入門書がありますが、多くの例題はビジネスや数学に関するものです。
+例えば、とても人気な Coursera コースの初めの練習問題は、指示関数を用いて集合を実装するというものです。
+あなたがそういうコンセプトに直接取り組みたいタイプの人ならば、そういうコンテンツは既にいっぱいあると思います。
+私たちは別のグループを対象としようと思いました。数学はちょっと苦手だけども、ビジュアル・アートなら興味があるかなという人たちです。
+正直に言っておくと、この本にも数学は出てきますが、そのコンセプトが何故必要なのかを動機づけ、ヴィジュアル化することで、怖さを軽減できたことを願っています。
 
-Finally, we've chosen what we hope is a fun method to explore functional programming and Scala: computer graphics.
-There are many introductions to Scala, but the majority use examples that either relate to business or mathematics.
-For example, one of the first exercises in the very popular Coursera course is to implement sets via indicator functions.
-We feel if you're the type of person who likes directly working with these sort of concepts you already have plenty of content available.
-We want to target a different group: people who perhaps thought that maths was not for them but nonetheless have an interest or appreciation in the visual arts.
-We won't lie: there is maths in this book, but we hope we manage to motivate and indeed visualise the concepts in a way that makes them less intimidating.
+この本は Scala を使いこなせるようになるための基礎となるメンタルモデルを提供しますが、自立できるための Scala の**全て**をここでカバーできるわけではありません。
+更に Scala を習うためには、他の Scala の教科書の中から良いものを選んで進むことをお勧めします。
+拙著の [Essential Scala][essential-scala] も検討してみてください。
 
-Although this book will give you the basic mental model
-required to become competent with Scala,
-you won't finish knowing *everything* you need to be self-sufficient.
-For further advancement we recommend considering one of the many excellent
-Scala textbooks out there, including our own [Essential Scala][essential-scala].
+練習問題を一人で解いているならば、[Gitter chat room][underscore-gitter] に参加して分からないことを聞いたり、この本の感想をシェアしてみてください。
 
-If you are working through the exercises on your own,
-we highly recommend joining our [Gitter chat room][underscore-gitter]
-to provide get help with the exercises and provide feedback on the book.
+[Creative Scala][github-creative-scala] のテキスト、及び練習問題で使われるお絵かきライブラリ [Doodle][github-doodle]
+は全てオープンソースです。
+コードは私たちの [GitHub アカウント][underscore-github]にて公開しています。
+英語版にコントリビュートしたい方は Gitter もしくは email で連絡してください。
 
-The text of [Creative Scala][github-creative-scala] is open source,
-as is the source code for the [Doodle][github-doodle]
-drawing library used in the exercises.
-You can grab the code from our [GitHub account][underscore-github].
-Contact us on Gitter or by email if you would like to contribute.
+ダウンロードしてくれてありがとう。これから creative プログラミングを始めましょう!
 
-Thanks for downloading and happy creative programming!
+---Dave と Noel
 
----Dave and Noel
-
-## Notes on the Early Access Edition {-}
+## Early access 版に関する注意 {-}
 
 <div class="callout callout-danger">
-This is an *early access* release of Creative Scala.
-There may be typos and other errors in the text and examples.
+これは Creative Scala のベータ版です。
+本文内や練習問題にタイポやその他の間違いがあるかもしれません。
 
-If you spot any mistakes or would like to provide feedback,
-please let us know via our [Gitter chat room][underscore-gitter]
-or by email:
+日本語版に関する間違いの報告は [eed3si9n/creative-scala][eed3si9n-issues]
+の issues を使ってお願いします。
+
+英語版に関する間違いの報告は [Gitter chat room][underscore-gitter] もしくは email でお願いします:
 
  - Dave Gurnell ([dave@underscore.io](mailto:dave@underscore.io))
  - Noel Welsh ([noel@underscore.io](mailto:noel@underscore.io))
 </div>
 
-## Acknowledgements {-}
+## 謝辞 {-}
 
-Creative Scala was written by [Dave Gurnell][twitter-dave] and [Noel Welsh][twitter-noel]. Many thanks to [Richard Dallaway][twitter-richard], [Jonathan Ferguson][twitter-jono], and the team at [Underscore][underscore] for their invaluable contributions and extensive proof reading.
+Creative Scala (英語版) は [Dave Gurnell][twitter-dave] と [Noel Welsh][twitter-noel] によって書かれました。[Richard Dallaway][twitter-richard] さん、[Jonathan Ferguson][twitter-jono] さん、そして [Underscore][underscore] のみんなが何度も校正を行ってくれたことを感謝します。
 
-Thanks also to the many people who pointed out errors or made suggestions to improve the book: Neil Moore; Kelley Robinson, Julie Pitt, and the other ScalaBridge organizers; d43; Matt Kohl; Alexa Kovachevich and all the other students who worked through Creative Scala at ScalaBridge, at another event, or on their own; and the many awesome members of the Scala community who gave us comments and suggestions in person. Finally, we have large amount of gratitude for Bridgewater, and particularly Lauren Cipicchio, who perhaps unknowingly funded a good portion of the initial development of the second version of the Creative Scala, and provided the first few rounds of students.
+間違いを指摘してくれたり、この本を改善するための意見をくださった多くの方々にもこの場をかりて感謝したいと思います: Neil Moore さん; Kelley Robinson さん、Julie Pitt さん、その他の ScalaBridge オーガナイザー; d43 さん; Matt Kohl さん; Alexa Kovachevich さんなど ScalaBridge その他のイベントで Creative Scala を読み進めた生徒の方々; その他直接コメントや意見をくれた多くの素晴らしい Scala コミュニティーの面々。Bridgewater 社、特に Lauren Cipicchio さんが、もしすると知らずに Creative Scala 第二版の初期開発に投資していただき、初期の生徒を提供していただいたことをここで感謝したいと思います。
 
-Finally, Creative Scala owes a large intellectual debt to the work of many researchers working in programming language theory and Computer Science education. In particular we'd like to highlight:
+最後に Creative Scala がプログラミング言語理論とコンピューターサイエンス教育にたずさわる多くの研究者の成果のおかであることをここに書きたいと思います。特に私たちが強調したいのは:
 
-- the work of the [PLT research group](http://racket-lang.org/plt.html), and in particular the book ["How to Design Programs"](http://htdp.org/), by Matthew Flatt, Matthias Felleisen, Robert Bruce Findler, and Shriram Krishnamurthi; and
-- the "creative coding" approach to introductory programming pioneered by [Mark Guzdial](https://www.cc.gatech.edu/faculty/mark.guzdial/), [Dianna Xu](https://cs.brynmawr.edu/~dxu/), and others.
+- [PLT research group](http://racket-lang.org/plt.html) の著作、特に Matthew Flatt、Matthias Felleisen、Robert Bruce Findler、Shriram Krishnamurthi 共著の ["How to Design Programs"](http://htdp.org/)、そして
+- [Mark Guzdial](https://www.cc.gatech.edu/faculty/mark.guzdial/)、[Dianna Xu](https://cs.brynmawr.edu/~dxu/) らによって率先されたプログラミング入門に関する「creative coding」というアプローチです。
