@@ -1,159 +1,152 @@
-## Installing Terminal Software and a Text Editors
+## ターミナルとテキストエディタのインストール
 
-This section is our recommended setup for people new to programming, and describes how to setup Creative Scala with the terminal and a text editor.
-We need to install:
+この節では、プログラミングが初めてという人のために私たちがお勧めする、ターミナルとテキストエディタを使った Creative Scala のセットアップ方法を解説します。
+インストールするものは:
 
-- the JVM;
-- Git;
-- a text editor; and
-- the template project for Creative Scala.
+- JVM
+- Git
+- テキストエディタ、1つ
+- Creative Scala のテンプレートプロジェクト
 
+### macOS
 
-### OS X
+ターミナルを開く。(ツールバー右側の虫めがねアイコンに "terminal" と打ち込んでください。)
 
-Open the terminal. (Click the magnifying icon on the top righthand side of the toolbar. Type in "terminal".)
-
-Install Java.
-Type into the terminal
+Java をインストールします。
+ターミナルに以下を打ってください:
 
 ```bash
 java
 ```
 
-If this runs you already have Java installed.
-Otherwise it will prompt you to install Java.
+もしもこれが実行されれば Java はインストール済みです。
+インストールされていなければ、Java をインストールする画面が表示されます。
 
-Install homebrew.
-Paste into the terminal
+Homebrew をインストールします。
+以下をターミナルにペーストしてください:
 
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-Install `git` using homebrew.
-At the terminal, type
+Homebrew を使って `git` をインストールします。
+ターミナルに以下を打ち込んでください:
 
 ```bash
 brew install git
 ```
 
-Now install the text editor Atom.
-Again type at the terminal
+次にテキストエディタ Atom をインストールします。
+ターミナルに以下を打ち込んでください:
 
 ```bash
 brew install Caskroom/cask/atom
 ```
 
-Install Scala support inside Atom: Settings > Install > language-scala
+Atom 内で Scala サポートをインストールしてください: Settings > Install > language-scala
 
-Now we will use Git to get an SBT project that will work with Creative Scala.
-Type
+これで Git を使って Creative Scala の作業をするための sbt プロジェクトを取得することができます。
+以下を打ち込んでください:
 
 ```bash
 git clone https://github.com/underscoreio/creative-scala-template.git
 ```
 
 <div class="callout callout-info">
-#### Sharing Your Work {-}
+#### 作業を共有する {-}
 
-There is an alternative setup that involves first forking the Creative Scala template project, and then cloning it to your computer.
-This is the setup to choose if you want to share your work with other people; for example you might be taking Creative Scala with a remote instructor or you might just (quite rightfully) be proud of your work.
+代替のセットアップとして、先に Creative Scala template プロジェクトを fork して、それをあなたのコンピュータに clone するという方法があります。
+これは、あなたが自分の作業結果を他の人とシェアしたい場合のセットアップで、例えばリモートのインストラクターと Creative Scala を受講している場合や、自分の作業を他の人にも見て欲しい場合に使うことができます。
 
-In this setup you first *fork* the Creative Scala template.
-Then you make a clone of *your* fork.
-This alternative setup is described in more detail in the section on GitHub later in this chapter.
+このセットアップではまず Creative Scala template を **fork** します。
+そして**あなたの** fork を clone します。
+この代替セットアップ方法に関してはこの章の後ほどの GitHub の節で解説します。
 </div>
 
-
-Now change to the directory we just created and run SBT.
+今作られたディレクトリに変えて、sbt を実行してみましょう。
 
 ```bash
 cd creative-scala-template
 ./sbt.sh
 ```
 
-SBT should start.
-Within SBT type `console`.
-Finally type
+sbt が起動したはずです。
+sbt 内で `console` と打ち込んでみてください。
+最後に、以下を打ち込んでください:
 
 ```scala
 Example.image.draw
 ```
 
-and an image of three circles should appear!
+3つの円の画像が現れるはずです!
 
-If you've made it this far you've successfully installed all the software you need for work through Creative Scala.
+ここまでできれば、Creative Scala の作業をするのに必要なソフトウェアは全てインストールされました。
 
-The final step is to load Atom and use it to open `Example.scala`, which you can find in `src/main/scala`.
-
+最後のステップは Atom を起動して、`src/main/scala` 内にある `Example.scala` を開くことです。
 
 ### Windows
 
-Download and install Java.
-Search for the "JDK" (Java development kit).
-This will take you to Oracle's site.
-Accept their license and download the JDK.
-Run the installer you just downloaded.
+Java をダウンロードしてインストールします。
+"JDK" (Java development kit) で検索してください。
+Oracle のサイトが出てくるはずです。
+ライセンスを承諾して、JDK をダウンロードしてください。
+ダウンロードが完了したら、インストーラーを実行してください。
 
-Download and install Atom.
-Go to `https://atom.io/` and download Atom for Windows.
-Run the installer you've just downloaded.
+Atom をダウンロードしてインストールします。
+`https://atom.io/` へ行って、Atom の Windows版をダウンロードしてください。
+ダウンロードが完了したら、インストーラーを実行してください。
 
-Download and install Git.
-Go to `https://git-scm.com/` and download Git for Windows.
-Run the installer you've just downloaded.
-At the very end it gives you the option to open Git.
-Select that option.
-A window will open up with a command prompt.
-Type
-
+Git をダウンロードしてインストールします。
+`https://git-scm.com/` へ行って、Git の Windows版をダウンロードしてください。
+ダウンロードが完了したら、インストーラーを実行してください。
+最後に Git を開くオプションが出てくるはずなので、それを選択してください。
+コマンドプロンプト画面が開きます。
+以下を打ち込んでください:
 
 ```bash
 git clone https://github.com/underscoreio/creative-scala-template.git
 ```
 
 <div class="callout callout-info">
-#### Sharing Your Work {-}
+#### 作業を共有する {-}
 
-There is an alternative setup that involves first forking the Creative Scala template project, and then cloning it to your computer.
-This is the setup to choose if you want to share your work with other people; for example you might be taking Creative Scala with a remote instructor or you might just (quite rightfully) be proud of your work.
+代替のセットアップとして、先に Creative Scala template プロジェクトを fork して、それをあなたのコンピュータに clone するという方法があります。
+これは、あなたが自分の作業結果を他の人とシェアしたい場合のセットアップで、例えばリモートのインストラクターと Creative Scala を受講している場合や、自分の作業を他の人にも見て欲しい場合に使うことができます。
 
-In this setup you first *fork* the Creative Scala template.
-Then you make a clone of *your* fork.
-This alternative setup is described in more detail in the section on GitHub later in this chapter.
+このセットアップではまず Creative Scala template を **fork** します。
+そして**あなたの** fork を clone します。
+この代替セットアップ方法に関してはこの章の後ほどの GitHub の節で解説します。
 </div>
 
-Open a normal command-prompt.
-Click on the Windows icon on the bottom left of the screen.
-In the search box enter "cmd" and run the program it finds.
-In the window that is opened up type
+コマンドプロンプトを開きます。
+画面左下の Windows アイコンをクリックしてください。
+検索ボックスに「cmd」と入力して、プログラムが出てきたらそれを実行してください。
+開いたウィンドウ内で以下を打ち込んでください:
 
 ```bash
 cd creative-scala-template
 ```
 
-which will change into the directory of the Creative Scala template project we just downloaded.
-Type
+さっきダウンロードした Create Scala template プロジェクトのディレクトリに変わるはずです。
+以下を打ち込んで sbt を起動してください:
 
 ```bash
 sbt.bat
 ```
 
-to start SBT.
-Within SBT type `console`.
-Finally type
+sbt 内で `console` と打ち込んでみてください。
+最後に、以下を打ち込んでください:
 
 ```scala
 Example.image.draw
 ```
 
-and an image of three circles should appear!
+3つの円の画像が現れるはずです!
 
-If you've made it this far you've successfully installed all the software you need for work through Creative Scala.
+ここまでできれば、Creative Scala の作業をするのに必要なソフトウェアは全てインストールされました。
 
-The final step is to load Atom and use it to open `Example.scala`, which you can find in the directory `src\main\scala`.
-
+最後のステップは Atom を起動して、`src/main/scala` 内にある `Example.scala` を開くことです。
 
 ### Linux
 
-Follow the OS X instructions, using your distributions package manager to install software in place of Homebrew.
+macOS の手順に従って、Homebrew の代わりに使っているディストリビューションのパッケージマネジャーを使ってください。

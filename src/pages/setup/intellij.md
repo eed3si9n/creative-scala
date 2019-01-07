@@ -1,20 +1,28 @@
 ## IntelliJ
 
-IntelliJ is an integrated development environment (IDE) for Scala and other programming languages. It integrates an number of programming tools into one application, and we recommend it for people who are used to using other IDEs such as Visual Studiol or Eclipse.
+IntelliJ は、Scala や他のプログラミング言語のための統合開発環境 (IDE) です。これはいくつものプログラミングツールを 1つのアプリケーションにまとめたもので、Visual Studio や Eclipse など他の IDE に慣れている人にお勧めします。
 
-Start by [downloading][intellij-download] and installing IntelliJ. You can use the free community edition for Creative Scala. When installing IntelliJ you will be asked a lot of questions. You can accept the defaults for the most part. When you are asked about "featured plugins", *make sure you install the Scala plug-in*.
+まずは IntelliJ Scala Bundle を[ダウンロード][intellij-scala-bundle]してください。
 
-Once you have completed the configuration you will be presented with a dialog asking if you want to create a new project, import a project, open a file, or check out from version control.
-Choose "checkout from version control", and select GitHub.
+IntelliJ Scala Bundle を起動すると、Welcome to IntelliJ IDEA というダイアログが出てきて、Create New Project、Import Project、Open、Check out from Version Control という選択肢が表示されます。
+「Check out from Version Control」を選択して、URL に `https://github.com/underscoreio/creative-scala-template.git` と入力して、「Clone」を選びます。
+「Would you like to open it?」と聞かれたら「Yes」を選びます。
 
-In the dialog box that opens change "Auth type" to Token.
-Now visit GitHub in a web browser.
-Select your account (top right hand of the page).
-Choose "Settings" and then choose "Personal access tokens".
-Generate a token. Call it "intellij" and select the "repo" check box.
-Copy the long string of numbers and text and paste it into the "Token" box.
-Now login to GitHub.
+オプション画面が出てきたら「Use sbt shell for build and import」選択します。
 
-Install the SBT console add-on.
+画面左下の sbt shell に `console` と打ち込んでください。
+`(busy) >` と書かれたプロンプトに以下を打ち込んでください:
 
-[intellij-download]: https://www.jetbrains.com/idea/download/
+```scala
+Example.image.draw
+```
+
+3つの円の画像が現れるはずです!
+
+```scala
+:q
+```
+
+と打ち込んで `console` を終了します。
+
+[intellij-scala-bundle]: https://github.com/JetBrains/intellij-scala-bundle/releases

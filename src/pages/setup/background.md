@@ -1,92 +1,79 @@
-## Background
+## 予備知識
 
-This section gives some background information on some of the tools we'll be using.
-If you're an experienced developer a lot of this will be old hat, and you can skip it.
-If you're not, this will hopefully give some useful context to the software we'll be working with.
+この節では、これから私たちが使うツールの予備知識を解説します。
+もしもあなたが経験を積んだデベロッパーであれば既に常識だと思うので読み飛ばしてください。
+もしもそうじゃなければ、これから使うソフトウェアについての背景を知ることで役に立てばいいと思います。
 
+### ターミナル
 
-
-### The Terminal
-
-Back when the world was young and computing was in its infancy, the common user interface of graphical windows, a cursor controlled by a mouse, and interaction by *direct manipulation* didn't exist.
-Instead users typed in commands at a device called a *terminal*.
-The direct manipulation interface is superior for most uses, but there are some cases for which the terminal or *command line* is preferable.
-For example, if we wanted to work out how much space was used by all the files which names starting with `data` in Linux or OS X we can execute the command
+コンピューターの黎明期には、今では一般的なユーザー・インターフェイスとなった、グラフィカルなウィンドウ、マウスで制御されるカーソル、そしてコンピューターの**直接操作**ということそのものが存在しませんでした。
+その代りに、ユーザーは**端末** (ターミナル) という装置にコマンドを打ち込んでコンピューターを操作しました。
+直接操作の方が多くの場面において優れていますが、ターミナルを用いた**コマンドライン**操作の方が便利なこともあります。
+例えば、`data` で始まるファイル名のファイルがどれだけの容量を占めているかを調べたいとするとき Linux や macOS ならば以下のコマンドを実行することができます:
 
 ```bash
 du -hs data*
 ```
 
-We can break this down into three components:
+これは 3つの要素に分解することができます:
 
-- the command `du` means disk usage;
-- the flags `-hs` mean to print a human readable summary; and
-- the pattern `data*` means all the files whose names begin with `data`.
+- `du` コマンドはディスク使用状況 (disk usage) を意味し、
+- フラグ `-hs` は人が読みやすいまとめ (human readable summary) を意味し、
+- パターン `data*` は、ファイル名が `data` で始まる全てのファイルを意味します。
 
-Doing this with a direct manipulation interface would be much more time consuming.
+これを直接操作系のインターフェイスを用いて行うのはより時間のかかる作業となるでしょう。
 
-The command line has a steep learning curve, but the reward is an extremely powerful tool.
-Our usage of the terminal will be very limited, so don't worry if you find the example above intimidating!
+コマンドラインのほうが学習するのが難しいですが、代わりに非常に強力なツールを得ることができます。
+私たちが使うターミナルの用法は限られているものなので、上の例が怖いなと思っても心配しないでください!
 
+### テキストエディタ
 
-### Text Editors
+あなたは多分ワードプロセッサーで文章を書いたことがあると思います。
+ワードプロセッサーはテキストを書いて、(最近見ることが減ってきた) 印刷されたページでのフォーマットの制御を行うことができます。
+ワードプロセッサーは、文章の作成に便利なスペルチェッカーや目次の生成などといった強力なコマンドを持ちます。
 
-You're probably used to writing documents in a word processor.
-A word processor allows us to write text and control the formatting of how it appears on the (increasingly rare) printed page.
-A word processor includes powerful commands, such as a spell checker and automatic table of contents generation, to make editing prose easier.
+**テキストエディタ**はコードを書くためのワードプロセッサーです。
+ワードプロセッサーがテキストの視覚的なプレゼンテーションにこだわるように、テキストエディタはプログラミングに特化した多くの機能を持ちます。
+強力な検索置換機能、そしてプロジェクト内の多くの異なるファイル間へ素早くジャンプできるための機能などが典型的な例です。
 
-A *text editor* is like a word processor for code.
-Whereas a word processor is concerned about visual presentation of text, a text editor has many programming specific functions.
-Typical examples include powerful tools to search and replace text, and the ability to quickly jump between the many different files that make up a project.
+テキストエディタは端末が使われていた時代にさかのぼるため、驚くことに当時から使われ続けているツールがいくつかあります。
+古来から続いており、今も現役で活躍している 2大エディターとして Emacs と Vim があります。
+私は Emacs を約20年使い続けているため、Emacs が全ての存在しうるテキストエディターの中で最も偉大なものであり、Vim ユーザーは悪趣味と劣等なツールに呪われてしまった脳みそが筋肉の人たちであることを本能的に分かっています。
+Vim ユーザーは私のことを同じように思っているでしょう。
 
-Text editors date back to the days of terminals and perhaps surprisingly some of these tools are still in use.
-The two main ancient and glorious text editors that survive are called Emacs and Vim.
-They have very different approaches (except when they don't) and developers tend to use one or the other.
-I've been using Emacs for about twenty years, and thus I know in my bones that Emacs is the greatest of all possible text editors and Vim users are knuckle-draggers lumbered with poor taste and an inferior tool.
-Vim users no doubt think the same about me.
+Vim と Emac のユーザーが一丸となることがあるとすれば、それは今流行りの Sublime Text や Atom といったテキストエディタは人類文明の没落を招いているということです。
+しかしながら、初めてのテキストエディタとしては Atom をお勧めします。
+Vim と Emacs の両方共現在広く使われているユーザーインターフェイスが確立する前に作られてたため、使いこなすのにかなり癖があるからです。
 
-If there is one thing that unites Vim and Emacs users it's the sure knowledge that new-fangled text editors like Sublime Text and Atom are bringing about the downfall of our civilization.
-Nonetheless we recommend using Atom if you're new to this text editing game.
-Both Vim and Emacs were created before the common interfaces in use today were created, and using them requires learning a very different way of working.
+### コンパイラ
 
+私たちがテキストエディタで書くコードは、そのままではコンピュータが実行することができません。
+**コンパイラ**はコードをコンピュータが実行できる形式に翻訳します。
+その翻訳を行う途中で、いくつかコードの検査も行います。
+この検査が通らない場合はコードはコンパイルされずに、コンパイラは代わりにエラー・メッセージを表示します。
+コンパイラが何をチェックすることができて、何ができないのかはまた後ほど見ていきます。
 
-### The Compiler
+コンパイラがコンピュータが実行できる形に翻訳すると上で言いましたが、Scala に関して言うと実はこれは完全な真実ではありません。
+コンパイラが出力するのはバイトコードと呼ばれるもので、Java Virtual Machine (JVM) という別のプログラムがこのコードを実行します[^complications]。
 
-The code we write in a text editor is not in a form that a computer can run.
-A *compiler* translates it into something the computer can run.
-As it does this it performs certain checks on the code.
-If these checks don't pass the code won't be compiled and the compiler will print an error message instead.
-We'll learn more about what the compiler can check and what it can't in the rest of this book.
+### 総合開発環境 (IDE)
 
-When we said the compiler translates the code is something the computer can run, this is not the complete truth in the case of Scala.
-The output of the compiler is something called bytecode, and another program, called the Java Virtual Machine (JVM), runs this code[^complications].
+総合開発環境 (IDE) はテキストエディタ、コンパイラ、その他のプログラミング用のツールを一つのプログラムにまとめたものです。
+IDE に絶対的な信用をおいている人たちもいれば、ターミナルとテキストエディタを好む人もいます。
+プログラミングに初めての人へ私たちがお勧めするのはターミナルとテキストエディタを使う方法です。
+IDE に慣れているならば、現在 Scala 開発に最も適している IDE は IntelliJ IDEA です。
 
+### バージョン管理
 
-### Integrated Development Environments
+バージョン管理は私たちが使うツールの 1つです。
+バージョン管理システムは、グループ化された複数のファイルに対する全ての変更を記録するためのプログラムです。
+プロジェクトにおいて、複数の人が同時に作業できるようにするのは非常に便利ですが、そのときにバージョン管理を使うことで間違ってお互いの変更が上書きされないことを保証します。
+Creative Scala を行うにあたってバージョン管理はさして重要なことではありませんが、早めにバージョン管理に触れておくのは良いことだと思います。
 
-Integrated development environments (IDEs) are an alternative approach that combine a text editor, a compiler, and several other programmer tools into a single program.
-Some people swear by IDEs, while some people prefer to use the terminal and a text editor.
-Our recommendation if you're new to programming is to take the terminal-and-text-editor approach.
-If you're already used to an IDE then IntelliJ IDEA is currently the best IDE for Scala development.
+私たちが使うバージョン管理は Git です。
+これは強力ですが、複雑なものです。
+幸い今回はあまり Git に関して習う必要はありません。
+私たちの Git の用例の多くは、Git に保存したソフトウェアを共有するための GitHub というウェブサイト経由で行うのがほとんどです。
+Creative Scala で使われるソフトウェアは GitHub で共有されています。
 
-
-### Version Control
-
-Version control is the final tool we'll use.
-A version control system is a program that allows us to keep a record of all the changes that have been made to a group of files.
-It's very useful for allowing multiple people to work on a project at the same time, and it ensures people don't accidentally overwrite each others changes.
-This is not a huge concern in Creative Scala, but it is good to get some exposure to version control now.
-
-The version control software we'll use is called Git.
-It's powerful but complex.
-The good news is we don't need to learn much about Git.
-Most of our use of Git will be via a website called GitHub, which allows people to share software that is stored in Git.
-We use GitHub to share the software used in Creative Scala.
-
-
-### Onward!
-
-Now that we've got some background, let's move on to installing the software we need to write Scala code.
-
-
-[^complications]: This is not itself the entire truth! We usually run Scala code on the JVM, but we can actually compile Scala to three different formats. The first and most common is JVM bytecode. We can also compiled to Javascript, another programming language, which allows us to run Scala code in a web browser. Finally, Scala Native will compile Scala to something a computer *can* run directly without requiring the JVM.
+[^complications]: これも完全な真実ではないです! 私たちは通常 Scala のコードは JVM 上で実行しますが、Scala は 3つの別なフォーマットにコンパイルすることができます。第一は、もっとも広く使われいる JVM バイトコード。Scala は、JavaScript という別の言語にコンパイルすることでウェブブラウザ上で実行することも可能です。最後に、Scala Native は Scala を JVM 無しでコンピュータが直接実行できるものにコンパイルします。

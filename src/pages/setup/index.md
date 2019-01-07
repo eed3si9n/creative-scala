@@ -1,10 +1,10 @@
-# Getting Started
+# 始めてみよう
 
-Our first step is to install the software we need to work with Creative Scala. We describe two pathways here:
+まず最初のステップは Creative Scala の作業に必要なソフトウェアをインストールすることです。ここでは 2つの道のりを解説します:
 
-1. Working with a text editor and a terminal. *We recommend this setup to people completely new to programming* as there are fewer moving parts.
-2. Working with IntelliJ IDEA. We recommend this setup to people who are used to using an IDE or are uncomfortable with the terminal.
+1. テキストエディタとターミナルを使う方法。**プログラミングを一切やったこと無い人にはこの方法をお勧めします**。
+2. IntelliJ IDEA を使う方法。IDE を使うのに慣れている人やターミナルを使うのが不安な人にはこの方法をお勧めします。
 
-If you're an experienced developer with a setup you are happy with just keep the tools you know and adapt the instructions below as needed.
+もしも経験を積んだデベロッパーで自分の好みのセットアップがある場合はそのままそれを使って、必要に応じて以下の手順を調整して使ってください。
 
-If all this stuff is new to you, the rest of the chapter has some background.
+何を言っているのかさっぱりという人は、この章でこれから説明していくので読み進めてください。
