@@ -1,28 +1,29 @@
-## Literal Expressions
+## リテラル式
 
-We'll now start to explore the various forms of expressions in Scala, starting with the simplest expressions, *literals*. Here's a literal expression:
+Scala の様々な式を探検してみましょう。初めは、最もシンプルな式である**リテラル**です。
+リテラル式の具体例です:
 
 ```tut:book
 3
 ```
 
-A literal evaluates to "itself." How we write the expression and how the console prints the value are the same. Remember though, there is a difference between the written representation of a value and its actual representation in the computer's memory.
+リテラルは「それ自身」に評価されます。式の書き方と console が値を表示する方法は一緒です。ただし、値の書かれた表現とコンピューターのメモリ内の実際の表現には違いがあることを思い出してください。
 
-Scala has many different forms of literals. We've already seen `Int` literals. There is a different type, and a different literal syntax, for what are called *floating point numbers*. This corresponds to a computer's approximation of the real numbers. Here's an example:
+Scala には多くの異なる形のリテラルがあります。私たちは既に `Int` リテラルを見ました。**浮動小数点数**という別の型があり、これは別のリテラル構文で表されます。これは、コンピューターの実数に対する近似値に対応します。具体例を見てみましょう:
 
 ```tut:book
 0.1
 ```
 
-As you can see, the type is called `Double`.
+見ての通り、この型は `Double` と呼ばれます。
 
-Numbers are well and good, but what about text. Scala's `String` type represents a sequence of characters. We write literal strings by putting their contents in double quotes.
+数字はいいとして、テキストはどうするのでしょうか。Scala の `String` 型は文字の列を表します。文字リテラルはダブルクォートで内容を囲んで書きます。
 
 ```tut:book
 "To be fond of dancing was a certain step towards falling in love."
 ```
 
-Sometimes we want to write strings that span several lines. We can do this by using triple double quotes, as below.
+数行にまたがった文字列を書きたいことがあります。これは、以下のようにトリプルダブルクォートを使って書きます。
 
 ```tut:book
 """
@@ -35,17 +36,17 @@ possession have rendered possible.
 """
 ```
 
-A `String` is a sequence of characters. Characters themselves have a type, `Char`, and character literals are written in single quotes.
+`String` は文字の列です。文字それぞれにも `Char` という型があって、それはシングルクォートを使って書かれます。
 
 ```tut:book
 'a'
 ```
 
-Finally we'll look at the literal representations of the `Boolean` type, named after English logician [George Boole](https://en.wikipedia.org/wiki/George_Boole). The fancy name just means a value that can be either `true` or `false`, and this indeed is how we write boolean literals.
+最後に、イギリスの論理学者 [George Boole](https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%BC%E3%82%B8%E3%83%BB%E3%83%96%E3%83%BC%E3%83%AB) にちなんで名付けられた `Boolean` 型のリテラル表現を見ていきましょう。気取った名前ですが、値が `true` か `false` であるかというだけの意味で、ブールリテラルはそのまま以下のように書かれます。
 
 ```tut:book
 true
 false
 ```
 
-With literal expressions, we can create values, but we won't get very far if we can't somehow interact with the values we've created. We've seen a few examples of more complex expressions like `1 + 2`. In the next section, we'll learn about objects and methods, which will allow us to understand how this, and more interesting expressions, work.
+リテラル式を使って値を作ることができるようになりましたが、何らかの方法で値と関わりを持つことができなければ何もできません。これまでに `1 + 2` というような複合式は見てきました。次の節ではオブジェクトとメソッドを習って、このような式やもっと面白い式が動作しているのかを理解します。

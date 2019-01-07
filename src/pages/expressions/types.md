@@ -1,46 +1,46 @@
-## Types
+## 型
 
-Now that we can write more complex expressions, we can talk a little more about types.
+より複雑な式が書けるようになった所で、型に関してもう少し話すことができます。
 
-One use of types is stopping us from calling methods that don't exist. The type of an expression tells the compiler what methods exist on the value it evaluates to. Our code won't compile if we try to call to a method that doesn't exist. Here are some simple examples.
+型の用例の 1つとして存在しないメソッドの呼び出しを防止するというものがあります。コンパイラが式を値に評価するとき、式の型はどのメソッドが存在するのかをコンパイラに教えてくれます。存在しないメソッドを呼び出そうとしてもそれはコンパイルされません。以下に簡単な具体例を使って説明します。
 
 ```tut:fail:book
 "Brontë" / "Austen"
 1.take(2)
 ```
 
-It really is the type of the expression that determines what methods we can call, which we can demonstrate by calling methods on the result of more complex expressions.
+本当に、式の型がどのメソッドを呼び出せるのかを決定します。これはより複雑な式に対してメソッドを呼び出すことで実験することができます。
 
 ```tut:fail:book
 (1 + 3).take(1)
 ```
 
-This process of *type checking* also applies to the parameter of methods.
+この**型検査**の処理は、メソッドのパラメータにも適用されます。
 
 ```tut:fail:book
 1.min("zero")
 ```
 
-Types are a property of expressions and thus exist at compile time (as we have discussed before.) This means we can determine the type of an expression even if evaluating it results in an error at run time. For example, dividing an `Int` by zero causes a run-time error.
+型は式の属性で (以前にも話した通り) コンパイル時に存在します。そのため、実行時に式を評価した結果がエラーとなっても、式の型は決定することができます。例えば、`Int` をゼロで割ると実行時エラーが発生します。
 
 ```tut:fail:book
 1 / 0
 ```
 
-The expression `1 / 0` still has a type, and we can get that type from the console as shown below.
+式 `1 / 0` はそれでも型を持ち、以下のようにして console で表示させることができます。
 
 ```scala
 :type 1 / 0
 // Int
 ```
 
-We can also write a compound expression including a sub-expression that will fail at run-time.
+実行時に失敗するサブ式を含んだ複合式を書くこともできます。
 
 ```tut:fail:book
 (2 + (1 / 0) + 3)
 ```
 
-This expression also has a type.
+そして、この式も型を持ちます。
 
 ```scala
 :type (2 + (1 / 0) + 3)

@@ -1,68 +1,67 @@
-## Values are Objects
+## 値はオブジェクトである
 
-In Scala all values are *objects*. An object is a grouping of data and operations on that data. For example, 2 is an object. The data is the integer 2, and the operations on that data are familiar operations like +, -, and so on. We call operations of an object the object's *methods*. 
+Scala において全ての値は**オブジェクト**です。オブジェクトは、データとそのデータに関する演算をグループ化したものです。例えば、2 はオブジェクトです。このデータは整数の 2 で、演算は慣れ親しんだ +、- などといったものです。オブジェクトの持つ演算をオブジェクトの**メソッド**と呼びます。
 
-### Method Calls
+### メソッド呼び出し
 
-We interact with objects by *calling* or *invoking* methods. For example, we can get the uppercase version of a `String` by calling its `toUpperCase` method.
+メソッドを**呼び出す**ことでオブジェクトと関わりを持つことができます。例えば、`toUpperCase` メソッドを呼び出すことで `String` 値を大文字にしたものを得ることができます。
 
 ```tut:book
 "Titan!".toUpperCase
 ```
 
-Some methods accept *parameters* or *arguments*, which control how the method works. The `take` method, for example, takes characters from a `String`. We must pass a parameter to `take` to specify how many characters we want.
+メソッドの中には**パラメータ** (**引数**と呼ばれることもあります) を受け取って、メソッドがどう動くかを制御できるものもあります。例えば `take` メソッドは `String` 値からいくつかの文字を取り出します。それが何文字なのかを `take` にパラメータを渡して指定する必要があります。
 
 ```tut:book
 "Gilgamesh went abroad in the world".take(3)
 "Gilgamesh went abroad in the world".take(9)
 ```
 
-A method call is an expression, and thus evaluates to an object. This means we can chain method calls together to make more complex programs:
+メソッド呼び出しは式の一つであり、オブジェクトへと評価されます。そのため、メソッド呼び出しを連鎖させて、より複雑なプログラムを書くことができます:
 
 ```tut:book
 "Titan!".toUpperCase.toLowerCase
 ```
 
 <div class="callout callout-info">
-#### Method Call Syntax {-}
+#### メソッド呼び出しの構文 {-}
 
-The syntax for a method call is
+メソッド呼び出しの構文は
 
 ```scala
 anExpression.methodName(param1, ...)
 ```
 
-or
+または
 
 ```scala
 anExpression.methodName
 ```
 
-where
+で、
 
-- `anExpression` is any expression (which evaluates to an object)
-- `methodName` is the name of the method
-- the optional `param1, ...` are one or more expressions evaluating to the parameters to the method.
+- `anExpression` は (オブジェクトに評価される) 任意の式で
+- `methodName` はメソッド名で
+- 省略可能な `param1, ...` は 1つもしくは複数の式で、メソッドのパラメータとして評価されます。
 </div>
 
+### 演算子
 
-### Operators
+全ての値はオブジェクトで、メソッドは `object.methodName(parameter)` という構文で呼び出すと言いました。だとすると、`1 + 2` という式はどのように説明したらいいでしょうか?
 
-We have said that all values are objects, and we call methods with the syntax `object.methodName(parameter)`. How then do we explain expressions like `1 + 2`?
-
-In Scala, and expression written `a.b(c)` can be written `a b c`. So these are equivalent:
+Scala において、`a.b(c)` と書ける式は `a b c` と書くことができます。そのため、以下の式は等価です:
 
 ```tut:book
 1 + 2
 1.+(2)
 ```
 
-This second way of calling a method is known an *operator* style.
+1つ目のメソッド呼び出しの書き方は、**演算子**スタイルと呼ばれます。
 
 <div class="callout callout-info">
-#### Infix Operator Notation {-}
+#### 演算子中置記法 {-}
 
-Any Scala expression written `a.b(c)` can also be written `a b c`.
+`a.b(c)` と書ける任意の Scala の式は `a b c ` と書くことができます。
 
-Note that `a b c d e` is equivalent to `a.b(c).d(e)`, not `a.b(c, d, e)`.
+`a b c d e` は、`a.b(c).d(e)` と等価であり `a.b(c, d, e)` ではないことに注意してください。
 </div>

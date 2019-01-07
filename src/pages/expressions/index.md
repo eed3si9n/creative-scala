@@ -1,34 +1,34 @@
-# Expressions, Values, and Types
+# 式、値、型
 
-Scala programs have three fundamental building blocks: *expressions*, *values*, and *types*. In this section, we explore these concepts.
+Scala のプログラムは**式**、**値**、**型**という 3つの基礎要素から成り立っています。この節では、これらの概念を考察します。
 
-Here's a very simple expression:
+非常にシンプルな式の一例です:
 
 ```tut:silent:book
 1 + 2
 ```
 
-An *expression* is a fragment of Scala code. We can write expressions in an a text editor, or on a piece of paper, or on a wall. You get the idea.
+**式**は Scala コードの断片です。式はテキストエディタに書くこともあれば、紙に書いたり、壁に書くこともできます。
 
-Expressions are like writing. Just like writing must be read for it to have any effect on the world (and the reader has to understand the language the writing is written in), the computer must *run* an expression for it to have an effect. The result of running an expression is a *value*. Value's live in the computer's memory, in the same way that the result of reading some writing lives in the reader's head. We will also say expressions are *evaluated* or *executed* to describe the process of transforming them into values.
+式は作文に似ています。作文が世界に作用を持つためには誰かが読む必要があるのと同様 (ということは読者が書かれた言語を理解している必要もあります)、式が作用を持つにはコンピュータが式を**実行**する必要があります。式を実行した結果が**値**です。値は、コンピューターのメモリの中に生きていて、それは作文を読んだ結果が読者の頭の中に生きているのと同様です。式を値に変換するプロセスを指して、式を**評価する**と言ったり、**実行する**と言ったりもします。
 
-We can evaluate expressions immediately by writing them at the console and pressing "Enter" (or "Return"). Try it now.
+console に式を書いて「Enter」(もしくは 「Return」) を押すことで即時に式を評価することができます。今すぐ試してみてください。
 
 ```tut:book
 1 + 2
 ```
 
-The console responds with the value the expression evaluates to, and the type of the expression.
+console は、式を評価した値と式の型を返します。
 
-The expression `1 + 2` evaluates to the value `3`. We can write down the number three here on the page, but the real value is something stored in the computer's memory. In this case, it is a 32-bit integer represented in two's-complement. The meaning of "32-bit integer represented in two's-complement" is not important. I just mention it to emphasize the fact the computer's representation of the value `3` is the true value, not the numeral written here or by the console.
+`1 + 2` という式は `3` という値に評価されます。私たちはこのページに数字の 3 と書くことができますが、真の値はコンピューターのメモリに格納されたものです。この場合、これは 2の補数で表された 32ビット整数となります。「2の補数で表された 32ビット整数」の意味は重要なものではありません。このページや console に書かれた数字ではなく、`3` という値のコンピューターの表現こそが真の値であることを強調するために書いたものです。
 
-*Types* are the final piece of the puzzle. A type is anything we can determine about a program *without* running it. The expression `1 + 2` has the type `Int`, which means we should interpret the value the expression evaluates to as an integer. This also means we can write further expressions with the result of this expression, but these expressions must be operations that make sense for integers. We could add, subtract, multiply, or divide, but we couldn't convert an integer to lowercase, for example.
+このパズルの最後のピースは**型**です。プログラムを**実行せずに**決定できるものを型と言います。式 `1 + 2` は `Int` 型を持ち、これはこの式が評価する値を整数だと解釈するべきことを意味します。これは、この式の結果を使って他の式を書くことができるけども、その式が整数に合った演算である必要があることを意味します。例えば、加算、減算、乗算、除算などが可能ですが、整数を小文字に変換することはできません。
 
-Types will often tell us how we should understand the value (the "stuff" in the computer's memory) that an expression evaluates to. Should we understand it as an integer or as a stream of points giving the current position of the mouse? The types will tell us. We can use types for other things, including things that don't have any representation at run time. These uses are a bit more advanced than we'll get into here, but don't make the mistake of thinking that types correspond to value. Types only exist at compile time in Scala. There is not necessarily any representation at run time of the type of the expression that produced a given a value.
+型は多くの場合において、私たちが値 (コンピューターのメモリにある「あれ」) をどう理解するべきかを教えてくれます。整数として理解するべきなのか、マウスの現在位置を表す点のストリームとして理解するべきでしょうか? それは型が教えてくれます。私たちは型を、実行時に表現を持たないものを含む他のことにも使うことができます。これらの用法はここで深入りするには少し難易度が高いですが、型が値に対応すると思ってしまうのは間違いです。Scala では型はコンパイル時のみに存在します。任意の値があるとき、その値を生成した式の型の表現は実行時にはありません。
 
-Before a Scala program is run, it must be *compiled*. Compilation checks that a program makes sense. It must be syntactically correct, meaning it must be written according to the rules of Scala. For example `(1 + 2)` is syntactically correct, but `(1 + 2` is not. It must also *type checked*, meaning the types must be correct for the operations we're trying to do. `1 + 2` type checks (we are adding integers), but `1.toUpperCase` does not (there is no concept of upper and lower case for numbers.)
+Scala プログラムが実行する前に、それは**コンパイル**される必要があります。コンパイルは、プログラムのつじつまが合うかの検査を行います。例えば、`(1 + 2)` は構文的に正しいけども、`(1 + 2` は正しくありません。プログラムは、**型検査**も通過する必要があります。型検査は、行おうとしている演算が今ある型に対して正しいかの検査です。`1 + 2` は型検査を通りますが (整数の加算をしています)、`1.toUpperCase` は通りません (数字に大文字も小文字もありません)。
 
-Only programs that successfully compile can be run. We can think of compilation as being analogous to the rules of grammar in writing. The sentence "F$Rf  fjrmn;l df.fd"
-is syntactically incorrect in English. The arrangement of letters doesn't form any words. The sentence "dog fly a here no" is made out of valid words but their arrangement breaks the rules of grammar---analogous to the type checks that Scala performs.
+コンパイルに成功したプログラムだけを実行することができます。コンパイルは、作文の文法のようなものと考えることができます。例えば、
+「F$Rf  fjrmn;l df.fd」は英文法的に間違っています。文字の並びは単語を形成していません。「dog fly a here no」という文は妥当な単語から成るけども、その並びは英文法を違反します。これは Scala が型検査を行うのと似ていると思います。
 
-We will talk about *compile time* as the time when a code is compiled, and *run time* as the time when the code is run.
+コードがコンパイルされる時のことを**コンパイル時**、コードが実行される時のことを**実行時**と言います。

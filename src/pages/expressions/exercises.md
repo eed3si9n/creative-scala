@@ -1,11 +1,11 @@
-## Exercises
+## 練習問題
 
-#### Arithmetic
+#### 算数
 
-Write an expression using integer literals, addition, and subtraction that evaluates to 42.
+整数リテラル、加算、減算の全てを使って 42 に評価される式を書いてみよう。
 
 <div class="solution">
-This exercise is just about getting used to writing Scala code. Here is one possible solution.
+この練習問題は Scala のコードを書くのに慣れるためのものです。色々な解答が可能ですが、1つの例として以下のように書けます。
 
 ```tut:book
 1 + 43 - 2
@@ -13,12 +13,12 @@ This exercise is just about getting used to writing Scala code. Here is one poss
 </div>
 
 
-#### Appending Strings
+#### 文字列の追加
 
-Join together two strings (known as *appending* strings) using the `++` method. Write equivalent expressions using both the normal method call style and operator style.
+`++` メソッドを使って 2つの文字列を連結してみよう (文字列の**追加**とも言います)。適当な式を普通のメソッド呼び出しスタイルと演算子スタイルそれぞれを使って書いてみよう。
 
 <div class="solution">
-Something like the below should do.
+こんな感じでいいと思います。
 
 ```tut:book
 "It is a truth ".++("universally acknowledged")
@@ -26,12 +26,12 @@ Something like the below should do.
 ```
 </div>
 
-#### Precedence
+#### 優先順位
 
-In mathematics we learned that some operators take *precedence* over others. For example, in the expression `1 + 2 * 3` we should do the multiplication before the addition. Do the same rules hold in Scala?
+数学では演算子には**優先順位**があることを習いました。例えば、`1 + 2 * 3` という式があるとき、乗算を先に行ってから加算を行います。Scala でもこのルールが当てはまるでしょうか?
 
 <div class="solution">
-A bit of exploration at the console should convince you that yes, Scala does maintain the standard precedence rules. The example below demonstrates this.
+console で色々実験してみると、Scala も標準的な演算子の優先順位に従うことが分かると思います。以下にこれを示す例を挙げます。
 
 ```tut:book
 1 + 2 * 3
@@ -41,9 +41,9 @@ A bit of exploration at the console should convince you that yes, Scala does mai
 </div>
 
 
-#### Types and Values
+#### 型と値
 
-Which of the following expressions will not compile? Of the expressions that will compile, what is their type? Which expressions fail at run-time?
+以下に挙げた式のうちコンパイルしないのはどれでしょう? 式がコンパイルする場合は、その型は何でしょうか? どの式が実行時に失敗するでしょう?
 
 ```tut:silent
 1 + 2
@@ -82,72 +82,71 @@ Which of the following expressions will not compile? Of the expressions that wil
 1 + 2
 ```
 
-This expression has type `Int` and evaluates to `3`.
-
+この式は `Int` 型を持ち、`3` と評価されます。
 
 ```tut:book
 "3".toInt
 ```
 
-This expression has type `Int` and evaluates to `3`.
+この式は `Int` 型を持ち、`3` と評価されます。
 
 ```tut:fail:book
 "Electric blue".toInt
 ```
 
-This expression has type `Int` but fails at run-time.
+この式は `Int` 型を持ちますが、実行時に失敗します。
 
 ```tut:silent
 "Electric blue".take(1)
 ```
 
-This expression has type `String` and evaluates to `"E"`.
+この式は `String` 型を持ち、`"E"` と評価されます。
 
 ```tut:fail:book
 "Electric blue".take("blue")
 ```
 
-This expression fails at compile-time and hence has no type.
+この式はコンパイル時に失敗し、そのため型を持ちません。
 
 ```tut:book
 1 + ("Moonage daydream".indexOf("N"))
 ```
 
-This expression has type `Int` and evaluates to `0`.
+この式は `Int` 型を持ち、`0` と評価されます。
 
 ```tut:book
 1 / 1 + ("Moonage daydream".indexOf("N"))
 ```
 
-This expression has type `Int` and, due to precedence, evaluates to `(1 / 1) + -1`, which is `0`.
+この式は `Int` 型を持ち、演算子の優先順位により `(1 / 1) + -1` と評価され、`0` となります。
 
 ```tut:fail:silent
 1 / (1 + ("Moonage daydream".indexOf("N")))
 ```
 
-This expression has type `Int` but fails at run-time with a division by zero.
+この式は `Int` 型を持ちますが、ゼロによる除算のため実行時に失敗します。
 </div>
 
-#### Floating Point Failings
+#### 浮動小数点数の弱点
 
-When we introduced Doubles, I said they are an approximation to the real numbers. Why do you think this is? Think about representing numbers like ⅓ and π. How much space would it take to represent these numbers in decimal?
+Double を紹介したとき、それは実数の近似値だと言いました。これは何故だと思いますか? ⅓ や π といった数を表すことを考えてみましょう。それらの数を 10進数で表すとしたらいくら容量が必要でしょうか?
 
 <div class="solution">
-`Double` is an approximation because it has the fit within the computer's finite memory. A `Double` takes up precisely 64-bits, which is enough space to store a lot of digits but not enough to store a number that, like π, has an infinite expansion.
+`Double` が近似値であるのは、コンピューターの有限なメモリーに収める必要があるからです。1つの `Double` は、64ビットの容量を取り、これは多くの桁数を保持するのに十分ですが、π のように無限に展開する数を格納することはできません。
 
-The number ⅓ also has an infinite expansion in decimal. Because Doubles are stored in binary there are some numbers that can be represented in a finite number of decimal digits but have no finite representation in binary. 0.1 turns out to be one such number.
+⅓ という数も 10進数では無限に展開します。Double は 2進数で格納されているため、10進数なら有限の桁数で表せる数でも 2進数では有限の表現を持たない場合があります。実は、0.1 はそのような数の一例です。
 
-In general, floating point numbers can lead to nasty surprises if you expect them to act like the reals. They are fine for our purposes in Creative Scala, but don't go using them to write accounting software!
+一般的に、浮動小数点数が実数と同じように振る舞うと期待すると思わぬ所でひどい目に合わされます。Creative Scala を使うには事足りますが、浮動小数点数を使って帳簿管理ソフトを書いてはいけません!
 </div>
 
-#### Beyond Expressions
+#### 式の先にあるもの
 
-In our current model of computation there are only three components: expressions (program text) with types, that evaluate to values (something within the computer's memory). Is this sufficient? Could we write a stock market or a computer game with just this model? Can you think of ways to extend this model?
+今の計算モデルは、式 (プログラムのテキスト) とその型、そしてそれが評価されたときの値 (コンピューターのメモリ内に存在するもの) という 3つの要素を持ちます。これははたして十分なものでしょうか? このモデルを使って株式市場やコンピューターゲームを書くことができるでしょうか? このモデルを拡張する方法を考えてみてください。
 
 <div class="solution">
-This is very open ended question. There are several ways to go beyond the model we have so far.
+これは自由回答の質問です。現行のモデルを拡張するいくつかの方法を考えることができます。
 
-To be useful our programs must be capable of creating effects---changes in the world that go beyond the computer's memory. For example, displaying things on the screen, making sound, sending messages to other computers, and the like. The console implicitly does some of this for us, by printing values on the screen. We'll need to go a bit beyond that for more useful programs.
+役に立つプログラムを書くには作用 (effect)、つまりコンピューターのメモリを超えた世界に関する何らかの変更を引き起こす能力を必要とします。例えば、画面に何か表示したり、音を出したり、他のコンピューターにメッセージを送信したりなどの作用があります。console は値を画面に表示することで自動的に何らかの作用を引き起こしてると言えます。より役に立つプログラムを書くには、それ以上の作用が必要になります。
 
-We also don't have any way to define our own objects and methods, or reuse values in our programs. If we want to, say, use someone's name across a program we have to repeat that name everywhere. We need more methods of *abstraction* and that's what we'll turn to soon.
+また、私たちは今の所独自のオブジェクトやメソッドを定義したり、プログラムの中で値を再利用するすべを持ちません。例えば、プログラム中で誰かの名前を使いたいとすると、その名前を何度も繰り返して書く必要があります。**抽象化**の方法が必要で、これからその方法を見ていきます。
 </div>
