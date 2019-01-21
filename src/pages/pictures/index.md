@@ -1,11 +1,11 @@
-# Computing With Pictures
+# 絵を使った演算
 
-So far we have computed using numbers, strings, and other simple objects. This is not particularly interesting. From here on out we will focus our attention to computing with pictures, and later to animations. Pictures offer us more immediate creative opportunities, and they make our program output tangible in a way that other methods can't deliver. 
+これまで数、文字列、その他の簡単なオブジェクトを使った演算をみてきました。これらは特に面白いものではありません。ここからは絵を使った計算に注目して、後ほどアニメーションをみていきます。絵を使うことは、より直接的にクリエイティブな機会を与えてくれます。自分たちのプログラムからリアルなアウトプットが出てくる感覚は他の方法では得られないことです。
 
-We'll use a library called Doodle to help us with creating graphics. In this chapter we will learn the basics of Doodle.
+私たちはグラフィックスを作るのに Doodle というライブラリを使います。この章では Dooble の初歩を習います。
 
 <div class="callout callout-info">
-If you run the examples from the SBT console within Doodle they will just work. If not, you will need to start your code with the following imports to make Doodle available.
+Doodle 内の sbt console を使って練習問題を実行すると普通に動作すると思います。そうじゃない場合で Dooble を使うときは、コードに始めに以下の import 文を書く必要があります。
 
 ```tut:silent
 import doodle.core._

@@ -1,4 +1,4 @@
-## Creating Colors
+## 色の作成
 
 ```tut:invisible
 import doodle.core._
@@ -8,25 +8,25 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-We've seen how to use predefined colors in our images. What about creating our own colors? In this section we will see how to create colors of our own, and transform existing colors into new ones.
+ここまでで、イメージの中で定義済みの色を使う方法を見てきました。独自の色を作りたいとしたらどうすればいいでしょう? この節では、独自の色を作ったり、既存の色を変換して新しいものにする方法を解説します。
 
-### RGB Colors
+### RGB カラー
 
-Computers work with colors defined by mixing together different amounts of red, green, and blue. This "RGB" model is an [additive model][additive-model] of color. Each red, green, or blue component can have a value between zero and 255. If all three components are set to the maximum of 255 we get pure white. If all components are zero we get black.
+コンピューターは、異なる量の赤、緑、青成分を混ぜて幅広い色を再現することで色を取り扱います。この RGB モデルは色の[加法混合][additive-model]の一種です。赤、緑、青の成分はそれぞれ 0 から 255 の値を持つことができます。3つ全ての成分が最大値の 255 であるときは、純粋な白を得ることができます。全ての成分が 0 のときは黒となります。
 
-We can create our own RGB colors using the `rgb` method on the `Color` object. This method takes three parameters: the red, green, and blue components. These are numbers between 0 and 255, called an `UnsignedByte`[^byte]. There is no literal expression for `UnsignedByte` like there is for `Int`, so we must convert an `Int` to `UnsignedByte`. We can do this with the `uByte` method. An `Int` can take on more values that an `UnsignedByte`, so if the number is too small or too large to be represented as a `UnsignedByte` it will be converted to the closest values is the range 0 to 255. These examples illustrate the conversion.
+`Color` オブジェクトの `rgb` メソッドを使って独自の RGB カラーを作ることができます。このメソッドは、赤、緑、青成分の 3つのパラメータを取ります。これらは `UnsignedByte`[^byte] と呼ばれる 0 から 255 の数です。`UnsignedByte` には `Int` のようなリテラル式が無いため、`Int` から `UnsignedByte` へと変換する必要があります。これは、`uByte` メソッドを使って行うことができます。`Int` は `UnsignedByte` よりも多くの値を取ることができるので、もしも数が `UnsignedByte` で表現するには小さすぎたり大きすぎる場合は 0 から 255 の範囲で最も近い値に変換されます。具体例で説明します。
 
 ```tut:book
 0.uByte
 255.uByte
 128.uByte
--100.uByte // Too small, is transformed to 0
-1000.uByte // Too big, is transformed to 255
+-100.uByte // 小さすぎるので、0 に変換する
+1000.uByte // 大きすぎるので、255 に変換する
 ```
 
-(Note that `UnsignedByte` is a feature of Doodle. It is not something provided by Scala.)
+(`UnsignedByte` は Doodle の機能で、Scala が提供するものではないことに注意してください)
 
-Now we know how to construct `UnsignedBytes` we can make RGB colors.
+`UnsignedByte` の作り方が分かったところで、RGB カラーを作ってみましょう。
 
 ```tut:silent:book
 Color.rgb(255.uByte, 255.uByte, 255.uByte) // White
@@ -34,21 +34,21 @@ Color.rgb(0.uByte, 0.uByte, 0.uByte) // Black
 Color.rgb(255.uByte, 0.uByte, 0.uByte) // Red
 ```
 
-### HSL Colors
+### HSL カラー
 
-The RGB color representation is not very easy to use. The hue-saturation-lightness (HSL) format more closely corresponds to how we perceive color. In this representation a color consists of:
+RGB カラー表現は取り扱いが簡単ではありません。色相、彩度、明度 (HSL) のフォーマットの方が、私たちが色を認知するのにより近い形でモデル化されています。この表現法では色は以下の成分を持ちます:
 
-- *hue*, which is an angle between 0 and 360 degrees giving a rotation around the color wheel.
-- *saturation*, which is a number between 0 and 1 giving the intensity of the color from a drab gray to a pure color; and
-- *lightness* between 0 and 1 giving the color a brightness varying from black to pure white.
+- **色相** (hue): 色相環上の位置を 0 から 360度の角度で表したもの。
+- **彩度** (saturation): 単調なグレーから純粋な色までの色の強度を 0 から 1 までの数で表したもの。
+- **明度** (lightness): 黒から純白までの明るさを 0 から 1 までの数で表したもの。
 
-[@fig:pictures:color-wheel] shows how colors vary as we change hue and lightness, and [@fig:pictures:saturation] shows the effect of changing saturation.
+[@fig:pictures:color-wheel] は色相と明度を変えることでどう色が変化するかを示し、[@fig:pictures:saturation] は彩度の変化の影響を示します。
 
-![A color wheel showing changes in hue (rotations) and lightness (distance from the center) with saturation fixed at 1.](src/pages/pictures/color-wheel.pdf+svg){#fig:pictures:color-wheel}
+![彩度を 1 に固定して、色相 (角度) と明度 (中心からの距離) の変化を示した色相環。](src/pages/pictures/color-wheel.pdf+svg){#fig:pictures:color-wheel}
 
-![A gradient showing how changing saturation effects color, with hue and lightness held constant. Saturation is zero on the left and one on the right.](src/pages/pictures/saturation.pdf+svg){#fig:pictures:saturation}
+![色相と明度を固定することで彩度の変化が色に与える影響を示した勾配。左端は彩度が 0 で右端が彩度が 1 となっている。](src/pages/pictures/saturation.pdf+svg){#fig:pictures:saturation}
 
-We can construct a color in the HSL representation using the `Color.hsl` method. This method takes as parameters the hue, saturation, and lightness. The hue is an `Angle`. We can convert a `Double` to an `Angle` using the `degrees` (or `radians`) methods.
+`Color.hsl` メソッドを使って HSL 表現の色を作ることができます。このメソッドは、色相、彩度、明度をパラメータとして受け取ります。色相は `Angle` で、`degrees` メソッド (か `radians` メソッド) を用いて `Double` を `Angle` へと変換することができます。
 
 ```tut:book
 0.degrees
@@ -56,7 +56,7 @@ We can construct a color in the HSL representation using the `Color.hsl` method.
 3.14.radians
 ```
 
-Saturation and lightness are both normalized to between 0.0 and 1.0. We can convert a `Double` to a normalized value with the `.normalized` method.
+彩度と明度は 0.0 から 1.0 へと標準化されます。`.normalized` メソッドを使って `Double` を標準化された値へと変換します。
 
 ```tut:book
 0.0.normalized
@@ -65,26 +65,26 @@ Saturation and lightness are both normalized to between 0.0 and 1.0. We can conv
 -1.0.normalized // Too small, is clipped to 0.0
 ```
 
-We can now create colors using the HSL representation.
+これで HSL 表現を使って色を作ることができます。
 
 ```tut:silent:book
 Color.hsl(0.degrees, 0.8.normalized, 0.6.normalized) // A pastel red
 ```
 
-To view this color we can render it in a picture. See [@fig:pictures:triangle-pastel-red] for an example.
+この色を見るためには、絵の中で使ってみてください。例えば、[@fig:pictures:triangle-pastel-red] を見てください。
 
-![Rendering pastel red in a triangle](./src/pages/pictures/triangle-pastel-red.pdf+svg){#fig:pictures:triangle-pastel-red}
+![パステルレッドを用いた三角形のレンダリング](./src/pages/pictures/triangle-pastel-red.pdf+svg){#fig:pictures:triangle-pastel-red}
 
 
-### Manipulating Colors
+### 色の操作
 
-The effectiveness of a composition often depends as much on the relationships between colors as the actual colors used. Colors have several methods that allow us to create a new color from an existing one. The most commonly used ones are:
+構図の効果は、実際に使われた色そのものだけではなく、色と色の間の関係よることが多いと思います。既存の色から新しい色を作ることができるメソッドがいくつかあります。特によく使われるのは:
 
-- `spin`, which rotates the hue by an `Angle`;
-- `saturate` and `desaturate`, which respectively add and subtract a `Normalised` value from the color; and
-- `lighten` and `darken`, which respectively add and subtract a `Normalised` value from the lightness.
+- `spin` は色相を `Angle` の量だけ回転します。
+- `saturate` と `desaturate` はそれぞれ彩度に対して `Normalized` 値を加算したり減算したりします。
+- `lighten` と `darken` はそれぞれ明度に対して `Normalized` 値を加算したり減算したりします。
 
-For example,
+具体例で解説すると
 
 ```tut:silent:book
 ((circle(100) fillColor Color.red) beside
@@ -92,11 +92,11 @@ For example,
     (circle(100) fillColor Color.red.spin(30.degrees))).lineWidth(5.0)
 ```
 
-produces [@fig:pictures:three-circles-spin].
+は [@fig:pictures:three-circles-spin] を生成します。
 
-![Three circles, starting with Color.red and spinning by 15 degrees for each successive circle](./src/pages/pictures/three-circles-spin.pdf+svg){#fig:pictures:three-circles-spin}
+![Color.red から始まり、色相を 15度づつ回転させた 3つの円](./src/pages/pictures/three-circles-spin.pdf+svg){#fig:pictures:three-circles-spin}
 
-Here's a similar example, this time manipulating saturation and lightness, shown in [@fig:pictures:saturate-and-lighten].
+次は似た例ですが、[@fig:pictures:saturate-and-lighten] のように彩度と明度を操作します。
 
 ```tut:silent:book
 (((circle(20) fillColor (Color.red darken 0.2.normalized))
@@ -107,14 +107,13 @@ Here's a similar example, this time manipulating saturation and lightness, shown
   beside (rectangle(40,40) fillColor Color.red)))
 ```
 
-![The top three circles show the effect of changing lightness, and the bottom three squares show the effect of changing saturation.](./src/pages/pictures/saturate-and-lighten.pdf+svg){#fig:pictures:saturate-and-lighten}
+![上の 3つの円は明度の変化を示し、下の 3つの四角形は彩度の変化を示す](./src/pages/pictures/saturate-and-lighten.pdf+svg){#fig:pictures:saturate-and-lighten}
 
-[^byte]: A byte is a number with 256 possible values, which takes 8 bits within a computer to represent. A signed byte has integer values from -128 to 127, while an unsigned byte ranges from 0 to 255.
+[^byte]: 1バイトは 256通りの可能性を持つ値で、コンピューター内の 8ビットを用いて表現する。符号付きバイトは -128 から 127 の整数値を持ち、符号なしバイトは 0 から 255 の値を持つ。
 
+### 透明度
 
-### Transparency
-
-We can also add a degree of transparency to our colors, by adding an *alpha* value. An alpha value of 0.0 indicates a completely transparent color, while a color with an alpha of 1.0 is completely opaque. The methods `Color.rgba` and `Color.hsla` have a fourth parameter that is a `Normalized` alpha value. We can also create a new color with a different transparency by using the `alpha` method on a color. Here's an example, shown in [@fig:pictures:rgb-alpha].
+**アルファ**値を与えることで、色に透明度を追加することができます。アルファ値 0.0 は完全な透明な色を表し、アルファ値 1.0 は完全に不透明な色を表します。`Color.rgba` と `Color.hsla` は、`Normalized` のアルファ値を表す 4つめのパラメータを受け取ります。既にある色に `alpha` メソッドを呼ぶことで異なる透明度を持つ新しい色を作ることができます。例えば、[@fig:pictures:rgb-alpha] のようになります。
 
 ```tut:silent:book
 ((circle(40) fillColor (Color.red.alpha(0.5.normalized))) beside
@@ -122,19 +121,19 @@ We can also add a degree of transparency to our colors, by adding an *alpha* val
  (circle(40) fillColor (Color.green.alpha(0.5.normalized))))
 ```
 
-![Circles with alpha of 0.5 showing transparency](./src/pages/pictures/rgb-alpha.pdf+svg){#fig:pictures:rgb-alpha}
+![アルファ値 0.5 の円を使って透明度を表す](./src/pages/pictures/rgb-alpha.pdf+svg){#fig:pictures:rgb-alpha}
 
 
-### Exercises {-}
+### 練習問題 {-}
 
-#### Analogous Triangles {-}
+#### 類似色の三角形 {-}
 
-Create three triangles, arranged in a triangle, with analogous colors. Analogous colors are colors that are similar in hue. See a (fairly elaborate) example in [@fig:pictures:complementary-triangles].
+3つの三角形を、三角に配置して、類似色で色付けしてみよう。類似色とは色相の近い色のことです。(ちょっと手のこんだ) 具体例 [@fig:pictures:complementary-triangles] を見てください。
 
-![Complementary triangles. The colors chosen are variations on `darkSlateBlue`](./src/pages/pictures/complementary-triangles.pdf+svg){#fig:pictures:complementary-triangles}
+![類似色の三角形。色は `darkSlateBlue` のバリエーションとして選ばれています。](./src/pages/pictures/complementary-triangles.pdf+svg){#fig:pictures:complementary-triangles}
 
 <div class="solution">
-These sort of examples are getting a bit too long to write out at the console. We'll look at a way around this next.
+回答を console に書くにはちょっと長くなりすぎてきていますね。次にその対策を見ていきます。
 
 ```tut:book
 ((triangle(40, 40)

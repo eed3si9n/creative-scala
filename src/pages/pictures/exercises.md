@@ -1,4 +1,4 @@
-## Exercises
+## 練習問題
 
 ```tut:invisible
 import doodle.core._
@@ -8,24 +8,24 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-### Compilation Target
+### ターゲット
 
-Create a line drawing of an archery target with three concentric scoring bands, as shown in [@fig:pictures:target1].
+アーチェリー用のターゲットを、[@fig:pictures:target1] のように 3つの同心円で得点帯を表して描いてみよう。
 
-![Simple archery target](src/pages/pictures/target1.pdf+svg){#fig:pictures:target1}
+![シンプルなアーチェリー用ターゲット](src/pages/pictures/target1.pdf+svg){#fig:pictures:target1}
 
-For bonus credit add a stand so we can place the target on a range, as shown in [@fig:pictures:target2].
+ボーナス得点として、[@fig:pictures:target2] のようにターゲットを練習場に置けるようにスタンドを追加してください。
 
-![Archery target with a stand](src/pages/pictures/target2.pdf+svg){#fig:pictures:target2}
+![スタンド付きのアーチェリー用ターゲット](src/pages/pictures/target2.pdf+svg){#fig:pictures:target2}
 
 <div class="solution">
-The simplest solution is to create three concentric circles using the `on` operator:
+最もシンプルな解法は `on` 演算子を使って同心円を描くことです。
 
 ```tut:silent:book
 (circle(10) on circle(20) on circle(30))
 ```
 
-For the extra credit we can create a stand using two rectangles:
+ボーナス得点のスタンドは 2つの長方形を使って描きます。
 
 ```tut:silent:book
 (
@@ -39,18 +39,16 @@ For the extra credit we can create a stand using two rectangles:
 </div>
 
 
-### Stay on Target
+### ぶれない標的
 
-Colour your target red and white, the stand in brown (if applicable),
-and some ground in green. See [@fig:pictures:target3] for an example.
+ターゲットを赤と白で色付けしてみよう。(もし前問で追加した場合は) スタンドは茶色、芝生は緑に色付けしてみよう。
+例としては [@fig:pictures:target3] を参照してください。
 
-![Colour archery target](src/pages/pictures/target3.pdf+svg){#fig:pictures:target3}
+![色付けしたアーチェリーのターゲット](src/pages/pictures/target3.pdf+svg){#fig:pictures:target3}
 
 <div class="solution">
-The trick here is using parentheses to control the order of composition.
-The `fillColor()`, `lineColor()`, and `lineWidth()` methods
-apply to a single image---we need to make sure that image
-comprises the correct set of shapes:
+ここでのコツはカッコをうまく使って合成の順序を制御することです。
+`fillColor()`、`lineColor()`、そして `lineWidht()` メソッドは単一のイメージに適用され、イメージが正しい形から構成されているかを確認する必要があります。
 
 ```tut:silent:book
 (

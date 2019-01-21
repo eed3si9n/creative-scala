@@ -1,4 +1,4 @@
-## Color
+## 色
 
 ```tut:invisible
 import doodle.core._
@@ -8,29 +8,26 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-In addition to layout, Doodle has some simple operators to add a splash of colour to our images. Try these out the methods described in [@tbl:pictures:color] to see how they work.
+レイアウトの他に、Doodle を使って私たちのイメージに彩りを与えることができます。[@tbl:pictures:color] で解説するメソッドを試して、結果がどうなるか見てください。
 
 ---------------------------------------------------------------------------------------------
-Operator                Type    Description                 Example
+演算子                   型      説明                        使用例
 ----------------------- ------- --------------------------- ---------------------------------
-`Image fillColor Color` `Image` Fills the image with        `circle(10) fillColor Color.red`
-                                the specified colour.
+`Image fillColor Color` `Image` 指定した色でイメージを塗りつぶす `circle(10) fillColor Color.red`
 
-`Image lineColor Color` `Image` Outlines the image with     `circle(10) lineColor Color.blue`
-                                the specified colour.
+`Image lineColor Color` `Image` 指定した色で線画を描く         `circle(10) lineColor Color.blue`
 
-`Image lineWidth Int`   `Image` Outlines the image with     `circle(10) lineWidth 3`
-                                the specified stroke width.
+`Image lineWidth Int`   `Image` 指定した筆幅で線画を描く       `circle(10) lineWidth 3`
 ---------------------------------------------------------------------------------------------
 
-: Some of the methods to add color to images in Doodle. {#tbl:pictures:color}
+: Doodle でイメージに色を付けるためのいくつかのメソッド {#tbl:pictures:color}
 
-Doodle has various ways of creating colours.
-The simplest are the predefined colours in [CommonColors.scala][common-colors].
-Some of the most commonly used are described in [@tbl:pictures:colors].
+Doodle では、色を作るための方法がいくつかあります。
+最もシンプルな方法は [CommonColors.scala][common-colors] で定義済みの色を使うことです。
+[@tbl:pictures:colors] によく使われる色を挙げます。
 
 ------------------------------------------------------------------
-Color                   Type    Example
+色                      型       使用例
 ----------------------- ------- ----------------------------------
 `Color.red`             `Color` `circle(10) fillColor Color.red`
 
@@ -47,18 +44,18 @@ Color                   Type    Example
 `Color.brown`           `Color` `circle(10) fillColor Color.brown`
 ------------------------------------------------------------------
 
-: Some of the most common predefined colors. {#tbl:pictures:colors}
+: 定義済みの色のうちよく使われるもの {#tbl:pictures:colors}
 
-### Exercises {-}
+### 練習問題 {-}
 
-#### Evil Eye {-}
+#### 邪視の魔除け {-}
 
-Make the image in [@fig:pictures:evil-eye], designed to look like a traditional amulet protecting against the evil eye. I used `cornflowerBlue` for the iris, and `darkBlue` for the outer color, but experiment with your own choices!
+邪視に対抗するための伝統的なお守りに似せた [@fig:pictures:evil-eye] のようなイメージを作ってみよう。私は虹彩の部分は `cornflowerBlue`、外側の部分は `darkBlue` を使ったけども、独自に他の色も実験してみて!
 
-![No evil eyes here!](src/pages/pictures/evil-eye.pdf+svg){#fig:pictures:evil-eye}
+![邪視退散!](src/pages/pictures/evil-eye.pdf+svg){#fig:pictures:evil-eye}
 
 <div class="solution">
-Here's my amulet:
+これが私のお守りです:
 
 ```tut:book
 ((circle(10) fillColor Color.black) on

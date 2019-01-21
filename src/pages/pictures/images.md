@@ -1,4 +1,4 @@
-## Images
+## イメージ
 
 ```tut:invisible
 import doodle.core._
@@ -8,42 +8,41 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-Let's start with some simple shapes, programming at the console as we've done before.
+まずは以前のように console を使って、簡単な形を描いてみましょう。
 
 ```tut:book
 Image.circle(10)
 ```
 
-What is happening here? `Image` is an object and `circle` a method on that object. We pass to `circle` a parameter, `10` that gives the radius of the circle we're constructing. Note the type of the result---an `Image`.
+何が起こっているのでしょう? `Image` はオブジェクトで、`circle` はそのオブジェクトのメソッドです。私たちは `circle` に `10` というパラメータを渡して、私たちが作る円の半径を指定します。結果の型に注目してください。`Image` となっていますね。
 
-We can also write just `circle(10)`, as if you run the console within Doodle it automatically makes this and other methods to construct images available.
+Doodle 内で console を実行した場合は、これらのイメージを作るためのメソッドが使用可能な状態になっているので、`circle(10)` とだけ書くこともできます。
 
 ```tut:book
 circle(10)
 ```
 
-We draw the circle by calling the `draw` method.
+この円を描画するためには、`draw` メソッドを呼びます。
 
 ```scala
 circle(10).draw
 ```
 
-A window should appear as shown in [@fig:pictures:circle].
+[@fig:pictures:circle] のようなウィンドウが表示されるはずです。
 
 ![A circle](src/pages/pictures/circle.pdf+svg){#fig:pictures:circle}
 
-Doodle supports a handful of "primitive" images: circles, rectangles, and triangles. Let's try drawing a rectangle.
+Doodle は、円、長方形、三角形といったいくつかの基本図形をサポートします。長方形を描いてみましょう。
 
 ```scala
 rectangle(100, 50).draw
 ```
 
-The output is shown in [@fig:pictures:rectangle].
+結果は [@fig:pictures:rectangle] のようになります。
 
 ![A rectangle](src/pages/pictures/rectangle.pdf+svg){#fig:pictures:rectangle}
 
-Finally let's try a triangle, for which the output is shown in [@fig:pictures:triangle].
-
+最後に、[@fig:pictures:triangle] のような三角形を描いてみましょう。
 
 ```scala
 triangle(60, 40).draw
@@ -51,16 +50,17 @@ triangle(60, 40).draw
 
 ![A triangle](src/pages/pictures/triangle.pdf+svg){#fig:pictures:triangle}
 
-### Exercises {-}
+### 練習問題 {-}
 
-#### I Go Round in Circles {-}
+#### 堂々巡り {-}
 
-Create circles that are 1, 10, and 100 units wide. Now draw them!
+1、10、100 単位の幅の円を作ってみましょう。次に、それを描いてみよう!
 
 <div class="solution">
-In this exercise we're checking that our Doodle install is working correctly and we're getting used to using the library. One of the important points in Doodle is we separate *defining the image* from *drawing the image*. We'll talk more about this throughout the book.
+この練習問題は Dooble が正しくインストールされているかの確認を行い、このライブラリを使うのに慣れてもらいます。
+Doodle を使うときの注意点として、**イメージの定義**と**イメージの描画**が別であるということがあります。この点に関してはこの本を通して何回も出てきます。
 
-We can create circles with the code below.
+以下のようなコードで円を作ることができます。
 
 ```tut:silent:book
 circle(1)
@@ -68,7 +68,7 @@ circle(10)
 circle(100)
 ```
 
-We can draw the circles by calling the `draw` method on each circle.
+それぞれの円の `draw` メソッドを呼ぶことで円を描画することができます。
 
 ```scala
 circle(1).draw
@@ -78,12 +78,12 @@ circle(100).draw
 </div>
 
 
-#### My Type of Art {-}
+#### 私のアートのタイプ {-}
 
-What is the type of a circle? A rectangle? A triangle?
+円の型は何でしょうか? 長方形の場合は? 三角形の場合は?
 
 <div class="solution">
-They all have type `Image`, as we can tell from the console.
+console で確認できる通り、それらは全て `Image` 型を持ちます。
 
 ```scala
 :type circle(10)
@@ -95,27 +95,27 @@ They all have type `Image`, as we can tell from the console.
 ```
 </div>
 
-#### Not My Type of Art {-}
+#### 私のアートのタイプじゃない {-}
 
-What's the type of *drawing* an image? What does this mean?
+イメージの**描画**の型は何でしょうか? これは何を意味するのでしょう?
 
 <div class="solution">
-Once again, we can ask the console this quesstion.
+再び console でこの質問を聞いてみましょう。
 
 ```scala
 :type circle(10).draw
 // Unit
 ```
 
-We see that the type of drawing an image is `Unit`. `Unit` is the type of expressions that have no interesting value to return. This is the case for `draw`; we call it because we want something to appear on the screen, not because we have a use for the value it returns. There is only one value with type `Unit`. This value is also called unit, which written as a literal expression is `()`
+見ての通り、イメージの描画の型は `Unit` です。`Unit` は特筆すべき値を返さない式のための型です。これは `draw` の場合に当てはまります。何故なら `draw` は画面に何かを表示するために呼ばれるのであり、戻り値に使い道は無いからです。`Unit` 型を持つ値は 1つだけあります。これは unit値と呼ばれ、リテラル式 `()` として書かれます。
 
-You'll note that the console doesn't print unit by default.
+console は unit値をデフォルトでは表示しないことに注意してください。
 
 ```scala
 ()
 ```
 
-We can ask the console for the type to show that there really is unit here.
+console に型を聞くことで、そこに unit値があることを確認することができます。
 
 ```scala
 :type ()
