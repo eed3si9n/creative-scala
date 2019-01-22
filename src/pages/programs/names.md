@@ -1,4 +1,4 @@
-## Names
+## 名前
 
 ```tut:invisible
 import doodle.core._
@@ -8,24 +8,22 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-In the previous section we introduced a lot of new concepts.
-In this section we'll explore one of those concepts: naming values.
+前の節では多くの新しい概念を紹介しました。
+この節では、そのうちの 1つ「値に名前をつけること」をもう少し掘り下げて見てみましょう。
 
-We use names to refer to things.
-For example, "Professeur Emile Perrot" refers to a very fragrant rose variety, while "Cherry Parfait" is a highly disease resistant variety but barely smells at all.
-Much ink has been spilled, and many a chin stroked, on how exactly this relationship works in spoken language.
-Programming languages are much more constrained, which allows us to be much more precise: names refer to values.
-We will sometimes say names are *bound* to values, or a name introduces a *binding*.
-Wherever we would write out a value we can instead use its name, if the value has a name.
-In other words, a name evaluates to the value it refers to.
-This naturally raises the question: how do we give names to values?
-There are several ways to do this in Scala.
-Let's see a few.
+私たちは、名前を使って色んな物を参照します。
+例えば「プロフェスール・エミル・ペロ」(Professeur Emile Perrot) はとても香りの強いバラの品種を指し、「チェリー・パフェ」(Cherry Parfait)　は非常に病気に強いけどもほとんど香りがしない品種のことです。
+話し言葉においてこの関係が正確にはどのようになっているのかに関して、人々は多くの考察を与えてきました。
+プログラミング言語はより制限されているため、正確な定義を与えることができます: 名前は値を指します。
+名前が値に**束縛**されている、もしくは名前が**バインディング**を導入するといった言い方をすることもあります。
+値が名前を持つ場合は、値をそのまま書いて使うことができる所全てで、代わりに名前を使うことができます。
+別の言い方をすると、名前は値が参照する値に評価されます。
+ここから必然的に出てくる疑問があります: どうやって値に名前を与えるのでしょう?
+Scala ではいくつの方法があるので、それを見ていきましょう。
 
+### オブジェクトリテラル
 
-### Object Literals
-
-We have already seen an example of declaring an object literal.
+オブジェクトリテラルの宣言の仕方は既に見ています。
 
 ```tut:silent:book
 object Example {
@@ -33,56 +31,56 @@ object Example {
 }
 ```
 
-This is a literal expression, like other literals we've seen so far, but in this case it creates an object with the name `Example`.
-When we use the name `Example` in a program it evaluates to that object.
+これは、今までに見てきた他のリテラル式同様にリテラル式ですが、この場合 `Example` という名前のオブジェクトを作ります。
+プログラムの中で `Example` という名前を使うと、このオブジェクトに評価されます。
 
 ```scala
 Example
 // Example.type = Example$@76c39258
 ```
 
-Try this in the console a few times.
-Do you notice any difference in uses of the name?
-You might have noticed that the *first* time you entered the name `Example` a picture was drawn, but on subsequent uses this didn't happen.
-The first time we use an object's name the body of the object is evaluated and the object is created.
-On subsequent uses of the name the object already exists and is not evaluated again.
-We can tell there is a difference in this case because the expression inside the object calls the `draw` method.
-If we replaced it with something like `1 + 1` (or just dropped the call to `draw`) we would not be able to tell the difference.
-We'll have plenty more to say about this in a later chapter.
+console 内で何回か試してみてください。
+名前を使ったときの違いに気づいたでしょうか?
+`Example` という名前を**最初**に使ったときは絵が描かれたけども、次回以降は何も起こらなかったことに気づいたかもしれません。
+オブジェクトの名前を初めて使ったときにはオブジェクトの本文が評価されて、オブジェクトが作られます。
+次回以降の名前の使用時にはオブジェクトが既に存在するので再評価されません。
+この場合は、オブジェクトの内部の式が `draw` メソッドを呼ぶため私たちはこの違いに気付くことができました。
+もしこれを `1 + 1` (もしくは、`draw` を抜いただけのもの) などに置き換えると違いは分からなくなります。
+これに関しては後ほどの章で存分に解説します。
 
-We might wonder about the type of the object we've just created.
-We can ask the console about this.
+このオブジェクトの型は何なのか気になるかもしれません。
+console に聞いてみましょう。
 
 ```scala
 :type Example
 // Example.type
 ```
 
-The type of `Example` is `Example.type`, a unique type that no other value has.
+`Example` の型は `Example.type` で、他に値を持たない固有の型です。
 
+### `val` 宣言
 
-### `val` Declarations
+オブジェクトリテラルはオブジェクトの作成と名前の定義を同時に行います。
+この 2つを分けて、既に存在する値に名前を与えられると便利です。
+`val` 宣言を用いてそれを行うことができます。
 
-Declaring an object literal mixes together object creation and defining a name.
-It would be useful if we could separate the two, so we could give a name to a pre-existing object.
-A `val` declaration allows us to do this.
-
-We use `val` by writing
+`val` を使うには
 
 ```scala
-val <name> = <value>
+val <名前> = <値>
 ```
 
-replacing `<name>` and `<value>` with the name and the expression evaluating to the value respectively.
-For example
+の `<名前>` と `<値>` をそれぞれ名前と値に評価されるような式をそれぞれ書きます。
+
+具体例で解説します。
 
 ```tut:silent:book
 val one = 1
 val anImage = Image.circle(100).fillColor(Color.red)
 ```
 
-These two declarations define the names `one` and `anImage`.
-We can use these names to refer to the values in later code.
+これら 2つの宣言は `one` と `anImage` という名前を定義します。
+後からこれらの名前をコードの中で使って値を参照することができます。
 
 ```tut:book
 one
@@ -90,71 +88,70 @@ anImage
 ```
 
 
-### Declarations
+### 宣言
 
-We've talked about declarations and definitions above.
-It's now time to be precise about what these terms mean, and to look in a bit more depth at the differences between `object` and `val`.
+上の節で、宣言と定義という言い方をしました。
+これらの用語が正確には何を意味するのかを理解して、`object` と `val` の違いをより深く見ていきましょう。
 
-We already know about expressions.
-They are a part of a program that evaluates to a value.
-A *declaration* or *definition* is another part of a program, but do not evaluate to a value.
-Instead they give a name to something---not always to a value as you can declare types in Scala, though we won't spend much time on this.
-Both `object` and `val` are declarations.
+式については分かっています。
+それらは、値に評価されるプログラムの一部です。
+**宣言**や**定義**は、プログラムの別の部分で、それらは値に評価されません。
+代わりに、それらは何かに名前を与えます。実は、Scala では値だけではなく型も宣言できますが、これに関してはここではあまり考察しません。
+`object` と `val` は両方とも宣言です。
 
-One consequence of declarations being separate from expressions is we can't write program like
+宣言と式が別になっていることの結果の 1つとして、以下のようなプログラム
 
 ```tut:fail:book
 val one = ( val aNumber = 1 )
 ```
 
-because `val aNumber = 1` is not an expression and thus does not evaluate to a value.
+は `val aNumber = 1` が式ではなく、値に評価されないため書くことができません。
 
-We can however write
+しかし、以下のようには書くことができます。
 
 ```tut:book
 val aNumber = 1
 val one = aNumber
 ```
 
+### トップレベル
 
-### The Top-Level
-
-It seems a bit unsatisfactory to have both `object` and `val` declarations, as they both give names to values.
-Why not just have `val` for declaring names, and make `object` just create objects without naming them?
-Can you declare an object literal without a name?
+値に名前を与えるのに `object` と `val` 宣言という別々の方法があるのに納得がいかないかもしれません。
+名前を宣言するのに `val` を使って、`object` は名前を付けずにオブジェクトの作成を行えばいいんじゃないでしょうか?
+名前を付けずにオブジェクトリテラルを宣言することはできるでしょうか?
 
 <div class="solution">
-No, Scala doesn't allow us to do this.
-For example, we can't write
+Scala はそれを許しません。
+例えば、以下のようには書くことができません。
 
 ```tut:fail:book
 object {}
 ```
 
-We have to give a name to any object literal we create.
+オブジェクトリテラルは必ず名前を付ける必要があります。
 </div>
 
-Scala distinguishes between what is called the *top-level* and other code.
-Code at the top-level is code that doesn't have any other code wrapped around.
-In other words it is something we can write in a file and Scala will compile without having to wrap it in an `object`.
+Scala は、**トップレベル**と呼ばれるコードとその他のものを区別します。
+トップレベルにあるコードは、それをラッピングするコードを一切外側に持ちません。
+別の言い方をすると、それは `object` に包むことなくファイルに直接書いてコンパイルすることができるものです。
 
-We've seen that expressions aren't allowed at the top-level.
-Neither are `val` definitions.
-Object literals, however, are.
+式はトップレベルではないことを見ました。
+`val` もトップレベルではありません。
+しかし、オブジェクトリテラルはトップレベルです。
 
-This distinction is a bit annoying.
-Some other languages don't have this restriction.
-In Scala's case it comes about because Scala builds on top of the Java Virtual Machine (JVM), which was designed to run Java code.
-Java makes a distinction between top-level and other code, and Scala is forced to make this distinction to work with the JVM.
-The Scala console *doesn't* make this top-level distinction (we can think of everything written in the console being wrapped in some object) which can lead to confusion when we first start using Scala.
+この区別は、ちょっと面倒なものです。
+他の言語にはこの区別が無いものもあります。
+Scala の場合は、Scala が Java コードを実行させるための Java Virtual Machine (JVM) 上に構築されていることによります。
+Java がトップレベルとその他のコードを区別するために、Scala も JVM 上で動作するために仕方がなく区別をする必要があります。
+Scala の console はこのトップレベル**区別を行わない**ため、Scala を習い始めたときに混乱しやすいポイントとなります (console に書かれたもの全てがオブジェクトにラッピングされたいると思ってください)。
 
-If an object literal is allowed at the top-level, but a `val` definition is not, does this mean we can declare a `val` inside an object literal?
-If we can declare a `val` inside an object literal, can we later refer to that name?
+オブジェクトリテラルはトップレベルであることが許されているけども、`val` 宣言は許されていないということは、オブジェクトリテラル内に `val` を宣言できるということでしょうか?
+オブジェクトリテラル内に `val` を宣言した場合、後からその名前を参照することができるでしょうか?
 
 <div class="solution">
-We sure can!
+できます!
 
-We can put a `val` inside an object literal like so:
+このようにして、オブジェクトリテラル内に `val` を置くことができます:
 
 ```tut:silent:book
 object Example {
@@ -162,26 +159,26 @@ object Example {
 }
 ```
 
-We can then refer to it using the `.` syntax we've been using already.
+これを後から参照するには、既に使ってきた `.` 構文を使います。
 
 ```tut:book
 Example.hi
 ```
 
-Note that we can't use `hi` on it's own
+`hi` を単独で使うことはできないことに注意してください。
 
 ```tut:fail:book
 hi
 ```
 
-We have to tell Scala we want to refer to the name `hi` defined inside the object `Example`.
+Scala に対して、`Example` オブジェクト内で定義された名前 `hi` を参照したいと伝える必要があるからです。
 </div>
 
 
-### Scope
+### スコープ
 
-If you did the last exercise (and you did, didn't you?) you'll have seen that a name declared inside an object can't be used outside the object without also referring to the object that contains the name.
-Concretely, if we declare
+さっきの練習問題をやったとすると (やったよね?)、オブジェクト内で宣言された名前は、その名前を含んだオブジェクトも参照しないとオブジェクト外で使えないことを見ました。
+具体例で解説すると、
 
 ```tut:book
 object Example {
@@ -189,28 +186,28 @@ object Example {
 }
 ```
 
-we can't write
+以下のようには書くことができません。
 
 ```tut:fail:book
 hi
 ```
 
-We must tell Scala to look for `hi` inside `Example`.
+Scala に対して `Example` 内の中で `hi` を探す必要があると伝える必要があります。
 
 ```tut:book
 Example.hi
 ```
 
-We say that a name is *visible* in the places where it can be used without qualification, and we call the places where a name is visible its *scope*.
-So using our fancy-pants new terminology, `hi` is not visible outside of `Example`, or alternatively `hi` is not in scope outside of `Example`.
+名前が修飾無しで使える所のことを名前が**可視** (visible) 状態であるという言い方をして、名前が可視状態である所のことをそのスコープと言います。
+そのため、この気取った新しい用語を使うと、「`hi` は `Example` 外では不可視である」または「`Example` 外では `hi` はスコープに無い」と言えます。
 
-How do we work out the scope of a name?
-The rule is fairly simple: a name is visible from the point it is declared to the end of the nearest enclosing braces (braces are `{` and `}`).
-In the example above `hi` is enclosed by the braces of `Example` and so is visible there.
-It's not visible elsewhere.
+名前のスコープはどうやったら分かるでしょうか?
+ルールは簡単で、名前は宣言された位置から始まり、直近の外側の中括弧 (`{` と `}`) の終わりまで可視状態にあります。
+上の例では、`hi` は `Example` の中括弧に囲まれているので、そこで可視状態にあります。
+他では見えません。
 
-We can declare object literals inside object literals, which allows us to make finer distinctions about scope.
-For example in the code below
+オブジェクトリテラルをオブジェクトリテラルの中で宣言することができ、より細かなスコープの区別することができます。
+具体例で解説すると、
 
 ```tut:silent:book
 object Example1 {
@@ -222,12 +219,12 @@ object Example1 {
 }
 ```
 
-`hi` is in scope in `Example2` (`Example2` is defined within the braces that enclose `hi`).
-However the scope of `hello` is restricted to `Example2`, and so it has a smaller scope than `hi`.
+`hi` は `Example2` 内でもスコープ内です (`Example2` は `hi` の外側の中括弧内で定義されているため)。
+しかし、`hello` のスコープは `Example2` だけに限定されているため、`hi` のスコープよりも小さなものです。
 
-What happens if we declare a name within a scope where it is already declared?
-This is known as *shadowing*.
-In the code below the definition of `hi` within `Example2` shadows the definition of `hi` in `Example1`
+もしスコープ内で既に宣言されている名前を再宣言するとどうなるでしょうか?
+これは**シャドーイング**と呼ばれています。
+以下のコードでは、`Example2` 内の `hi` は `Example1` 内の `hi` を覆い隠します。
 
 ```tut:silent:book
 object Example1 {
@@ -239,11 +236,12 @@ object Example1 {
 }
 ```
 
-Scala let's us do this, but it is generally a bad idea as it can make code very confusing.
+Scala はこれを許容しますが、コードがすごく分かりづらくなるので一般的には悪い考えです。
 
-We don't have to use object literals to create new scopes.
-Scala allows us to create a new scope just about anywhere by inserting braces.
-So we can write
+オブジェクトリテラルを使わなくても新しいスコープを作ることができます。
+Scala は、中括弧を置くことでほぼ全ての場所でスコープを作ることができます。
+
+例えば以下のように書けます。
 
 ```tut:silent:book
 object Example {
@@ -259,18 +257,17 @@ object Example {
 }
 ```
 
-`morning` (and `toYou`) is declared within a new scope. We have no way to refer to this scope from the outside (it has no name) so we cannot refer to `morning` outside of the scope where it is declared.
-If we had some secrets that we didn't want the rest of the program to know about this is one way we could hide them.
+`morning` (と `toYou`) は新しいスコープ内で宣言されています。(このスコープには名前が無いため) このスコープを外側から参照することはできないので、宣言されているスコープ外から `morning` を参照することは不可能です。
+残りのプログラムに知られたくない秘密があるときはこの方法を使って隠すことができます。
 
-The way nested scopes work in Scala is called *lexical scoping*.
-Not all languages have lexical scoping.
-For example, Ruby and Python do not, and Javascript has only recently acquired lexical scoping.
-It is the authors' opinion that creating a language without lexical scope is an idea on par with eating a bushel of Guatemalan insanity peppers and then going to the toilet without washing your hands.
+このような Scala での入れ子のスコープの振る舞いは**レキシカルスコープ**と呼ばれます。
+全ての言語がレキシカルスコープを持つわけではありません。
+例えば、Ruby や Python はレキシカルスコープを持たず、JavaScript はやっと最近になって導入されました。
+筆者の意見では、レキシカルスコープを持たない言語を設計するのは、グアテマラ産激辛トウガラシを大量に食べた後で手を洗わずにトイレに行くぐらい馬鹿げたことだと思います。
 
+### 練習問題 {-}
 
-### Exercises {-}
-
-Test your understanding of names and scoping by working out the value of `answer` in each case below.
+名前とスコープが理解できているかをテストするために、以下のそれぞれの場合で `answer` の値を求めてみましょう。
 
 ```tut:silent:book
 val a = 1
@@ -279,7 +276,7 @@ val answer = a + b
 ```
 
 <div class="solution">
-A simple example to get started with. `answer` is `1 + 2`, which is `3`.
+まずはシンプルな例から。`answer` は `1 + 2` なので `3` です。
 </div>
 
 ```tut:silent:book
@@ -298,7 +295,7 @@ object One {
 ```
 
 <div class="solution">
-Another simple example. `answer` is `1 + 2`, which is `3`. `Two.a` is not in scope where `answer` is defined.
+これもシンプルな例です。`answer` は `1 + 2` なので `3` です。`Two.a` は `answer` が定義されている場所ではスコープ外です。
 </div>
 
 ```tut:silent:book
@@ -314,7 +311,7 @@ object One {
 ```
 
 <div class="solution">
-Here `Answer.a` shadows `One.a` so `answer` is `1 + 2`, which is `3`.
+ここでは `Answer.a` が `One.a` を覆い隠すので、`answer` は `1 + 2` で `3` となります。
 </div>
 
 ```tut:silent:book
@@ -326,7 +323,7 @@ object One {
 ```
 
 <div class="solution">
-This is perfectly fine. The expression `a + 1` on the right hand side of the declaration of `b` is an expression like any other so `answer` is `3` again.
+これは完全に普通のコードです。`b` の宣言の右辺項にある式 `a + 1` は普通の式であるので、`answer` は再び `3` となります。
 </div>
 
 ```tut:silent:book
@@ -342,7 +339,7 @@ object One {
 ```
 
 <div class="solution">
-This code doesn't compile as `b` is not in scope where `answer` is declared.
+`b` は `answer` が宣言されている所では `b` はスコープ外であるので、このコードはコンパイルを通りません。
 </div>
 
 ```tut:fail:silent:book
@@ -355,5 +352,5 @@ object One {
 ```
 
 <div class="solution">
-Trick question! This code doesn't work. Here `a` and `b` are defined in terms of each other which leads to a circular dependency that can't be resolved.
+引っ掛け問題です! このコードは動作しません。ここでは `a` と `b` がそれぞれに対して定義されているため循環依存となり、解決されません。
 </div>

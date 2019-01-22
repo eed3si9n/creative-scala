@@ -1,13 +1,13 @@
-# Writing Larger Programs
+# 大きなプログラムの書き方
 
-We're getting to the point where it's inconvenient to type programs into the console. 
-In this chapter we'll learn about two tools for writing larger programs:
+console にプログラムを打ち込んでいくのが辛くなってきています。
+この章では、より大きなプログラムを書くためのツールを解説します:
 
-- saving programs to a file so we don't have to type code over and over again;
-- giving names to values so we can reuse them.
+- プログラムをファイルに保存することで、何度も繰り返してコードを書き込む必要が無くなります。
+- 値に名前を与えることで再利用できるようにします。
 
 <div class="callout callout-info">
-If you run the examples from the SBT console within Doodle they will just work. If not, you will need to start your code with the following imports to make Doodle available.
+例題を Doodle の sbt console 内で実行した場合は、何もしなくても動作するはずです。そうじゃない場合は、以下の import 文を使って Doodle を使用可能な状態にする必要があります。
 
 ```tut:silent
 import doodle.core._

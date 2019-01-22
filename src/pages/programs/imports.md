@@ -1,40 +1,39 @@
-## Packages and Imports
+## パッケージとインポート
 
-When we changed our code to compile we had to add many *import statements* to it.
-In this section we learn about them.
+私たちのコードをコンパイルできるように変えたとき多くの**import 文**を追加する必要がありました。
+この節ではその解説を行います。
 
-We've seen that one name can shadow another.
-This can cause problems in larger programs as many parts of a program many want to put a common name to different uses.
-We can create scopes to hide names from the outside, but we must still deal with names defined at the top-level.
+ある名前が別の名前を覆い隠すことができることは前に見ました。
+これはプログラムが大きくなると、1つのプログラムの別々の部分が同じ名前を別の用途に使おうとして問題を引き起こす可能性があります。
+スコープを作って外からの名前を隠すことはできますが、トップレベルで定義された名前の対策をする必要があります。
 
+同様の問題が自然言語でも発生します。
+例えば、あなたの弟と友達の両方が「ズィギー」という名前だとすると、その名前を使った時どっちを指しているのかを補足する必要があります。
+文脈によっては明らかかもしれませんが、友達の場合は「ズィギー S」、弟の場合は「ズィギー」と呼び分ける必要があるかもしれません。
 
-We have the same problem in natural language.
-For example, if both your brother and friend were called "Ziggy" you would have to qualify which one you meant when you used their name.
-Perhaps you could tell from context, or perhaps your friend was "Ziggy S" and your brother was just "Ziggy".
+Scala では、名前を整理するのに**パッケージ**を用います。
+パッケージはトップレベルで定義される名前のためのスコープを作ります。
+同一のパッケージ内のトップレベルの名前は全て同じスコープ内で定義されます。
+別のスコープ内にあるパッケージの名前を持ってくるには**インポート**を行う必要があります。
 
-In Scala we can use *packages* to organise names.
-A package creates a scope for names defined at the top-level.
-All top-level names within the same package are defined in the same scope.
-To bring names in a package into another scope we must *import* them.
-
-Creating a package is simple: we write
+パッケージを作るのは簡単で、以下のように
 
 ```scala
-package <name>
+package <名前>
 ```
 
-at the top of the file, replace `<name>` with the name of our package.
+ファイルの一番上に書いて、`<name>` を自分のパッケージ名に置き換えます。
 
-When we want to use names defined in a package we use an `import` statement, specifying the package name followed by `_` for all names, or the just the name we want if we only want one or a few names.
+パッケージ内で定義された名前を使うには `import` 文を使って、パッケージ名を指定した後、全ての名前なら `_`、いくつかの名前だけならその名前を書きます。
 
-Here's an example.
+具体例で解説します。
 
 <div class="info">
-You can't define packages in the console.
-To get the following code to work you must put the code within the package `example` into a file and compile it.
+console 内ではパッケージを定義することはできません。
+以下のコードを動作させるためには、`example` パッケージ内のコードをファイルに置いてコンパイルする必要があります。
 </div>
 
-Let's start by defining some names within a package.
+まずは、パッケージ内でいくつかの名前を定義してみましょう。
 
 ```scala
 package example
@@ -52,8 +51,8 @@ object Three {
 }
 ```
 
-Now to bring these names into scope we must import them.
-We could import just one name.
+次に、これらの名前をスコープ内に持ち込むにはインポートを行います。
+1つの名前だけインポートすることができます。
 
 ```scala
 import example.One
@@ -61,7 +60,7 @@ import example.One
 One.one
 ```
 
-Or both `One` and `Two`.
+`One` と `Two` の両方をインポートする場合。
 
 ```scala
 import example.{One, Two}
@@ -69,7 +68,7 @@ import example.{One, Two}
 One.one + Two.two
 ```
 
-Or all the names in `example`.
+もしくは、`example` 内の全ての名前をインポートする場合。
 
 ```scala
 import example._
@@ -77,8 +76,8 @@ import example._
 One.one + Two.two + Three.three
 ```
 
-In Scala we can also import just about anything that defines a scope, including objects.
-So the following code brings `one` into scope.
+Scala では、スコープを定義することができる色んなものをインポートすることができ、これにはオブジェクトを含みます。
+以下のコードは `one` をスコープにインポートします。
 
 ```scala
 import example.One._
@@ -86,15 +85,14 @@ import example.One._
 one
 ```
 
-### Package Organisation
+### パッケージの整理
 
-Packages stop top-level names from colliding, but what about collisions between package names?
-It's common to organise packages in a hierarchy, which helps to avoid collisions.
-For example, in Doodle the package `core` is defined within the package `doodle`.
-When we use the statement
+パッケージはトップレベルの名前が衝突するのを防ぐけども、パッケージ名同士の衝突はどうしたらいいでしょうか?
+一般的には、パッケージは階層的に整理することで衝突を回避します。
+例えば、Doodle では `core` パッケージは `doodle` パッケージ内に定義されます。
 
 ```tut:book:silent
 import doodle.core._
 ```
 
-we're indicating we want the package `core` within the package `doodle`, and not some other package that might be called `core`.
+上のような `import` 文を使うとき、これはパッケージ `doodle` 内のパッケージ `core` が欲しくて、`core` と呼ばれているかもしれない他のパッケージでは無いことを明示します。

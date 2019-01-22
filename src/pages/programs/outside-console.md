@@ -1,4 +1,4 @@
-## Coding Outside the Console
+## console 外でのコーディング
 
 ```tut:invisible
 import doodle.core._
@@ -8,13 +8,13 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-The code we've been writing inside the console will cause problems running outside the console. For example, put the following code into `Example.scala` in the `src/main/scala`.
+これまで console で書いてきたコードは、console 外で実行すると問題が発生します。例えば、以下のコードを `src/main/scala` 内の `Example.scala` に書いてください。
 
 ```tut:silent:book
 Image.circle(100) fillColor Color.paleGoldenrod lineColor Color.indianRed
 ```
 
-Now restart SBT and try to enter the console. You should see an error similar to
+次に、sbt を再起動して console に入ってみましょう。以下のようなエラーが表示されるはずです。
 
 ```bash
 [error] src/main/scala/Example.scala:1: expected class or object definition
@@ -23,16 +23,16 @@ Now restart SBT and try to enter the console. You should see an error similar to
 [error] one error found
 ```
 
-You'll see something similar if you're using an IDE.
+IDE を使っている場合も似たようなエラーが出てくるはずです。
 
-The problem is this:
+問題は、このようになっています:
 
-- Scala is attempting to compile all our code before the console starts; and
-- there are restrictions on code written in files that don't apply to code written directly in the console.
+- Scala は、console が起動する前に全てのコードをコンパイルしようとします。
+- ファイルに書かれるコードには、直接 console に書かれるコードには無い制約がいくつかあります。
 
-We need to know about these restrictions and change how we write code in files accordingly.
+そのため、これらの制約を知って、ファイルに書くコードの書き方を変える必要があります。
 
-The error message gives us some hint: `expected class or object definition`. We don't yet know what a class is, but we do know about objects---all values are objects. In Scala all code in a file must be written inside an object or class. We can easily define an object by wrapping an expression like the below.
+エラーメッセージにヒントが隠されています。`expected class or object definition` (クラスまたはオブジェクトを期待する)。クラスが何かはまだ分かりませんが、オブジェクトのことは知っています -- 全ての値はオブジェクトです。Scala では、全てのコードはオブジェクトかクラス内に書かれる必要があります。オブジェクトは、以下のように式をラッピングすることで定義できます。
 
 ```tut:silent:book
 object Example {
@@ -40,7 +40,7 @@ object Example {
 }
 ```
 
-Now the code won't compile for a different reason. You should see a lot of errors similar to
+次は別の理由でコンパイルが通りません。以下のようなエラーが沢山出てきたと思います。
 
 ```bash
 [error] doodle/shared/src/main/scala/doodle/examples/Example.scala:2: not found: value circle
@@ -48,20 +48,20 @@ Now the code won't compile for a different reason. You should see a lot of error
 [error]    ^
 ```
 
-The compiler is saying that we've used a name, `circle`, but the compiler doesn't know what value this name refers to.
-It will have a similiar issue with `Color` in the code above.
-We'll talk in more details about names in just a moment.
-Right now let's tell the compiler where it can find the values for these names by adding some `import` statements.
-The name `Color` is found inside a *package* called `doodle.core`, and the name `circle` is within the object `Image` that is in `doodle.core`.
-We can tell the compiler to use all the name in `doodle.core`, and all the names in the object `Image` by writing
+私たちが `circle` という名前を使ったけども、この名前が何を指しているのか分からないと、コンパイラは言っています。
+上のコード内の `Color` でも同様の問題が発生します。
+名前に関する詳しい解説は後ほど行います。
+とりあえず今の所は `import` 文を書いて、これらの名前の値をどこから見つければいいのかを教えてあげましょう。
+`Color` という名前は `doodle.core` という**パッケージ**の中にあり、`circle` という名前は `doodle.core` 内の `Image` オブジェクトの中にあります。
+`doodle.core` 内の全ての名前と `Image` オブジェクト内の全ての名前を使うようにコンパイラに指示するには以下のように書きます。
 
 ```tut:silent:book
 import doodle.core._
 import doodle.core.Image._
 ```
 
-There are a few other names that the compiler will need to find for the complete code to work.
-We can import these with the lines
+コードが完全に動作するためには、コンパイラは他にもいくつかの名前を探す必要があります。
+それらは以下のように import します。
 
 ```tut:silent:book
 import doodle.syntax._
@@ -69,7 +69,7 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-We should place all these imports at the top of the file, so the complete code looks like
+これらの import 文はファイルの一番上に書くので、コード全体はこのようになります:
 
 ```scala
 import doodle.core._
@@ -83,14 +83,14 @@ object Example {
 }
 ```
 
-With this in place the code should compile without issue.
+これで問題なくコードがコンパイルするはずです。
 
-Now when we go to the console within SBT we can refer to our code using the name, `Example`, that we've given it.
+これで、sbt 内の console に行った場合は、私たちのコードをさっき名付けた `Example` という名前を使って参照することができます。
 
 ```scala
 Example // draws the image
 ```
 
-### Exercise {-}
+### 練習問題 {-}
 
-If you haven't done so already, save the code above in the file `src/main/scala/Example.scala` and check that the code compiles and you can access it from the console.
+まだ行っていなければ、上のコードを `src/main/scala/Example.scala` というファイルに保存して、コードがコンパイルされて console からアクセスできることを確認してみよう。

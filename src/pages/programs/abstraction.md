@@ -1,4 +1,4 @@
-## Abstraction
+## 抽象化
 
 ```tut:invisible
 import doodle.core._
@@ -8,29 +8,29 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-We've learned a lot about names in the previous section.
-If we want to use fancy programmer words, we could say that *names abstract over expressions*.
-This usefully captures the essence of what defining names does, so let's decode the programmer-talk.
+前の節では名前について色々習いました。
+気取ったプログラマー用語を使うと、**名前は式を抽象化する**と言えます。
+これは、名前の定義することの本質を一言で言い表しているけども、ちょっと用語を解読してみよう。
 
-To abstract means to remove unnecessary details.
-For example, numbers are an abstraction.
-The number "one" is never found in nature as a pure concept.
-It's always one object, such as one apple, or one copy of Creative Scala.
-When doing arithmetic the concept of numbers allows us to abstract away the unnecessary detail of the exact objects we're counting and manipulate the numbers on their own.
+抽象化とは、要らない詳細を取り除くという意味です。
+例えば、数は抽象化の 1つです。
+「1」という数の純粋な概念は自然界には存在しません。
+それはいつも 1つのリンゴや 1冊の Creative Scala の本といった具合に 1つの物です。
+算数を行うときに、数という概念は何を数えているのかという要らない詳細を抽象化して数だけを操作することができます。
 
-Similarly a name stands in for an expression.
-An expression tells us how to construct a value.
-If that value has a name then we don't need to know anything about how the value is constructed.
-The expression can have arbitrary complexity, but we don't have to care about this complexity if we just use the name.
-This is what it means when we say that names abstract over expressions.
-Whenever we have an expression we can substitute a name that refers to the same value.
+同様に、名前は式を代理します。
+式は値をどのように構築するかを教えてくれます。
+その値に名前があれば、その値がどのように構築されるかは知らなくてもよくなります。
+式は任意の複雑さを持つことができますが、名前を使うことでどれだけ複雑なのかを気にする必要が無くなります。
+これが、名前は式を抽象化すると言ったときの意味です。
+いつでも式が出てきたら、それは同じ値を持つ名前に置き換えることができます。
 
-Abstraction makes code easier to read and write.
-Let's take as an example creating a sequence of boxes like shown in [@fig:programs:sequential-boxes].
+抽象化はコードを読み書きしやすくします。
+[@fig:programs:sequential-boxes] のように箱の列を作る具体例を用いて説明しましょう。
 
-![Five boxes filled with Royal Blue](./src/pages/programs/sequential-boxes.pdf+svg){#fig:programs:sequential-boxes}
+![ロイヤルブルーで塗った 5つの箱](./src/pages/programs/sequential-boxes.pdf+svg){#fig:programs:sequential-boxes}
 
-We can write out a single expression that creates the picture.
+この絵を作る単一の式を書くことは可能です。
 
 ```tut:silent:book
 (
@@ -57,9 +57,9 @@ We can write out a single expression that creates the picture.
 )
 ```
 
-In this code it is difficult to see the simple pattern within.
-Can you really tell at a glance that all the rectangles are exactly the same?
-If we make the abstraction of naming the basic box the code becomes much easier to read.
+このコードの中に内在するシンプルなパターンがありますが、それが見づらくなっています。
+初見で全ての長方形が同じものであることが分かるでしょうか?
+基本となる箱のコードに名前を付けるという抽象化を行うことでコードの見通しが良くなります。
 
 ```tut:silent:book
 val box =
@@ -71,25 +71,24 @@ val box =
 box beside box beside box beside box beside box
 ```
 
-Now we can easily see how the box is made, and easily see that the final picture is that box repeated five times.
+これでどうやって箱が作られているのかと、絵の中で箱が 5回繰り返されているのが分かりやすくなりました。
 
+### 練習問題 {-}
 
-### Exercises {-}
+#### 再びアーチェリー {-}
 
-#### Archery Again {-}
+前の章のアーチェリーのターゲットに戻ってみてみましょう。 [@fig:programs:target3] を見てください。
 
-Let's return to the archery target we created in an earlier chapter, shown in [@fig:programs:target3].
+![アーチェリーのターゲット](./src/pages/programs/target3.pdf+svg){#fig:programs:target3}
 
-![The Archery Target](./src/pages/programs/target3.pdf+svg){#fig:programs:target3}
-
-Last time we created the image we didn't know how to name values, so we can to write one large expression.
-This time around, give the components of the image names so that it is easier for someone else to understand how the image is constructed.
-You'll have to use your own taste to decide what parts should be named and what parts don't warrant names of their own.
+前回イメージを作ったときは値に名前をつける方法を知らなかったので、1つの大きい式を書きました。
+今回は、イメージの部品にそれぞれ名前をつけて、イメージがどのように構築されているのか他の人が分かりやすいようにしてください。
+どの部分に名前を付けるべきで、他の部分は名前をつけるに足らないという判断は自分のセンスで行う必要があります。
 
 <div class="solution">
-We decided to name the target, stand, and ground, as shown below.
-This makes is clear how the final image is constructed.
-Naming more components seemed to us that it would not aid comprehension.
+私たちは、以下のようにターゲット、スタンド、地面を分けて名前を付けました。
+これで最終的なイメージがどう構築されているのかの見通しが良くなったと思います。
+私たちの考えでは、これ以上細かく部品に名前をつけても役に立たないと思いました。
 
 ```tut:silent:book
 val coloredTarget =
@@ -110,16 +109,16 @@ val image = coloredTarget above stand above ground
 </div>
 
 
-#### Streets Ahead {-}
+#### 一丁先を行く {-}
 
-For a more compelling use of names, create a street scene like that shown in [@fig:programs:street].
-By naming the individual components of the image you should be able to avoid a great deal of repetition.
+より実践的な名前の使い方として、[@fig:programs:street] のような町並みの 1シーンを作ってみよう。
+イメージの部品に名前を付けることによってかなりの繰り返しを省けるはずです。
 
-![A Street Scene](./src/pages/programs/street.pdf+svg){#fig:programs:street}
+![町並みの風景](./src/pages/programs/street.pdf+svg){#fig:programs:street}
 
 <div class="solution">
-Here's our solution.
-As you can see, by breaking the scene down into smaller components we were able to write relatively little code.
+これが私たちの解答です。
+見ての通り、風景を小さな部品に分けることで比較的小さなコードに収めることができました。
 
 ```tut:silent:book
 val roof = Image.triangle(50, 30) fillColor Color.brown

@@ -1,4 +1,4 @@
-## Working Within the Console
+## console 内での作業
 
 ```tut:invisible
 import doodle.core._
@@ -8,36 +8,37 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-Your text editor or IDE will allow you to save code to a file, but we need to save them in the right place so the Scala compiler can find them.
-If you're working from the Doodle template you should save your code in the directory `src/main/scala/`.
+テキスト・エディタや IDE を使ってコードをファイルに保存できるようになりますが、Scala コンパイラが探せるように正しい場所に保存する必要があります。
+Doodle テンプレートから作業している場合は、コードは `src/main/scala/` ディレクトリに保存してください。
 
-How do we use code that we saved to a file from the console? 
-There is a special command, that only works from the console, that allows us to run code saved in a file. 
-This command is called `:paste`[^load]. We follow `:paste` with the name of the file we want to run. For example, if we save in the file `src/main/scala/Example.scala` the expression
+保存したコードを console から使うにはどうしたらいいでしょうか?
+console 内だけで動作する特別なコマンドがあって、それを使ってファイルに保存したコードを実行することができます。
+このコマンドは `:paste`[^load] と呼ばれています。`:paste` に続けて実行したいファイル名を書きます。例えば、`src/main/scala/Example.scala` というファイルに式
 
 ```tut:silent:book
 circle(100) fillColor Color.paleGoldenrod lineColor Color.indianRed
 ```
 
-we can then run this code by writing at the console
+を保存したとすると、以下のように console に書くことでこのコードを実行することができます。
 
 ```scala
 :paste src/main/scala/Example.scala
 // res0: doodle.core.Image = ContextTransform(<function1>,ContextTransform(<function1>,Circle(100.0)))
 ```
 
-Note the value has been given the name `res0` in the example above. If you're following along, the name in your console might end with a different number depending on what you've already typed into the console. We can draw the image by evaluating `res0.draw` (or the correct name for your console).
+上の例では `res0` という名前が与えられたことに注目してください。あなたが console に打ち込んで追従しているとしたら、今まで console に何を書いたのかによって別の数になったかもしれません。`res0.draw` (もしくは、あなたの console のための別の名前) を評価することでこのイメージを描画することができます。
 
-### Tips for Using the Console
 
-Here are a few tips for using the console more productively:
+### console を使うためのコツ
 
-- If you press the up arrow you'll get the last thing you typed into the console. Handy to avoid having to type in those long file names over and over again! You can press up multiple times to go through the history of your interactions at the console.
+console をより効率良く使うためのコツです:
 
-- You can press the `Tab` key to get the console to suggest completions for code, but unfortunately not file names, you're typing. For example, if you type `Stri` and then press `Tab`, the console will show possible completions. Type `Strin` and the console will complete `String` for you.
+- 上矢印キーを押すと console に最後に打ち込んだものが出てきます。長いファイル名を何度も打ち込まないでいいようになるので便利です! 上矢印キーを複数回押すことで console 内での履歴をさかのぼることができます。
 
-[^load]: There is also a command called `:load` which works in a slightly different way to `:paste`. It compiles and runs each line in the file on its own, while `:paste` compiles and runs the whole file in one go. They have subtly different semantics. The way `:paste` works is closer to how Scala code works outside the console, so we'll use it in preference to `:load`.
+- `Tab` キーを押すことで、console にコードの補完を行ってもらうことができますが、残念ながらファイル名を探すことはできないので、自分で書く必要があります。例えば、`Stri` と書いて `Tab` を押すと、console は可能な補完例を表示します。`Strin` と書けば、console が `String` と補完できるようになります。
+
+[^load]: `:load` というコマンドもあって、これは `:paste` とは少し異なる動作をします。`:load` はファイル内の各行を別にコンパイルして実行するのに対して、`:paste` はファイル全体を一気にコンパイルします。そのため、微妙に違うセマンティクスを持ちます。`:paste` の方が console 外での Scala コードの振る舞いに近いので、私たちは `:load` の代わりに `:paste` を使います。
 
 <div class="callout callout-warn">
-Once we start saving code to a file, we'll likely find the compiler doesn't like our code next time we start SBT. Read the next section to see how we can fix this problem.
+コードをファイルに保存し始めると、次回 sbt を起動したときにコンパイラーが私たちのコードを見て怒るのに気付くかもしれません。その対策方法は次の節で解説するので続きを読んでください。
 </div>
