@@ -1,4 +1,4 @@
-## Order of Evaluation
+## 評価順序
 
 ```tut:invisible
 import doodle.core._
@@ -8,49 +8,48 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-We're now ready to tackle the question of order-of-evaluation.
-We might wonder if the order of evaluation even matters?
-In the examples we've looked at so far the order doesn't seem to matter, except for the issue that we cannot evaluate an expression before it's sub-expressions.
+評価順序の話をする準備が整いました。
+評価順なんて関係あるのかと思うかもしれません。
+これまで見た例だと、式をサブ式の前に評価してはいけないという問題以外では評価順は関係無いように見えます。
 
-To investigate these issues further we need to introduce a new concept.
-So far we have almost always dealt with *pure* expressions.
-These are expressions that we can freely substitute in any order without issue[^corner-cases].
+これらの問題の考察を行うには新しい概念を導入する必要があります。
+ここまではほぼ全て**純粋**な式のみを取り扱ってきました。
+これらは自由な順序で置き換えしても問題の無い式のことです[^corner-cases]。
 
-*Impure* expressions are those where the order of evaluation matters.
-We have already used one impure expression, the method `draw`.
-If we evaluate
+**非純粋**な式は評価順に影響を受けるものです。
+これまでに 1つ非純粋な式を見ていて、それは `draw` メソッドです。
 
 ```scala
 Image.circle(100).draw
 Image.rectangle(100, 50).draw
 ```
 
-and
+と
 
 ```scala
 Image.rectangle(100, 50).draw
 Image.circle(100).draw
 ```
 
-the windows containing the images will appear in different orders.
-Hardly an exciting difference, but it *is* a difference, which is the point.
+を評価したとき、イメージを含むウィンドウが異なる順番で現れます。
+特に面白みの無い違いですが、確かに違いではあります。
 
-The key distinguishing feature of impure expressions is that their evaluation causes some change that we can see.
-For example, evaluating `draw` causes an image to be displayed.
-We call these observable changes *side effects*, or just *effects* for short.
-In a program containing side effects we cannot freely use substitution.
-However we can use side effects to investigate the order of evaluation.
-Our tool for doing so will be the `println` method.
+非純粋な式の特徴はそれらの評価が私たちに見える形の変化を引き起こすことです。
+例えば、`draw` を評価するとイメージが表示されます。
+これらの観測可能な変化を**副作用**もしくは**作用**と呼びます。
+副作用を含むプログラムは、自由に置き換えを行うことができません。
+しかし、副作用を使って評価順序を調査することができます。
+それを行う道具は `println` メソッドです。
 
-The `println` method displays text on the console (a side effect) and evaluates to unit.
-Here's an example:
+`println` メソッドはテキストを console に表示して (副作用)、Unit値に評価されます。
+以下が具体例です:
 
 ```tut:book
 println("Hello!")
 ```
 
-The side-effect of `println`---printing to the console---gives us a convenient way to investigate the order of evaluation.
-For example, the result of running
+`println` の console に表示するという副作用は評価順序を調べるのに便利なものです。
+例えば、
 
 ```tut:book
 println("A")
@@ -58,35 +57,34 @@ println("B")
 println("C")
 ```
 
-indicates to us that expressions are evaluated from top to bottom.
-Let's use `println` to investigate further.
+を実行した結果は式が上から下へと評価することを示します。
+`println` を使ってさらに調査してみましょう。
 
+### 練習問題 {-}
 
-### Exercises {-}
+#### println は置き換えができない {-}
 
-#### No Substitute for Println {-}
-
-In a pure program we can give a name to any expression and substitute any other occurrences of that expression with the name.
-Concretely, we can rewrite
+純粋なプログラムはどの式でも名前を与えてその式が出てきた所を名前で置き換えることができます。
+具体例で示すと、
 
 ```tut:silent:book
 (2 + 2) + (2 + 2)
 ```
 
-to
+を置き換えて、以下のように書くことができ、
 
 ```tut:silent:book
 val a = (2 + 2)
 a + a
 ```
 
-and the result of the program doesn't change.
+プログラムの結果は変わりません。
 
-Using `println` as an example of an impure expression, demonstrates that this is *not* the case for impure expressions, and hence we can say that impure expressions, or side effects, break substitution.
+非純粋な式の 1例として `println` を使って、この置き換えが**うまくいかない**こと、そのため副作用とも言われる非純粋な式が置き換えを壊すことを示してみよう。
 
 <div class="solution">
-Here is a simple example that illustrates this.
-The following two programs are observably different.
+以下はこれを示すシンプルな例です。
+以下の 2つのプログラムが異なることを観測することができます。
 
 ```tut:book
 println("Happy birthday to you!")
@@ -101,17 +99,17 @@ a
 a
 ```
 
-Therefore we cannot freely use substitution in the presence of side effects, and we must be aware of the order of evaluation.
+つまり、副作用があるときは自由に置き換えを使うことができないため、評価順序を気にする必要があると言えます。
 </div>
 
 
-#### Madness to our Methods {-}
+#### 狂気のメソッド {-}
 
-When we introduced scopes we also introduced block expressions, though we didn't call them that at the time.
-A block is created by curly braces (`{}`). It evaluates all the expressions inside the braces. The final result is the result of the last expression in the block.
+スコープを紹介したときにブロック式も見ましたが、そのときはその名前では呼びませんでした。
+ブロックは中括弧 (`{}`) を使って作ることができます。それは中括弧内全ての式を評価します。ブロック内の最後の式の結果がブロック式の結果となります。
 
 ```tut:book
-// Evaluates to three
+// 3 に評価される
 {
   val one = 1
   val two = 2
@@ -119,13 +117,13 @@ A block is created by curly braces (`{}`). It evaluates all the expressions insi
 }
 ```
 
-We can use block expressions to investigate the order in which method parameters are evaluated, by putting `println` expression inside a block that evaluates to some other useful value.
+ブロック式を使って、何か役に立つ値に評価されるブロックの中に `println` を入れることで、メソッドのパラメータの評価順を調査することができます。
 
-For example, using `Image.rectangle` or `Color.hsl` and block expressions, we can determine if Scala evaluates method parameters in a fixed order, and if so what that order is.
+例えば、`Image.rectangle` や `Color.hsl` とブロック式を使って Scala がメソッドパラメータを特定の順序で評価しているのか、そうだとしたらどの順序なのかを調べてみましょう。
 
-Note that you can write a block compactly, on one line, by separating expressions with semicolons (`;`).
-This is generally not good style but might be useful for these experiments.
-Here's an example.
+セミコロン (`;`) で分けて書くことでブロックをよりコンパクトに 1行で書くことができることに注意してください。
+これは普通はお行儀の良い方法ではありませんが、このような実験には役立つかもしれません。
+以下が例となります。
 
 ```tut:book
 // Evaluates to three
@@ -133,7 +131,7 @@ Here's an example.
 ```
 
 <div class="solution">
-The following code demonstrates that method parameters are evaluated from left to right.
+以下のコードは、メソッドのパラメータが左から右へと評価されていることを示します。
 
 ```tut:book
 Color.hsl(
@@ -152,7 +150,8 @@ Color.hsl(
 )
 ```
 
-We can write this more compactly as
+これをよりコンパクトに書くとこうなります
+
 ```tut:book
 Color.hsl({ println("a"); 0.degrees },
           { println("b"); 1.normalized },
@@ -161,23 +160,23 @@ Color.hsl({ println("a"); 0.degrees },
 </div>
 
 
-#### The Last Order {-}
+#### ラストオーダー {-}
 
-In what order are Scala expressions evaluated?
-Perform whatever experiments you need to determine an answer to this question to your own satisfaction.
-You can reasonably assume that Scala uses consistent rules across all expressions.
-There aren't special cases for different expressions.
+Scala はどのような順序で式の評価を行っているでしょうか?
+満足がいくまで必要な実験を行って答を探してみましょう。
+Scala は、全ての式において一貫性のあるルールを適用していると仮定することができます。
+異なる式に対する特別な場合はありません。
 
 <div class="solution">
-We've already seen that expressions are evaluated from top-to-bottom, and method parameters are evaluated from left-to-right.
-We might want to check that expressions are in general evaluated left-to-right.
-We can show this fairly easily.
+式は上から下へ評価され、メソッドのパラメータは左から右へと評価されることは既に見ました。
+一般的な式が左から右へと評価されることをチェックしてみましょう。
+これは以下のように比較的簡単に証明できます。
 
 ```tut:book
 { println("a"); 1 } + { println("b"); 2 } + { println("c"); 3}
 ```
 
-So in conclusion we can say that Scala expressions are evaluated from top-to-bottom and left-to-right.
+結果として、Scala の式は、上から下へ、左から右へと評価されていることが分かりました。
 </div>
 
-[^corner-cases]: This is not entirely true. There are some corner cases where the order of evaluation does make a difference even with pure expressions. We're not going to worry about these cases here. If you're interested in learning more, and this is interesting and useful stuff, you can read up on "eager evaluation" and "lazy evaluation".
+[^corner-cases]: これは完全には正しくありません。純粋な式においても評価の順序が影響を与えるコーナーケースがいくつかあります。ここではあまりその心配はしなくても大丈夫です。もし興味があるならば、面白いことなので「正格評価」と「遅延評価」に関して調べてみましょう。

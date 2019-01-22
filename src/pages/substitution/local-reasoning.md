@@ -1,52 +1,51 @@
-## Local Reasoning
+## 局所推論
 
-We've seen that the order of evaluation is only really important when we have side effects.
-For example, if the following expressions produce side effects
+副作用があるときには評価順序が大切であることを見てきました。
+例えば以下のような副作用のある式があるとき、
 
 ```scala
-disableWarheads()
-launchTheMissles()
+disableWarheads() // 弾頭を無効化
+launchTheMissles() // ミサイル発射
 ```
 
-we really want to ensure that the expressions are evaluated top to bottom so the warheads are disabled before the missles are launched.
+式が確かに上から下へと評価されて、ミサイルを発射する前に弾頭が無効化されていることを保証したいと思います。
 
-All useful programs must have some effect, because effects are how the program interacts with the outside world.
-The effect might just be printing out something when the program has finished, but it's still there.
-Minimising side effects is a key goal of functional programming so we will spend a few more words on this topic.
+作用はプログラムが世界に対して変化をもたらすことなので、全ての役に立つプログラムは何らかの作用を持ちます。
+その作用はプログラムが終了した後に何らかの表示を行うことだけかもしれませんが、作用であることには違いありません。
+副作用を最小限にするのは関数型プログラミングにおける重要なゴールの 1つなので、もう少しこの事に関してみてみましょう。
 
-Substitution is really easy to understand.
-When the order of evaluation doesn't matter it means any other code cannot change the meaning of the code we're looking at.
-`1 + 1` is always `2`, no matter what other code we have in our program, but the effect of `launchTheMissles()` depends on whether we have already disabled the warheads or not.
+置き換えは非常に分かりやすいものです。
+評価の順序が関係無ければ、今見ているコードの意味を他のコードが勝手に変えることが無いことを意味します。
+`1 + 1` は、他にどんなコードがプログラムに含まれていようとも `2` ですが、`launchTheMissles()` の作用は弾頭を既に無効化したかしないかに依存します。
 
-The upshot of this is that pure code can be understood in isolation.
-Since no other code can change its meaning, if we're only interested in one fragment we can ignore the rest of the code.
-The meaning of impure code, on the other hand, depends on all the code that will have run before it is evaluated.
-This property is known as *local reasoning*.
-Pure code has it, but impure code does not.
+結果として、純粋なコードは単独でも理解できることを意味します。
+他のコードが意味を変えることが無いので、コードの一部だけを取り出して残りは無視することができます。
+一方、非純粋なコードの意味はそれまで評価されて全てのコードに依存します。
+この特性は**局所推論** (local reasoning) と呼ばれます。
+純粋なコードはこの特性を持ち、非純粋なコードはそれを持ちません。
 
-As programs get larger it becomes harder and harder to keep all the details in our head.
-Since the size of our head is a fixed quantity the only solution is to introduce abstraction.
-Remember that an abstraction is the removal of irrelevant details.
-Pure code is the ultimate abstraction, because it tells us that everything else is an irrelevant detail.
-This is one of the properties that gets functional programmers really excited: the ability to make large programs understandable.
-Functional programming doesn't mean avoiding effects, because all useful programs have effects.
-It does, however, mean controlling effects so the majority of the code can be reasoned about using the simple model of substitution.
+プログラムが大きくなるにつれて全ての詳細を頭の中に入れておくのがどんどん辛くなっていきます。
+私たちの頭の大きさは固定されている量なので、唯一の解法は抽象化を導入することです。
+抽象化が無関係な詳細を取り除くということを覚えているでしょうか。
+純粋なコードは残りのコードの全てが無関係な詳細であると言っているので究極の抽象化であると言えるでしょう。
+この大きなプログラムを分かりやすくさせるという能力は、関数型プログラマーをワクワクさせる特性の 1つです。
+関数型プログラムは作用を避けるという意味ではありません。全ての有用なプログラムは作用を持ちます。
+関数型プログラムが目指すのは、作用をうまく制御することでコードの大部分をシンプルな置き換えモデルを使って推論できるようにすることです。
 
+### 意味の意味
 
-### The Meaning of Meaning
+ここまでコードの意味について考察するとき、「意味」をコードが評価される結果もしくはそれが実行する副作用という意味で使ってきました。
 
-So far, we've talked a lot about the meaning of code, where we've taken "meaning" to mean to the result it evaluates to, and perhaps the side effects it performs.
+置き換えでは、プログラムの意味はそれが評価されたものだと全く同じです。
+そのため、同じ結果に評価される 2つのプログラムは等価です。
+これは、副作用が置き換えを壊す理由です。置き換えモデルは副作用という考えを持たないので、作用に違いのある 2つのプログラムを見分けることができません。
 
-In substitution, the meaning of a program is exactly what it evaluates to.
-Thus two programs are equal if they evaluate to the same result.
-This is precisely why side effects break substitution: the substitution model has no notion of side effects and therefore cannot distinguish two programs that differ by their effects.
+プログラムは評価される結果以外でも異なることがあります。
+例えば、同じ結果にたどり着くのに 1つのプログラムは別のものよりも長く時間がかかるかもしれません。
+置き換えモデルはこれも区別しません。
 
-There are other ways in which programs can differ.
-For example, one program may take longer than another to produce the same result.
-Again, substitution does not distinguish them.
-
-Substitution is an abstraction, and the details it throws away are everything except for the value.
-Side effects, time, and memory usage are all irrelevant to substitution, but perhaps not to the people writing or running the program.
-There is a tradeoff here.
-We can employ richer models that capture more of these details, but they are much harder to work with.
-For most people most of the time substitution makes the right tradeoff of being dead simple to use while still being useful.
+置き換えは抽象化であり、値以外の全てのものを捨ててしまいます。
+副作用、時間、メモリ使用量などは置き換えにとっては無関係なものですが、プログラムを書いたり実行したりする人にとってはそうではないかもしれません。
+ここにトレードオフがあります。
+より豊かなモデルを使ってこれらの詳細を捕捉することもできますが、取り扱いは難しくなります。
+多くの人にとって多くの場合は、置き換えが非常にシンプルかつ役に立つものなので正しいトレードオフとなります。

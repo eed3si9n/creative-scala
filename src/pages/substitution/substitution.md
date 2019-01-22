@@ -1,164 +1,164 @@
-## Substitution
+## 置き換え
 
-Substitution says that wherever we see an expression we can replace it with the value it evaluates to. For example, where we see
+置き換えは、式を見たら、それが評価される値で置き換えることができるというものです。具体例で説明すると、
 
 ```tut:silent:book
 1 + 1
 ```
 
-we can replace it with `2`.
+を見たら、これは `2` で置き換えることができます。
+そのため、
+
 This in turn means when we see a compound expression such as
 
 ```tut:silent:book
 (1 + 1) + (1 + 1)
 ```
 
-we can substitute `2` for `1 + 1` giving
+のような複合式が出てきたら `1 + 1` を `2` に置き換えて
 
 ```tut:silent:book
 2 + 2
 ```
 
-which evaluates to `4`.
+となり、それは `4` に評価されます。
 
-This type of reasoning is what we do in high school algebra when we simplify an expression.
-Naturally computer science has fancy words for this process.
-In addition to substitution, we can call this *reducing an expression*, or *equational reasoning*.
+これは、高校の数学で式を簡易化するときに行ったのと同様の論理的思考です。
+当然計算機科学ではこの過程を指す気取った用語があります。
+置き換えの他に、これを**式を簡約する**と言ったり、**等式推論** (equational reasoning) と言ったりします。
 
-Substitution gives us a way to reason about our programs, which is another
-way of saying "working out what they do".
-We can apply substitution to just about any expression we've seen so far.
-It's easier to use examples that work with numbers and strings, rather than images, here so we'll return to an example we saw in an earlier chapter:
+置き換えは私たちのプログラムを筋道立てて考える方法を与えてくれます。別の言い方とすると、「何が起こっているのかを正確に知ることができる」ということです。
+今まで見てきた全ての式に置き換えを適用することができます。
+ここではイメージよりも数や文字列を使った例題の方が分かりやすいので、前の章で見た例題に戻ります:
 
 ```tut:silent:book
 1 + ("Moonage daydream".indexOf("N"))
 ```
 
-In the previous example we were a bit fast-and-loose.
-Here we will be a bit more precise to illustrate the steps the computer would have to go through.
-We are trying to emulate the computer, after all.
+前の例は少し大ざっぱでしたが、ここではもう少し正確にコンピューターが何を行っているかのステップを解説しましょう。
+コンピューターを真似ていると思ってください。
 
-The expression containing the `+` consists of two sub-expressions, `1` and `("Moonage daydream".indexOf("N"))`.
-We have to decide which to evaluate first: the left or the right.
-Let's arbitrarily choose the right sub-expression (we'll return to this choice later.)
+`+` を含む式は 2つのサブ式である `1` と `("Moonage daydream".indexOf("N"))` から構成されます。
+まず左か、右かのどちらを先に評価するかを決める必要があります。
+ここでは、適当に右のサブ式を選ぶことにします (この選択に関してはまた後ほど)。
 
-The sub-expression `("Moonage daydream".indexOf("N"))` again consists of two sub-expressions, `"Moonage daydream"` and `"N"`.
-Let's again evaluate the right-hand first, remembering that literal expressions are not values so they must be evaluated.
+サブ式である `("Moonage daydream".indexOf("N"))` もまた 2つのサブ式 `"Moonage daydream"` と `"N"` から構成されます。
+リテラル式自身は値では無いのでこれらも評価する必要があることを思い出して、再び右側から評価するとします。
 
-The literal `"N"` evaluates to the value `"N"`.
-To avoid this confusion let's write the value as `|"N"|`.
-Now we can substitute the value for the expression given in our first steps
+リテラルである `"N"` は、値の `"N"` へ評価されます。
+混乱を避けるために、値の方は `|"N"|` と書きましょう。
+これで、最初のステップにより 1つの式をその値に置き換えることができます。
 
 ```scala
 1 + ("Moonage daydream".indexOf(|"N"|))
 ```
 
-Now we can evaluate the left-hand side of the sub-expression, substituting the literal expression `"Moonage daydream"` with its value `|"Moonage daydream"|`.
-This gives us
+次に、サブ式の左辺側を評価して、リテラル式 `"Moonage daydream"` をその値である `|"Moonage daydream"|` に置き換えることができます。
+これで以下のようになります:
 
 ```scala
 1 + (|"Moonage daydream"|.indexOf(|"N"|))
 ```
 
-Now we're in a position to evaluate the entire expression `(|"Moonage daydream"|.indexOf(|"N"|))`, which evaluates to `|-1|` (again differentiating the integer value from the literal expression by using a vertical bar).
-Once again we perform substitution and now we have
+これで `(|"Moonage daydream"|.indexOf(|"N"|))` という式全体を評価できるようになり、これは `|-1|` に評価されます (ここでも縦棒を使って整数値とリテラル式を区別しています)。
+再び置き換えを使って以下を得ます:
 
 ```scala
 1 + |-1|
 ```
 
-Now we should evaluate the left-hand side literal `1`, giving `|1|`.
-Perform substitution and we get
+次に左辺のリテラル `1` を評価して `|1|` を得ます。
+置き換えを行って、以下を得ます:
 
 ```scala
 |1| + |-1|
 ```
 
-Now we can evaluate the entire expression, giving
+これで式全体を評価できるようになり、以下を得ます:
 
 ```scala
 |0|
 ```
 
-We can ask Scala to evaluate the whole expression to check our work.
+Scala に式全体を評価してもらって検算しましょう。
 
 ```tut:book
 1 + ("Moonage daydream".indexOf("N"))
 ```
 
-Correct!
+正解です!
 
-There are some observations we might make at this point:
+ここまでを見て、いくつか気づいたことがあると思います:
 
- - doing substitution rigorously like a computer might involve a lot of steps;
- - the shortcut evaluation you probably did in your head probably got to the correct answer; and
- - our seemingly arbitrary choice to do evaluation from right-to-left got us the correct answer.
+ - コンピューターのように厳密に置き換えを行うには多くのステップを伴います。
+ - 暗算で行った評価でも正しい答えを得ることができたかもしれません。
+ - 一見適当に右から左に行った評価でも正しい答を得ることができました。
 
-Did we somehow manage to choose the same substitution order that Scala uses (no we didn't, but we haven't investigated this yet) or does it not really matter what order we choose?
-When exactly can we take shortcuts and still reach the right result, like we did in the first example with addition?
-We will investigate these questions in just a moment, but first let's talk about how substitution works with names.
+たまたま Scala が行っている置き換え順を選ぶことができたのか (違いますが、まだこれは調査していません)、どの順で評価しても関係無いのでしょうか?
+最初の足し算の例のように、正しい答えの得られる近道があるのはどの場合でしょうか?
+これらの質問を後ほど考察しますが、まずは名前がある場合に置き換えがどうなるかを見ていきましょう。
 
+### 名前
 
-### Names
+名前の置き換えルールは、名前が参照する値で置き換えることです。
+このルールは既にそれとなく使ってきたものですが、ここで形式化します。
 
-The substitution rule for names is to substitute the name with the value it refers to.
-We've already been using this rule implicitly.
-Now we're just formalising it.
-
-For example, given the code
+具体例で解説すると、
 
 ```tut:silent:book
 val name = "Ada"
 name ++ " " ++ "Lovelace"
 ```
 
-we can apply substitution to get
+このコードに置き換えを適用して
 
 ```tut:silent:book
 "Ada" ++ " " ++ "Lovelace"
 ```
 
-which evaluates to
+を得ることができ、これは
 
 ```tut:silent:book
 "Ada Lovelace"
 ```
 
-We can use names to be a bit more formal with our substitution process.
-Returning to our first example
+に評価されます。
+
+これで置き換えプロセスの中で名前をより形式的に取り扱うことができるようになりました。
+例えば、最初に例に戻ると
 
 ```tut:silent:book
 1 + 1
 ```
 
-we can give this expression a name:
+この式に名前を与えることができます:
 
 ```tut:silent:book
 val two = 1 + 1
 ```
 
-When we see a compound expression such as
+以下のような複合式があるとき
 
 ```tut:silent:book
 (1 + 1) + (1 + 1)
 ```
 
-substitution tells us we can substitute `two` for `1 + 1` giving
+置き換えによって `1 + 1` を `two` で置き換えて以下を得ることができます:
 
 ```tut:silent:book
 two + two
 ```
 
-Remember when we worked through the expression
+この式を計算したとき
 
 ```tut:silent:book
 1 + ("Moonage daydream".indexOf("N"))
 ```
 
-we broke it into sub-expressions which we then evaluated and substituted.
-Using words, this was quite convoluted.
-With a few `val` declarations we can make this both more compact and easier to see.
-Here's the same expression broken into it's components.
+私たちはサブ式に分解してから、それぞれを評価して置き換えました。
+言葉を使ったため、これはかなり難解なものになってしまいました。
+`val` 宣言を使うことで、これはよりコンパクトかる分かりやすく書き直すことができます。
+以下は同じ式を部品に分解したものです。
 
 ```tut:silent:book
 val a = 1
@@ -168,9 +168,9 @@ val d = b.indexOf(c)
 val e = a + d
 ```
 
-If we (at this point, arbitrarily) define that evaluation occurs from top-to-bottom we can experiment with different ordering to see what difference they make.
+ここで (現在では適当に) 上から下の順に評価が行われると定義した場合、異なる評価順を試して結果に影響が出るか実験することができます。
 
-For example,
+例えば、
 
 ```tut:silent:book
 val c = "N"
@@ -180,8 +180,8 @@ val d = b.indexOf(c)
 val e = a + d
 ```
 
-achieves the same result as before.
-However we can't use
+は以前と同じ結果となります。
+しかし、
 
 ```scala
 val e = a + d
@@ -191,5 +191,5 @@ val c = "N"
 val d = b.indexOf(c)
 ```
 
-because `e` depends on `a` and `d`, and in our top-to-bottom ordering `a` and `d` have yet to be evaluated.
-We might rightly claim that this is a bit silly to even attempt. The complete expression we're trying to evaluate is  `e` but `a` to `d` are sub-expressions of `e`, so of course we have to evaluate the sub-expressions before we evaluate the expression.
+は `e` が `a` と `d` に依存して、上から下の順序では `a` と `d` が評価されていないためうまくいきません。
+これは試すのも少し馬鹿げていると思うかもしれません。最終的に評価しようとしている式は `e` であり、`a` と `d` は `e` のサブ式であるため、当然サブ式は式の前に評価される必要があります。

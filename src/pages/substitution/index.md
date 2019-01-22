@@ -1,13 +1,15 @@
-# The Substitution Model of Evaluation
+# 置き換えモデルによる評価
 
- We need to build a mental model of how Scala expressions are evaluated so we can understand what our programs are doing.
- We've been getting by with an informal model so far. 
- In this section we make our model a bit more formal by learning about the *substitution model* of evaluation.
- Like many things in programming we're using some fancy words for a simple concept.
- In this case you've probably already learned about substitution in high school algebra, and we're just taking those ideas into a new context.
+私たちのプログラムが何を行っているのかを理解するためには Scala の式がどのように評価されるのかというメンタルモデルが必要となります。
+これまでの所は、くだけたモデルで何とかやってきました。
+この節では、**置き換えモデル**による評価を理解してもう少し形式化されたモデルにしていきます。
+プログラミングの多くのこと同様に、気取った用語を使っていますがシンプルな概念です。
+この場合、多分高校の数学で習ったことのある置き換えの話で、同じ考え方を新しい文脈に持ってきたものです。
 
 <div class="callout callout-info">
-If you run the examples from the SBT console within Doodle they will just work. If not, you will need to start your code with the following imports to make Doodle available.
+
+
+例題を Doodle の sbt console 内で実行した場合は、何もしなくても動作するはずです。そうじゃない場合は、以下の import 文を使って Doodle を使用可能な状態にする必要があります。
 
 ```tut:silent
 import doodle.core._
