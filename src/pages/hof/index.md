@@ -1,4 +1,4 @@
-# Horticulture and Higher-order Functions
+# 園芸と高階関数
 
 In this chapter we're going to learn how to draw flowers and to use functions as first-class values.
 
@@ -25,7 +25,7 @@ Our motivating example for this will be drawing flowers as in [@fig:hof:flower-p
 ![A flower created using the techniques in this chapter](src/pages/hof/flower-power.pdf+svg){#fig:hof:flower-power}
 
 <div class="callout callout-info">
-If you run the examples from the SBT console within Doodle they will just work. If not, you will need to start your code with the following imports to make Doodle available.
+例題を Doodle の sbt console 内で実行した場合は、何もしなくても動作するはずです。そうじゃない場合は、以下の import 文を使って Doodle を使用可能な状態にする必要があります。
 
 ```tut:silent
 import doodle.core._

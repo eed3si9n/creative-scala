@@ -1,9 +1,9 @@
-# Turtle Algebra and Algebraic Data Types
+# タートル代数と代数的データ型
 
 In this chapter we explore a new way of creating paths---turtle graphics---and learn some new ways of manipulating lists and functions.
 
 <div class="callout callout-info">
-If you run the examples from the SBT console within Doodle they will just work. If not, you will need to start your code with the following imports to make Doodle available.
+例題を Doodle の sbt console 内で実行した場合は、何もしなくても動作するはずです。そうじゃない場合は、以下の import 文を使って Doodle を使用可能な状態にする必要があります。
 
 ```tut:silent
 import doodle.core._

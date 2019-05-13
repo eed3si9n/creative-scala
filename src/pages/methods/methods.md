@@ -1,4 +1,4 @@
-## Methods
+## メソッド
 
 ```tut:invisible
 import doodle.core._
@@ -7,6 +7,8 @@ import doodle.syntax._
 import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
+
+
 
 In a previous chapter we created the image shown in [@fig:methods:sequential-boxes] using the program
 

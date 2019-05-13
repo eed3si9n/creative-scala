@@ -1,4 +1,4 @@
-# Summary
+# まとめ
 
 In this text we have covered a handful of the essential
 functional programming tools available in Scala.

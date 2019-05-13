@@ -1,15 +1,15 @@
-# Methods
+# メソッド
 
-We've already used methods---methods are the way we interact with objects.
-In this chapter we'll learn how to write our own methods.
+私たちは既にメソッドを使ってきました。メソッドを通じて私たちはオブジェクトと関わりを持つことができます。
+この章では、独自のメソッドを書く方法を解説します。
 
-Names allow us to abstract over expressions.
-Methods allow us to abstract over and *generalise* expressions.
-By generalisation we mean the ability to express a group of related things, in this case expressions.
-A method captures a template for an expression, and allows the caller to fill in parts of that template by passing the method parameters.
+名前は式を抽象化する方法を与えてくれます。
+メソッドは式を抽象化して、**一般化**する方法を与えてくれます。
+ここで一般化とは、関連する複数のもの (ここでは式) のグループを表現できる能力を指します。
+メソッドは式のテンプレートを捉えて、その呼び手がメソッドのパラメータを渡すことでテンプレートの一部を補うことができます。
 
 <div class="callout callout-info">
-If you run the examples from the SBT console within Doodle they will just work. If not, you will need to start your code with the following imports to make Doodle available.
+例題を Doodle の sbt console 内で実行した場合は、何もしなくても動作するはずです。そうじゃない場合は、以下の import 文を使って Doodle を使用可能な状態にする必要があります。
 
 ```tut:silent
 import doodle.core._
@@ -19,5 +19,3 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 </div>
-
-
