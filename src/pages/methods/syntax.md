@@ -1,4 +1,4 @@
-## Method Syntax
+## メソッド構文
 
 ```tut:invisible
 import doodle.core._
@@ -8,7 +8,7 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-We've already seen an example of declaring a method.
+私たちは既にメソッド宣言の 1例を見ています。
 
 ```tut:silent:book
 def boxes(color: Color): Image = {
@@ -22,91 +22,90 @@ def boxes(color: Color): Image = {
 }
 ```
 
-Let's use this as a model for understanding the syntax of declaring a method.
-The first part is the *keyword* `def`.
-A keyword is a special word that indicates something important to the Scala compiler---in this case that we're going to declare a method.
-We're already seen the `object` and `val` keywords.
+これをモデルとしてメソッド宣言の構文を理解していきましょう。
+最初の部分は**キーワード** `def` です。
+キーワードは Scala コンパイラにとって特別な意味を持つ単語で、この場合メソッドを宣言するという意味を持ちます。
+これまでに `object` と `val` というキーワードも見てきました。
 
-The `def` is immediately followed by the name of the method, in this case `boxes`, in the same way that `val` and `object` are immediately followed by the name they declare.
-Like a `val` declaration, a method declaration is not a top-level declaration and must be wrapped in an `object` declaration (or other top-level declaration) when written in a file.
+`def` の直後にはメソッドの名前が続き、この場合 `boxes` で、これは `val` や `object` がそれぞれ宣言するものの名前が直後に続くのに似ています。
+`val` 宣言同様に、メソッド宣言はトップレベル宣言ではないので、ファイルに書く場合は `object` 宣言 (もしくはその他のトップレベル宣言) にラッピングされている必要があります。
 
-Next we have the method parameters, defined in brackets (`()`).
-The method parameters are the parts that the caller can "plug-in" to the expression that the method evaluates.
-When declaring method parameters we must give them both a name and a type.
-A colon (`:`) separates the name and the type.
-We haven't had to declare types before.
-Most of the time Scala will work out the types for us, a process known as *type inference*.
-Type inference, however, cannot infer the type of method parameters so we must provide them.
+次に、括弧 (`()`) で定義されるメソッドパラメータが続きます。
+このメソッドパラメータは、呼び出す人がメソッドが評価する式に差し込むことができる部分です。
+メソッドパラメータを宣言するとき、名前と型を与える必要があります。
+コロン (`:`) を使って名前と型を分けます。
+ここまでは型を宣言する必要はありませんでした。
+ほとんどの場合、Scala は**型推論**という仕組みを使って型を自動的に計算してくれます。
+しかし型推論はメソッドパラメータの型は推論できないため、私たちが与える必要があります。
 
-After the method parameters comes the result type.
-The result type is the type of the value the method evaluates to when it is called.
-Unlike parameter types Scala can infer the result type, but it is good practice to include it and we will do so throughout Creative Scala.
+メソッドパラメータの次に戻り値の型が来ます。
+戻り型はメソッド呼ばれたときに評価される値の型です。
+パラメータ型と違って Scala は戻り型を推論することができますが、自分で書くのが良い作法なので Creative Scala では戻り型を書くことにします。
 
-Finally, the body expression of the method calculates the result of calling the method.
-A body can be a block expression, as in `boxes` above, or just a single expression.
+最後に、メソッドが呼ばれたときに結果として返す値を計算するための式の本文が来ます。
+本文は、`boxes` のようにブロック式のときもあれば、単一の式のときもあります。
 
 <div class="callout callout-info">
-#### Method Declaration Syntax {-}
+#### メソッド宣言の構文 {-}
 
-The syntax for a method declaration is
+メソッド宣言の構文は
 
 ```scala
 def methodName(param1: Param1Type, ...): ResultType =
   bodyExpression
 ```
 
-where
+で
 
-- `methodName` is the name of the method;
-- the optional `param1 : Param1Type, ...` are one or more pairs of parameter name and parameter type;
-- the optional `ResultType` is the type of the result of calling the method; and
-- `bodyExpression` is the expression that is evaluated to yield the result of calling the method.
+- `methodName` がメソッド名、
+- 省略可能な `param1 : Param1Type, ...` は 1つもしくはそれ以上のパラメータ名とパラメータ型の対、
+- 省略可能な `ResultType` はメソッドを呼んだ結果得られる値の型で、
+- `bodyExpression` はメソッドを呼んだ結果を計算するために評価される式。
 </div>
 
+### 練習問題 {-}
 
-### Exercises {-}
+簡単な例題でメソッドの宣言を練習してみましょう。
 
-Let's practice declaring methods by writing some simple examples.
+#### 2乗 {-}
 
-#### Square {-}
-
-Write a method `square` that accepts an `Int` argument and returns the `Int` square of it's argument. (Squaring a number is multiplying it by itself.)
+`Int` の引数を受け取り、その引数の 2乗の `Int` を返す `squire` というメソッドを書いてみよう。(数の 2乗は自身を掛けることで得られるよ)
 
 <div class="solution">
-The solution is
+解答は
 
 ```tut:silent:book
 def square(x: Int): Int =
   x * x
 ```
 
-We can arrive at the solution by the following steps.
+手順を追って解にたどり着くことができます。
 
-We're given the name (`square`), the type of the parameter (`Int`), and the type of the result (`Int`).
-From this we can write the method skeleton
+名前 (`square`) パラメータの型、そして戻り型 (`Int`) が与えられています。
+ここから、以下のようなメソッドの骨組みを書くことができます。
 
 ```tut:silent:book
 def square(x: Int): Int =
   ???
 ```
 
-where we have chosen `x` as the name of the parameter.
-This is a fairly arbitrary choice.
-Where there is no meaningful name you often see one-letter names such as `x`, `v`, or `i` used.
+パラメータの名前として `x` を選びました。
+これは、適当な選択です。
+特に意味のある名前が見つからないときは 1文字の `x`、`v`、`i` といった名前がよく出てきます。
 
-By the way this is valid code.
-Enter it into the console and see!
-What happens if you call `square` when it's defined like so?
+ちなみに、これは既に妥当なコードです。
+コンソールに入力してみてください。
+このように宣言した場合、`square` を呼ぶとどんな結果となるでしょう?
 
-Now we need to complete the body.
-We've been told that squaring is multiplying a number by itself, so `x * x` is what we replace the `???` with.
-We don't need to wrap this in braces as there is only a single expression in the body.
+次に、本文を完成させる必要があります。
+2乗は数を自身で掛け算することだと言われているので、`???` を `x * x` で置き換えます。
+これは単一の式なので中括弧で囲む必要はありません。
 </div>
 
 
-#### Halve {-}
+#### ハーフ {-}
 
-Write a method `halve` that accepts a `Double` argument and returns the `Double` that is half of it's argument.
+`Double` の引数を受け取って、その引数を半分にした `Double` を返す `halve` というメソッドを書いてみよう。
 
 <div class="solution">
 ```tut:silent:book
@@ -114,5 +113,5 @@ def halve(x: Double): Double =
  x / 2.0
 ```
 
-We can follow the same process as for `square` above to arrive at the solution.
+`square` で見たのと同じ手順でこの解が得られるはず。
 </div>

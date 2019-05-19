@@ -1,8 +1,7 @@
-## Conclusions
+## まとめ
 
-In this chapter, we learned how to write our own simple methods and we saw how to use the substitution model of evaluation to understand method calls.
+この章では、簡単な独自メソッドの書き方と、メソッド呼び出しを置き換えモデルを使って理解する方法を学びました。
 
-We saw that methods both abstract over expressions, in the same way as names, and also generalize over expressions, allowing us to represent a group of related expressions with one name.
+メソッドは名前同様に式を抽象化するもので、かつ関連するグループの式を一つの名前を使って一般化するものであることをみました。
 
-We wrote some interesting methods, but we still have more repeated code than is desirable (think about the repeated calls to `box` and `circle` in the exercises.)
-In the next chapter, we will learn how we can generalize over this using structural recursion over the natural numbers.
+いくつかの面白いメソッドを書きましたが、それでもコードの重複が残っています。次の章では、構造的再帰を使って自然数を一般化する方法をみていきます。

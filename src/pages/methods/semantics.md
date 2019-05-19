@@ -1,30 +1,28 @@
-## Method Semantics
+## メソッドのセマンティクス
 
-Now that we know how to declare methods, let's turn to the semantics.
-How do we understand a method call in terms of our substitution model?
+メソッドの宣言の仕方が分かったので、セマンティクスを見ていきましょう。
+置き換えモデルを使った場合、メソッド呼び出しはどう理解すればいいでしょう?
 
-We already know we can substitute a method call with the value it evaluates to.
-However we need a more fine-grained model so we can work out what this value will be.
-Our extended model is as follows: when we see a method call we will create a new block and within this block:
-bind the parameters to the respective expressions given in the method call and substitute the method body.
+メソッド呼び出しはそれが評価する値へと置き換えることができると分かっています。
+しかし、この値を導き出すためにはもう少しきめ細かいモデルを必要とします。
+モデルを以下のように拡張します: メソッド呼び出しを見ると、新しいブロックを作り、そのブロック内ではパラメータをそれぞれに対応するメソッド呼び出し引数へと束縛してメソッド本体を置き換えます。
 
-We can then apply substitution as usual.
+これで普通どおり置き換えを適用できるようになりました。
 
-Let's see a simple example.
-Given the method
+簡単な例を見てみましょう。以下のメソッドがあるとき
 
 ```tut:silent:book
 def square(x: Int): Int =
   x * x
 ```
 
-we can expand the method call
+このメソッド呼び出しは
 
 ```tut:silent:book
 square(2)
 ```
 
-by introducing a block
+ブロックを導入して
 
 ```tut:silent:book
 {
@@ -32,7 +30,7 @@ by introducing a block
 }
 ```
 
-binding the parameter `x` to the expression `2`
+パラメータ `x` を `2` に束縛して、
 
 ```tut:silent:book
 {
@@ -41,7 +39,7 @@ binding the parameter `x` to the expression `2`
 }
 ```
 
-and substituting the method body
+メソッド本文を置き換えることで展開することができます。
 
 ```tut:silent:book
 {
@@ -50,7 +48,7 @@ and substituting the method body
 }
 ```
 
-We can now perform substitution as usual giving
+これで通常の置き換えを行い、以下を得ることができます。
 
 ```tut:silent:book
 {
@@ -58,7 +56,7 @@ We can now perform substitution as usual giving
 }
 ```
 
-and finally
+そしてこうなります。
 
 ```tut:silent:book
 {
@@ -66,20 +64,19 @@ and finally
 }
 ```
 
-Once again we see that substitution is involved but no single step was particularly difficult.
+前にも見ましたが、置き換えは複雑ですが、各ステップの一つ一つは特に難しいものではないことが分かります。
 
+### 練習問題 {-}
 
-### Exercise {-}
-
-Last time we looked at substitution we spent a lot of time investigating order of evaluation.
-In the description above we have decided that a method's arguments are evaluated before the body is evaluated.
-This is not the only possibility.
-We could, for example, evaluate the method's arguments only at the point they are needed.
-This could save us some time if a method doesn't use one of its parameters.
-By using our old friend `println`, determine when method parameters are evaluated in Scala.
+前回置き換えを見たときは評価の順序に多くの時間をさきました。
+上の説明でメソッドの引数が本文よりも先に評価されることを決めました。
+他にも可能な選択肢があります。
+例えば、メソッドの引数が必要になった時点で評価することも可能です。
+もしメソッドがパラメータの 1つを使わなかった場合は無駄を省くことができるかもしれません。
+古い友だちでる `println` を使って、Scala においてメソッドのパラメータがいつ評価されているかを調査してみましょう。
 
 <div class="solution">
-The following program demonstrates that parameters are evaluated before the method body.
+以下のプログラムはパラメータがメソッドの本文よりも先に評価されることを証明します。
 
 ```tut:book
 def example(a: Int, b: Int): Int = {
@@ -90,5 +87,5 @@ def example(a: Int, b: Int): Int = {
 example({ println("a"); 1 }, { println("b"); 2 })
 ```
 
-The alternative we described above is used by some languages, most notably Haskell, and is known as lazy or non-strict evaluation.
+前述のもう一つの代替方法を採用しているプログラミング言語もあって、その代表として Haskell があり、これは遅延 (lazy) もしくは非正格 (non-strict) 評価と呼ばれます。
 </div>

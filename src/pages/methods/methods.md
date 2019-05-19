@@ -8,9 +8,7 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-
-
-In a previous chapter we created the image shown in [@fig:methods:sequential-boxes] using the program
+前に出てきた章の 1つの中で [@fig:methods:sequential-boxes] で示すイメージを以下のようなプログラムを使って作りました。
 
 ![Five boxes filled with Royal Blue](./src/pages/programs/sequential-boxes.pdf+svg){#fig:methods:sequential-boxes}
 
@@ -24,8 +22,8 @@ val box =
 box beside box beside box beside box beside box
 ```
 
-Imagine we wanted to change the color of the boxes.
-Right now we would have to write out the expression again for each different choice of color.
+ここで、箱の色を変えたいと思ったとします。
+現状だと別の色のためにわざわざ式を書き直す必要があります。
 
 ```tut:silent:book
 val paleGoldenrod = {
@@ -59,10 +57,10 @@ val mistyRose = {
 }
 ```
 
-This is tedious.
-Each expression only differs in a minor way.
-It would be nice if we could capture the general pattern and allow the color to vary.
-We can do exactly this by declaring a method.
+これはつかれます。
+それぞれの式は少ししか違いがありません。
+大まかなパターンをとらえて、色違いだけを表すことができれば嬉しいです。
+メソッドを宣言することでまさにそれを実現することができます。
 
 ```tut:silent:book
 def boxes(color: Color): Image = {
@@ -75,12 +73,12 @@ def boxes(color: Color): Image = {
   box beside box beside box beside box beside box
 }
 
-// Create boxes with different colors
+// 色違いの箱を作る
 boxes(Color.paleGoldenrod)
 boxes(Color.lightSteelBlue)
 boxes(Color.mistyRose)
 ```
 
-Try this yourself to see that you get the same result using the method as you did writing everything out by hand.
+自分で試してみて、全部書き下した場合とメソッドを使った場合で同じ結果を得られるかみてみましょう。
 
-Now that we've seen an example of declaring a method, we need to explain the syntax of methods. Next, we'll look at how to write methods, the semantics of method calls, and how they work in terms of substitution.
+メソッドの宣言の例を 1つみたので、メソッドの構文の解説をする必要があります。続いて、メソッドの書き方、メソッド呼び出しのセマンティクス、どう置き換えするのかを見ていきましょう。
