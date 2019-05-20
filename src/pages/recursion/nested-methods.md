@@ -1,4 +1,4 @@
-## Nested Methods
+## ネストしたメソッド
 
 ```tut:invisible
 import doodle.core._
@@ -8,11 +8,11 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-A method is a declaration.
-The body of a method can contain declarations and expressions.
-Therefore, a method declaration can contain other method declarations.
+メソッドは宣言です。
+メソッドの本文内には別の宣言や式を含むことができます。
+そのため、メソッド宣言は他のメソッド宣言を含むことができます。
 
-To see why this is useful, lets look at a method we wrote earlier:
+なぜこれが役に立つのかを見るために、以前に書いたメソッドをもう一度見てみましょう:
 
 ```tut:book
 def cross(count: Int): Image = {
@@ -24,12 +24,12 @@ def cross(count: Int): Image = {
 }
 ```
 
-We have declared `unit` inside the method `cross`.
-This means the declaration of `unit` is only in scope within the body of `cross`.
-It is good practice to limit the scope of declarations to the minimum needed, to avoid accidentally shadowing other declarations.
-However, let's consider the runtime behavior of `cross` and we'll see that is has some undesirable characteristics.
+`unit` は `cross` メソッドの中で宣言されています。
+そのため、`unit` の宣言は `cross` の本文内だけにスコープ付けされています。
+他の宣言を間違ってシャドーイングしないように宣言のスコープを必要最小限に制限するのはお行儀が良いことです。
+しかし、ここで `cross` の実行時の振る舞いを考察すると、少し嬉しくない特性が見つかるはずです。
 
-We'll use our substitution model to expand `cross(1)`.
+ここれは置き換えモデルを使って `cross(1)` を展開します。
 
 ```scala
 cross(1)
@@ -71,8 +71,8 @@ cross(1)
 }
 ```
 
-The point of this enormous expansion is to demonstrate that we're recreating `unit` every time we recurse within `cross`.
-We can prove this is true by printing something every time `unit` is created.
+このような巨大な展開を書き出した理由は再帰するたびに `unit` を作り直していることを示すためです。
+これは `unit` が作られるたびに何かを println することでも証明できます。
 
 ```tut:book
 def cross(count: Int): Image = {
@@ -89,9 +89,9 @@ def cross(count: Int): Image = {
 cross(1)
 ```
 
-This doesn't matter greatly for `unit` because it's very small, but we could be doing that takes up a lot of memory or time, and it's undesirable to repeat it when we don't have to.
+`unit` は非常に小さいのであまり大したことないですが、多くのメモリや時間を取る処理をしている可能性もあり、不必要に繰り返すのは嬉しくないことです。
 
-We could solve this by shifting `unit` outside of `cross`.
+これは、`unit` を `cross` の外に出すことで解決できます。
 
 ```tut:book
 val unit = {
@@ -109,8 +109,8 @@ def cross(count: Int): Image = {
 cross(1)
 ```
 
-This is undesirable because `unit` now has a larger scope than needed.
-A better solution it to use a nested or internal method.
+これは、`unit` は必要以上に大きいスコープを持つことになるので、それも嬉しくないです。
+ネストされたメソッド、別名内部メソッドを使うとより良く書くことができます。
 
 ```tut:book
 def cross(count: Int): Image = {
@@ -131,19 +131,18 @@ def cross(count: Int): Image = {
 cross(1)
 ```
 
-This has the behavior we're after, creating `unit` only once while minimising its scope.
-The internal method `loop` is using structural recursion exactly as before.
-We just need to ensure that we call it in `cross`.
-I usually name this sort of internal method `loop` or `iter` (short for iterate) to indicate that they're performing a loop.
+これは、スコープを最小にしつつ `unit` を一度だけ作るという求めている振る舞いとなります。
+内部メソッド `loop` は以前通り構造的再帰を行います。
+`cross` 内で忘れずに呼ぶ必要があります。
+私は、このような内部メソッドはループを行っていることを示すために通常 `loop` や `iter` (iterate の略) と名付けています。
 
-This technique is just a small variation of what we've done already, but let's do a few exercises to make sure we've got the pattern.
+このテクニックは既に見てきたことの小さなバリエーションですが、いくつかの練習問題を行ってパターンを習得したか確認してみましょう。
 
+### 練習問題 {-}
 
-### Exercises {-}
+#### チェス盤 {-}
 
-#### Chessboard {-}
-
-Rewrite `chessboard` using a nested method so that `blackSquare`, `redSquare`, and `base` are only created once when `chessboard` is called.
+`chessboard` をネストしたメソッドを使って書き換えて、`blackSquare`、`redSquare` そして `base` が `chessboard` が呼ばれたときに一度だけ作られるようにしましょう。
 
 ```tut:book
 def chessboard(count: Int): Image = {
@@ -163,7 +162,7 @@ def chessboard(count: Int): Image = {
 
 <div class="solution">
 
-Here's how we did it. It has exactly the same pattern we used with `boxes`.
+これが私たちが行った方法です。`boxes` で使ったのと全く同じパターンです。
 
 ```tut:book
 def chessboard(count: Int): Image = {
@@ -184,9 +183,9 @@ def chessboard(count: Int): Image = {
 ```
 </div>
 
-#### Boxing Clever {-}
+#### 賢く箱に入れる {-}
 
-Rewrite `boxes`, shown below, so that `aBox` is only in scope within `boxes` and only created once when `boxes` is called.
+以下の `boxes` を書き直して、`aBox` が `boxes` 内のみのスコープに入り、かつ `boxes` が呼ばれたときに一度だけ作られるようにしましょう。
 
 ```tut:silent
 val aBox = Image.rectangle(20, 20).fillColor(Color.royalBlue)
@@ -200,7 +199,7 @@ def boxes(count: Int): Image =
 
 <div class="solution">
 
-We can do this in two stages, first moving `aBox` within `boxes`.
+これは2段階に分けて解きます。まずは、`aBox` を `boxes` に取り込みます。
 
 ```tut:silent
 def boxes(count: Int): Image = {
@@ -212,7 +211,7 @@ def boxes(count: Int): Image = {
 }
 ```
 
-Then we can use an internal method to avoid recreating `aBox` on every recursion.
+次に、内部メソッドを使って再帰のたびに `aBox` が作られるのを防ぎます。
 
 ```tut:silent
 def boxes(count: Int): Image = {

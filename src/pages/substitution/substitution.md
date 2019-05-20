@@ -9,8 +9,6 @@
 を見たら、これは `2` で置き換えることができます。
 そのため、
 
-This in turn means when we see a compound expression such as
-
 ```tut:silent:book
 (1 + 1) + (1 + 1)
 ```

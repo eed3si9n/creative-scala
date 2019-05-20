@@ -1,6 +1,6 @@
-## Conclusions
+## 結論
 
-In this chapter we've seen our first big pattern for structuring code, *structural recursion over the natural numbers*.
-We've seen a lot of examples that generate images, but we can use this pattern for anything that is transforming a natural number into anything else (including other natural numbers).
+この章では、**自然数の構造的再帰**という初めての構造的な大きなパターンを見ました。
+イメージを生成する多くの例を見ましたが、このパターンは自然数を (別の自然数を含む) 何かへと変換する全ての場面で使うことができます。
 
-We'll use this pattern, and other variants of structural recursion, throughout the book.
+このパターンや構造的再帰の別のバリエーションは、この本の色々な所でこれからも出てきます。

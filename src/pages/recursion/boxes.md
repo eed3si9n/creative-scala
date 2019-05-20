@@ -1,4 +1,4 @@
-## A Line of Boxes
+## 箱の線
 
 ```tut:invisible
 import doodle.core._
@@ -8,88 +8,89 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-Let's start with an example, drawing a line or row of boxes as in [@fig:recursion:sequential-boxes].
+まずは、[@fig:recursion:sequential-boxes] のように箱を一列並べて描いた例から始めましょう。
 
-![Five boxes filled with Royal Blue](./src/pages/recursion/sequential-boxes.pdf+svg){#fig:recursion:sequential-boxes}
+![ロイヤルブルーで塗った 5つの箱](./src/pages/recursion/sequential-boxes.pdf+svg){#fig:recursion:sequential-boxes}
 
-Let's define a box to begin with.
+まずは手始めに 1つの箱を定義しましょう。
 
 ```tut:book
 val aBox = Image.rectangle(20, 20).fillColor(Color.royalBlue)
 ```
 
-Then one box in a row is just
+1つの箱を一列に並べた場合はこうなります。
 
 ```tut:book
 val oneBox = aBox
 ```
 
-If we want to have two boxes side by side, that is easy enough.
+2つの箱を隣同士に並べた場合も簡単です。
 
 ```tut:book
 val twoBoxes = aBox beside oneBox
 ```
 
-Similarly for three.
+3つの場合も似ています。
 
 ```tut:book
 val threeBoxes = aBox beside twoBoxes
 ```
 
-And so on for as many boxes as we care to create.
+以下、いくつの箱でも作ろうと思えば作ることができます。
 
-You might think this is an unusual way to create these images.
-Why not just write something like this, for example?
+これらのイメージを作るのに奇妙な方法だと思ったかもしれません。
+例えば、何故以下のように書かないのかと思わなかったでしょうか?
 
 ```tut:book
 val threeBoxes = aBox beside aBox beside aBox
 ```
 
-These two definitions are equivalent.
-We've chosen to write later images in terms of earlier ones to emphasise the structure we're dealing with, which is building up to structural recursion.
+これらの 2つの定義は等価です。
+ここでは先にあるイメージを元に後続のイメージを作ることで扱っている構造を強調して、これが構造的再帰への前段階となっています。
 
-Writing images in this way could get very tedious.
-What we'd really like is some way to tell the computer the number of boxes we'd like.
-More technically, we would like to abstract over the expressions above.
-We learned in the previous chapter that methods abstract over expressions, so let's try to write a method to solve this problem.
+このような方法でイメージを書くのは疲れる作業です。
+私たちがやりたいのはコンピューターに何らかの方法で描きたい箱の数を伝えることです。
+よりテクニカルに言うと、上の式を抽象化したいと言うことができます。
+前の章で、メソッドは式を抽象化すると習ったので、この問題を解くのにメソッドを使ってみましょう。
 
-We'll start by writing a method skeleton that defines, as usual, what goes into the method and what it evaluates to.
-In this case we supply an `Int` `count`, which is the number of boxes we want, and we get back an `Image`.
+まずはいつも通り、定義したいメソッドの骨組みである、メソッドに入っていくものとメソッドが評価するものから始めましょう。
+この場合、私たちは欲しい箱の数として `Int` の `count` を提供して、`Image` を得ます。
 
 ```tut:book
 def boxes(count: Int): Image =
   ???
 ```
 
-Now comes the new part, the *structural recursion*.
-We noticed that `threeBoxes` above is defined in terms of `twoBoxes`, and `twoBoxes` is itself defined in terms of `box`.
-We could even define `box` in terms of *no* boxes, like so:
+次に新しいこととして、**構造的再帰**が来ます。
+上で `threeBoxes` が `twoBoxes` を使って、`twoBoxes` が `box` を使って定義できることに気づきました。
+`box` も、以下のように箱が無い状態を元に定義することができます:
 
 ```tut:book
 val oneBox = aBox beside Image.empty
 ```
 
-Here we used `Image.empty` to represent no boxes.
+ここでは、`Image.empty` を使って箱が無い状態を表します。
 
-Imagine we had already implemented the `boxes` method.
-We can say the following properties of `boxes` always hold, if it is correctly implemented:
+`boxes` メソッドを既に実装したと想像してください。
+もしも正しく実装されたならば、`boxes` は以下の性質を常に保つという事ができるでしょう:
 
 - `boxes(0) == Image.empty`
 - `boxes(1) == aBox beside boxes(0)`
 - `boxes(2) == aBox beside boxes(1)`
 - `boxes(3) == aBox beside boxes(2)`
 
-The last three properties all have the same general shape.
-We can describe all of them, and any case for `n > 0`, with the single property `boxes(n) == aBox beside boxes(n - 1)`.
-So we're left with two properties
+最後の 3つの性質は全て同じ一般的な形をしています。
+`boxes(n) == aBox beside boxes(n - 1)` という 1つの性質を使って、それら全ておよび `n > 0` 全ての場合を記述することができます。
+
+これで、2つの性質だけが残りました。
 
 - `boxes(0) == Image.empty`
 - `boxes(n) == aBox beside boxes(n-1)`
 
-These two properties completely define the behavior of `boxes`.
-In fact we can implement `boxes` by converting these properties into code.
+これらの 2つの性質は `boxes` の振る舞いを完全に定義します。
+実際、これらの性質をコードに変換するだけで `boxes` を実装することができます。
 
-A full implementation of `boxes` is
+`boxes` の完全な実装は
 
 ```tut:book
 def boxes(count: Int): Image =
@@ -99,24 +100,24 @@ def boxes(count: Int): Image =
   }
 ```
 
-Try it and see what results you get!
-This implementation is only tiny bit more verbose than the properties we wrote above, and is our first structural recursion over the natural numbers.
+試してみて、どのような結果が得られるか確かめてください!
+この実装は上に書いた性質よりほんの少しだけ冗長ですが、これが私たち最初の自然数の構造的再帰です。
 
-At this point we have two questions to answer.
-Firstly, how does this `match` expression work?
-More importantly, is there some general principle we can use to create methods like this on our own?
-Let's take each question in turn.
+ここで 2つの疑問に答える必要があります。
+まず、この `match` 式はどのように動くのでしょう?
+このようなメソッドを自分で作れるようになるための原理はあるのでしょうか?
+一つづつ疑問に答えます。
 
-### Exercise: Stacking Boxes {-}
+### 練習問題: 積み上げられた箱 {-}
 
-Even before we get into the details of `match` expressions you should be able to modify `boxes` to produce an image like [@fig:recursion:stacked-boxes].
+`match` 式の詳細に入る前でも `boxes` を改造して [@fig:recursion:stacked-boxes] のようなイメージを作ることができるはずです。
 
-At this point we're trying to get used to the syntax of `match`, so rather than copying and pasting `boxes` write it all out by hand again to get some practice.
+ここでは `match` の構文に慣れるために、`boxes` をコピー・ペーストするのでは無く、練習のために手で書き出してみましょう。
 
-![Three stacked boxes filled with Royal Blue](./src/pages/recursion/sequential-boxes.pdf+svg){#fig:recursion:stacked-boxes}
+![ロイヤルブルーで塗った 3つの積み上げられた箱](./src/pages/recursion/sequential-boxes.pdf+svg){#fig:recursion:stacked-boxes}
 
 <div class="solution">
-All you to do is change `beside` to `above` in `boxes`.
+`boxes` の `beside` を `above` に変えるだけです。
 
 ```tut:book
 def stackedBoxes(count: Int): Image =

@@ -1,4 +1,4 @@
-## Auxiliary Parameters
+## 補助パラメータ
 
 ```tut:invisible
 import doodle.core._
@@ -9,17 +9,17 @@ import doodle.backend.StandardInterpreter._
 val aBox = Image.rectangle(20, 20).fillColor(Color.royalBlue)
 ```
 
-We've seen how to use structural recursion over the natural numbers to write a number of interesting programs.
-In this section we're going to see an extension that allows us to write more complex programs using *auxiliary parameters*.
-An auxiliary parameter is just an additional parameter to our method that allows us to pass extra information down the recursive call.
+ここまでで自然数の構造的再帰を使ったいくつもの面白いプログラムを見てきました。
+このセクションでは**補助パラメータ**を使ってより複雑なプログラムを書くことを可能とする拡張をみていきます。
+補助パラメータは再帰呼出しに他の情報を渡すための追加のパラメータのことです。
 
-For example, imagine creating the picture in [@fig:recursion:growing-boxes], which shows a line of boxes that grow in size as we move along the line.
+例えば、[@fig:recursion:growing-boxes] で示す線に沿って並ぶ次々と大きくなっていく箱のような絵を作ることを考えます。
 
-![Boxes that grow in size with each recursion.](./src/pages/recursion/growing-boxes.pdf+svg){#fig:recursion:growing-boxes}
+![再帰のたびにサイズが大きくなる箱](./src/pages/recursion/growing-boxes.pdf+svg){#fig:recursion:growing-boxes}
 
-How can we create this image?
+どうやってこのイメージを作ることができるでしょう?
 
-We know it has to be a structural recursion over the natural numbers, so we can immediately write down the skeleton
+自然数の構造的再帰であることは分かっているので、骨組みはすぐに書くことができます。
 
 ```scala
 def growingBoxes(count: Int): Image =
@@ -29,7 +29,7 @@ def growingBoxes(count: Int): Image =
   }
 ```
 
-Using what we learned working with `boxes` earlier we can go a bit further and write down
+`boxes` で色々やったことを活かすことでもう少し書くことができます。
 
 ```scala
 def growingBoxes(count: Int): Image =
@@ -39,11 +39,9 @@ def growingBoxes(count: Int): Image =
   }
 ```
 
-The challenge becomes how to make the box grow in size as we move to the right.
+ここでつまずくのは、右に行くに従って箱のサイズを大きくする方法です。
 
-There are two ways to do this.
-The tricky way is to switch the order in the recursive case and make the size of the box a function of `n`.
-Here's the code.
+トリッキーな方法としては、再帰ケースの順序を逆にして箱のサイズを `n` についての関数にすることです。コードはこうなります。
 
 ```tut:book
 def growingBoxes(count: Int): Image =
@@ -53,11 +51,11 @@ def growingBoxes(count: Int): Image =
   }
 ```
 
-Spend some time figuring out why this works before moving on to the solution using an auxiliary parameter.
+補助パラメーターを使った解法に読み進める前にじっくり時間をかけて何故この方法でうまくいくのかを理解してください。
 
-Using an auxiliary parameter we simply add another parameter to `growingBoxes` that tells us how big the current box should be.
-When we recurse we change this size.
-Here's the code.
+補助パラメーターを使った場合は、単に `growingBoxes` に現在の箱の大きさを指定するもう1つのパラメーターを追加するだけです。
+再帰するときにこのサイズを変更します。
+コードはこうなります。
 
 ```tut:book
 def growingBoxes(count: Int, size: Int): Image =
@@ -67,23 +65,23 @@ def growingBoxes(count: Int, size: Int): Image =
   }
 ```
 
-The auxiliary parameter method has two advantages: we only have to think about what changes from one recursion to the next (in this case, the box gets larger), and it allows the caller to change this parameter (for example, making the starting box larger or smaller).
+補助パラメータ法は 2つの利点があります。まず 1つの再帰から次で何が変わるのかだけを考えればいい (この場合、箱が大きくなる) のと、呼び出し側でこのパラメータを変更することができることです (例えば、最初の箱を大きくしたり小さくしたり)。
 
-Now we've seen the auxiliary parameter method let's practice using it.
+補助パラメータ法をみた所で、練習してみましょう。
 
-#### Gradient Boxes {-}
+#### 箱のグラデーション {-}
 
-In this exercise we're going to draw a picture like that in [@fig:recursion:gradient-boxes].
-We already know how to draw a line of boxes.
-The challenge in this exercise is to make the color change at each step.
+この練習問題では、[@fig:recursion:gradient-boxes] のような絵を描きます。
+箱の線の描き方は分かっています。
+ここでの課題は各ステップで色を変えることです。
 
-Hint: you can `spin` the fill color at each recursion.
+ヒント: 各再帰で塗る色を `spin` することができます。
 
-![Five boxes filled with changing colors starting from Royal Blue](./src/pages/recursion/gradient-boxes.pdf+svg){#fig:recursion:gradient-boxes}
+![ロイヤルブルーから始まって徐々に変化する色で塗られた 5つの箱](./src/pages/recursion/gradient-boxes.pdf+svg){#fig:recursion:gradient-boxes}
 
 <div class="solution">
-There are two ways to implement a solution.
-The auxiliary parameter method is to add an extra parameter to `gradientBoxes` and pass the `Color` through the structural recursion.
+解答を実装する 2通りの方法があります。
+補助パラメーター法は `gradientBoxes` にパラメーターを追加して `Color` を構造的再帰に渡してまわる方法です。
 
 ```tut:book
 def gradientBoxes(n: Int, color: Color): Image =
@@ -93,7 +91,7 @@ def gradientBoxes(n: Int, color: Color): Image =
   }
 ```
 
-We could also make the fill color a function `n`, as we demonstrated with the box size in `growingBoxes` above.
+`growingBoxes` の例で行ったように塗るための色を `n` に関する関数にすることもできます。
 
 ```tut:book
 def gradientBoxes(n: Int): Image =
@@ -104,14 +102,14 @@ def gradientBoxes(n: Int): Image =
 ```
 </div>
 
-#### Concentric Circles {-}
+#### 同心円 {-}
 
-Now let's try a variation on the theme, drawing concentric circles as shown in [@fig:recursion:concentric-circles]. Here we are changing the size rather than the color of the image at each step. Otherwise the pattern stays the same. Have a go at implementing it.
+バリエーションとして、[@fig:recursion:concentric-circles] のような同心円を描いてみましょう。ここでは、色ではなく各ステップでサイズを変えています。その他はパターンとしては同じようになるはずです。実装してみてください。
 
-![Concentric circles, colored Royal Blue](./src/pages/recursion/concentric-circles.pdf+svg){#fig:recursion:concentric-circles}
+![ロイヤルブルー色の同心円](./src/pages/recursion/concentric-circles.pdf+svg){#fig:recursion:concentric-circles}
 
 <div class="solution">
-This is almost identical to `growingBoxes`.
+これはほとんど `growingBoxes` と同じものです。
 
 ```tut:book
 def concentricCircles(count: Int, size: Int): Image =
@@ -122,17 +120,16 @@ def concentricCircles(count: Int, size: Int): Image =
 ```
 </div>
 
-#### Once More, With Feeling {-}
+#### もう一度、気持ちを込めて {-}
 
-Now let's combine both techniques to change size and color on each step, giving results like those shown in [@fig:recursion:colorful-circles].
-Experiment until you find something you like.
+今度は両方のテクニックを組み合わせて各ステップでサイズと色を変更して、[@fig:recursion:colorful-circles] で得られるような絵を描いてみましょう。
+自分の好みになるまで色々実験してみてください。
 
-![Concentric circles with interesting color variations](./src/pages/recursion/colorful-circles.pdf+svg){#fig:recursion:colorful-circles}
+![面白いカラーバリエーションの同心円](./src/pages/recursion/colorful-circles.pdf+svg){#fig:recursion:colorful-circles}
 
 <div class="solution">
-Here's our solution, where we've tried to break the problem into reusable parts and reduce the amount of repeated code.
-We still have a lot of repetition as we don't yet have the tools to get rid of more.
-We'll come to that soon.
+これが私たちの解法で、コードの繰り返しを減らすために問題を再利用可能なパーツへと分けてみました。
+これでもまだ多くの繰り返しがありますが、それらを減らすためのツールは後ほど見ていきます。
 
 ```tut:book
 def circle(size: Int, color: Color): Image =

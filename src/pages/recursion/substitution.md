@@ -1,4 +1,4 @@
-## Reasoning about Recursion
+## 再帰に関する論理的な考察
 
 ```tut:invisible
 import doodle.core._
@@ -8,13 +8,13 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-We're now experienced users of structural recursion over the natural numbers.
-Let's now return to our substitution model and see if it works with our new tool of recursion.
+自然数の構造的再帰の達人となりました。
+ここで置き換えモデルへと戻ってこれが新しいツールである再帰と使えるか見てみましょう。
 
-Recall that substitution says we can substitute the value of an expression wherever we see a value.
-In the case of a method call, we can substitute the body of the method with appropriate renaming of the parameters.
+置き換えは、式の値を分かっている値と置き換えることができると言っていることを思い出してください。
+メソッド呼び出しの場合は、メソッドの本文をパラメータを適当に名前を変えることで置き換えることができました。
 
-Our very first example of recursion was `boxes`, written like so:
+再帰の最初の例は、以下のように書かれた `boxes` でした。
 
 ```tut:silent
 val aBox = Image.rectangle(20, 20).fillColor(Color.royalBlue)
@@ -26,9 +26,9 @@ def boxes(count: Int): Image =
   }
 ```
 
-Let's try using substitution on `boxes(3)` to see what we get.
+`boxes(3)` に対して置き換えを使うことで何が得られるか見てみましょう。
 
-Our first substitution is
+まず最初の置き換えは
 
 ```tut:silent
 boxes(3)
@@ -39,7 +39,7 @@ boxes(3)
 }
 ```
 
-Knowing how to evaluate a `match` expression and using substitution again gives us
+となります。`match` 式の評価と置き換え方を知っているので、以下が得られます。
 
 ```tut:silent
 3 match {
@@ -50,7 +50,7 @@ Knowing how to evaluate a `match` expression and using substitution again gives 
 aBox beside boxes(2)
 ```
 
-We can substitute again on `boxes(2)` to obtain
+次に `boxes(2)` を置き換えて以下を得られます。
 
 ```tut:silent
 aBox beside boxes(2)
@@ -67,7 +67,7 @@ aBox beside {
 }
 ```
 
-Repeating the process a few more times we get
+この過程を何度か繰り返すことで以下を得られます。
 
 ```tut:silent
 aBox beside {
@@ -105,19 +105,19 @@ aBox beside {
 }
 ```
 
-Our final result, which simplifies to
+最後の結果を単純化したもの
 
 ```tut:silent
 aBox beside aBox beside aBox beside Image.empty
 ```
 
-is exactly what we expect.
-Therefore we can say that substitution works to reason about recursion.
-This is great!
-However the substitutions are quite complex and difficult to keep track of without writing them down.
-A more practical way to reason about recursion is to assume that the recursion works and only worry about what new comes from each step.
+はまさに私たちが期待するものと同じものです。
+そのため、置き換えは再帰に関しても論理的に考察することができると言うことができます。
+これは素晴らしいことです!
+しかし、置き換えは書き出さなければかなり複雑でついていくのが難しくなります。
+再帰そのものは正しいと仮定して、各ステップでの何を導入しているかだけを考えるのが再帰について考察する実践的な方法です。
 
-For example, when reasoning about `boxes`
+例えば、`boxes` を論理的に考察する場合、
 
 ```tut:silent
 def boxes(count: Int): Image =
@@ -127,20 +127,19 @@ def boxes(count: Int): Image =
   }
 ```
 
-we can tell the base case is correct by inspection.
-Looking at the recursive case we *assume* that `boxes(n-1)` will do the right thing.
-We then ask ourselves "is what we do in the recursion case correct and is the recursion itself correct?"
-The answer is yes: if the recursion `boxes(n-1)` creates `n-1` boxes in a line, sticking a box in front of them is the right thing to do.
-This way of reasoning is much more compact that using substitution *and* guaranteed to work *if* we're using structural recursion.
+調べるだけで基底ケースが正しいことが分かります。
+再帰ケースを見たときに、`boxes(n-1)` は正しいと**仮定**します。
+そして、「再帰ケースで行っていることは正しくて、再帰そのものが正しいでしょうか?」と問います。
+答はイエスです。再帰の `boxes(n-1)` が `n-1`個の箱を一列に作ったとき、もう1つの箱を頭に並べるのは正しいことだからです。
+この方法を使った論理思考は置き換えを使ったときよりも非常に簡潔で**かつ**構造的再帰を使っているならば正しいことが保証されています。
 
+### 練習問題 {-}
 
-### Exercises {-}
-
-Below are some rather silly examples of structural recursion.
-Work out if the methods do what they claim to do *without* running them.
+以下は少し現実味に欠ける構造的再帰の例です。
+これらのメソッドが、言っていることを実際に行うかを**実行せずに**確認しましょう。
 
 ```tut:silent
-// Given a natural number, returns that number
+// 自然数が与えられたとき、その数を返します。
 // Examples:
 //   identity(0) == 0
 //   identity(3) == 3
@@ -152,14 +151,13 @@ def identity(n: Int): Int =
 ```
 
 <div class="solution">
-It sure does!
-The base case is straightforward.
-Looking at the recursive case, we assume that `identity(n-1)` returns the identity for `n-1` (which is exactly `n-1`).
-The identity for `n` is then `1 + identity(n-1)`.
+もちろんです!
+基底ケースは率直なものです。
+再帰ケースを見るときは、`identify(n-1)` が `n-1` の identity (`n-1` そのものです) を返すことを仮定します。その場合、`n` の identity は `1 + identity(n-1)` です。
 </div>
 
 ```tut:silent
-// Given a natural number, double that number
+// 自然数が与えられたとき、その倍を返します。
 // Examples:
 //   double(0) == 0
 //   double(3) == 6
@@ -171,11 +169,11 @@ def double(n: Int): Int =
 ```
 
 <div class="solution">
-No way!
-This method is broken in two different ways.
-Firstly, because we're multiplying in the recursive case we will eventualy end up multiplying by base case of zero, and therefore the entire result will be zero.
+これはダメです!
+このメソッドは 2つの異なる形で壊れています。
+まず第一に、再帰ケースで掛け算を行っているため、いずれはゼロの基底ケースで掛け算する必要があり、全体の結果もゼロとなります。
 
-We might try and fix this by adding a case for `1` (and perhaps wonder why the structural recursion skeleton let us down).
+これを修正するために、`1` のケースを追加を試みることはできます (そして構造的再帰の骨組みがどうしてうまくいかなったのかを疑問に思うかもしれません)。
 
 ```tut:silent
 def double(n: Int): Int =
@@ -186,16 +184,16 @@ def double(n: Int): Int =
   }
 ```
 
-This doesn't give us the correct result, however! We're doing the wrong thing at the recursive case: we should be adding, not multiplying.
+しかし、これも正しい結果を返しません! 再帰ケースで間違ったことを行ってます。掛ける代わりに足し算を行うべきです。
 
-A bit of algebra:
+代数の復習をしてみましょう:
 
 ```scala
 2(n-1 + 1) == 2(n-1) + 2
 ```
 
-So if `double(n-1)` is `2(n-1)` then we should *add* 2, not multiply by 2.
-The correct method is
+そのため、`double(n-1)` が `2(n-1)` ならば、私たちは 2 を掛けるのでは無く、2 を**足す**べきです。
+正しいメソッドは
 
 ```tut:silent
 def double(n: Int): Int =
@@ -205,3 +203,5 @@ def double(n: Int): Int =
   }
 ```
 </div>
+
+です。
