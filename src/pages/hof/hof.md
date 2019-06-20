@@ -1,4 +1,4 @@
-## Higher Order Methods and Functions
+## 高階メソッドと関数
 
 ```tut:invisible
 import doodle.core._
@@ -8,17 +8,17 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-Why are functions useful?
-We can already use methods to package up and name reusable fragments of code.
-What other advantages do we get from treating code as values? 
-We've said we can
+関数は何の役に立つでしょうか?
+私たちは既にメソッドを使って再利用可能なコードの断片をパッケージ化して名前を付けることができます。
+コードを値として扱うことで他に得られる利点は何でしょう?
+先ほど
 
- - pass functions as parameters to other functions and methods; and
- - create methods that return functions as their results
- 
-but we haven't used this ability yet. Let's do that now.
+ - 関数を他の関数やメソッドへパラメータとして渡すこと
+ - 戻り値として関数を返すメソッドを定義できること
 
-Let's consider the pattern from the concentric circles exercise as an example:
+とは言いましたが、実際にこの機能は使っていません。これらを見ていきましょう。
+
+具体例として、同心円の例題のパターンを考えます:
 
 ```tut:silent:book
 def concentricCircles(count: Int, size: Int): Image =
@@ -28,15 +28,11 @@ def concentricCircles(count: Int, size: Int): Image =
   }
 ```
 
-This pattern allows us to create many different images
-by changing the use of `Image.circle` to another shape.
-However, each time we provide a new replacement for `Image.circle`,
-we also need a new definition of `concentricCircles` to go with it.
+このパターンは、`Image.circle` を別の形に差し替えることで多くの異なるイメージを作ることが可能です。
+しかし、`Image.circle` の置き換え提供するたびに私たちは `concentricCircles` の新しい定義を必要とします。
 
-We can make `concentricCircles` completely general by supplying
-the replacement for `Image.circle` as a parameter.
-Here we've renamed the method to `concentricShapes`, as we're no longer restricted to drawing circles,
-and made `singleShape` responsible for drawing an appropriately sized shape.
+`Image.circle` の代替となるものをパラメータとして渡すことができれば、`concentricCircles` を完全に一般化することができます。
+円を描くだけでは無いので、`concentricShapes` と名前を変えて、適当な大きさの形を描くのを `singleShape` に任せることにします。
 
 ```tut:silent:book
 def concentricShapes(count: Int, singleShape: Int => Image): Image =
@@ -46,10 +42,8 @@ def concentricShapes(count: Int, singleShape: Int => Image): Image =
   }
 ```
 
-Now we can re-use the same definition of `concentricShapes`
-to produce plain circles, squares of different hue,
-circles with different opacity, and so on.
-All we have to do is pass in a suitable definition of `singleShape`:
+これで、同じ `concentricShapes` の定義を再利用してただの円、色々な色の四角形、異なる透明度の円などを描くことができます。
+適当な定義の `singleShape` を渡すだけです:
 
 ```tut:silent:book
 // Passing a function literal directly:
@@ -64,14 +58,13 @@ val redCircles: Image =
   concentricShapes(10, redCircle _)
 ```
 
-### Exercises {-}
+### 練習問題 {-}
 
-#### The Colour and the Shape {-}
+#### 色と形 {-}
 
-Starting with the code below, write color and shape functions
-to produce the image shown in [@fig:hof:colors-and-shapes.png].
+以下のコードから始めて、色と形の関数を書いて [@fig:hof:colors-and-shapes.png] で示したイメージを作ってみましょう。
 
-![Colors and Shapes](src/pages/hof/colors-and-shapes.pdf+svg){#fig:hof:colors-and-shapes.png}
+![色と形](src/pages/hof/colors-and-shapes.pdf+svg){#fig:hof:colors-and-shapes.png}
 
 ```tut:silent:book
   def concentricShapes(count: Int, singleShape: Int => Image): Image =
@@ -81,45 +74,37 @@ to produce the image shown in [@fig:hof:colors-and-shapes.png].
     }
 ```
 
-The `concentricShapes` method is equivalent to the
-`concentricCircles` method from previous exercises.
-The main difference is that we pass in
-the definition of `singleShape` as a parameter.
+この `concentricShapes` メソッドは以前の練習問題の
+`concentricCircles` メソッド同様のものです。
+主な違いは、`singleShape` の定義をパラメータとして渡すことです。
 
-Let's think about the problem a little.
-We need to do two things:
+この問題について少し考えてみましょう。
+私たちは、2つのことをする必要があります:
 
- 1. write an appropriate definition of `singleShape` for each
-    of the three shapes in the target image; and
+ 1. 3つの目標となるイメージに対してそれぞれ適当な `singleShape` の定義を書くこと
 
- 2. call `concentricShapes` three times,
-    passing in the appropriate definition of `singleShape` each time
-    and putting the results `beside` one another.
+ 2. `concentricShapes` にそれぞれ適当な `singleShape` を渡して3回呼び出して、その結果を `beside` を使って並べる
 
-Let's look at the definition of the `singleShape` parameter in more detail.
-The type of the parameter is `Int => Image`,
-which means a function that accepts an `Int` parameter and returns an `Image`.
-We can declare a method of this type as follows:
+`singleShape` パラメータの定義を注意して見てみましょう。
+このパラメータの型は `Int => Image` なので、これは `Int` パラメータを受け取って `Image` を返す関数です。
+この型のメソッドは以下のように宣言できます:
 
 ```tut:silent:book
 def outlinedCircle(n: Int) =
   Image.circle(n * 10)
 ```
 
-We can convert this method to a function, and pass it to `concentricShapes` to create
-an image of concentric black outlined circles:
+このメソッドを関数へと変換して、`concentricShapes` へ渡して黒い輪郭の同心円を描くことができます:
 
 ```tut:silent:book
 concentricShapes(10, outlinedCircle _)
 ```
 
-This produces the output shown in [@fig:hof:colors-and-shapes-step1].
+これは [@fig:hof:colors-and-shapes-step1] で示したものを生成します。
 
-![Many outlined circles](src/pages/hof/colors-and-shapes-step1.pdf+svg){#fig:hof:colors-and-shapes-step1}
+![多くの円の輪郭](src/pages/hof/colors-and-shapes-step1.pdf+svg){#fig:hof:colors-and-shapes-step1}
 
-The rest of the exercise is just a matter of copying, renaming,
-and customising this function to produce
-the desired combinations of colours and shapes:
+練習問題の残りは、この関数をコピーして、名前を変えて、期待される色と形の組み合わせを得られるように改造することです:
 
 ```tut:silent:book
 def circleOrSquare(n: Int) =
@@ -128,15 +113,13 @@ def circleOrSquare(n: Int) =
 (concentricShapes(10, outlinedCircle) beside concentricShapes(10, circleOrSquare))
 ```
 
-See [@fig:hof:colors-and-shapes-step2] for the output.
+[@fig:hof:colors-and-shapes-step2] の出力を見てください。
 
-![Many outlined circles beside many circles and squares](src/pages/hof/colors-and-shapes-step2.pdf+svg){#fig:hof:colors-and-shapes-step2}
+![多くの円と正方形の輪郭](src/pages/hof/colors-and-shapes-step2.pdf+svg){#fig:hof:colors-and-shapes-step2}
 
-For extra credit, when you've written your code to
-create the sample shapes above, refactor it so you have two sets
-of base functions---one to produce colours and one to produce shapes.
-Combine these functions using a *combinator* as follows,
-and use the result of the combinator as an argument to `concentricShapes`
+ボーナスポイントとして、上の形の例を作れるようになったら、リファクタリングして
+色のための関数と形を生成する関数という 2つのベースとなる関数を書いてみましょう。
+これらの関数は以下のように**コンビネーター**を使って組み合わせて、コンビネーターの結果を `concentricShapes` へ引数として渡しましょう。
 
 ```tut:silent:book
 def colored(shape: Int => Image, color: Int => Color): Int => Image =
@@ -144,7 +127,7 @@ def colored(shape: Int => Image, color: Int => Color): Int => Image =
 ```
 
 <div class="solution">
-The simplest solution is to define three `singleShapes` as follows:
+最もシンプルな解答は、`singleShapes` を以下のように定義することです:
 
 ```tut:silent:book
 def concentricShapes(count: Int, singleShape: Int => Image): Image =
@@ -177,13 +160,10 @@ val answer =
    concentricShapes(10, rainbowSquare))
 ```
 
-However, there is some redundancy here:
-`rainbowCircle` and `rainbowTriangle`, in particular,
-use the same definition of `color`.
-There are also repeated calls to `lineWidth(10)` and
-`lineColor(color)` that can be eliminated.
-The extra credit solution factors these out into their own functions
-and combines them with the `colored` combinator:
+しかし、重複したコードがあります。
+特に、`rainbowCircle` と `rainbowTriangle` は同じ定義の `color` を用います。
+`lineWidth(10)` と `lineColor(color)` も繰り返し呼び出されていますが、重複を避けることができます。
+ボーナス解答は、これらを単独の関数へと抽出して、`colored` コンビネーターを使って組み合わせます:
 
 ```tut:book
 def concentricShapes(count: Int, singleShape: Int => Image): Image =

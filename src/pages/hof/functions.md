@@ -1,4 +1,4 @@
-## Functions
+## 関数
 
 ```tut:invisible
 import doodle.core._
@@ -8,8 +8,7 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-As the error message we saw in the previous section above suggests, we can convert any method to a function using the `_` operator and call it with the same parameters.
-
+前の節でのエラーメッセージが言っているように、全てのメソッドは `_` を使って関数に変換することができ、その関数には同じパラメータを渡すことができます。
 
 ```tut:silent:book
 // Parametric equation for rose with k = 7
@@ -22,42 +21,41 @@ rose _
 (rose _)(0.degrees)
 ```
 
-A function is basically a method, but we can use a function as a first-class value:
+関数はだいたいメソッドと同じものですが、関数は第1級値として使うことができます:
 
-- we can pass it as an argument or parameter to a method or function; 
-- we can return it from a method or function; and
-- we can give it a name using `val`.
+- 関数を他のメソッドや関数への引数として渡すことができます
+- メソッドや関数から戻り値として返すことができます
+- `val` を使って名前を付けることができます
 
 ```tut:book
 val roseFn = rose _
 roseFn(0.degrees)
 ```
 
+### 関数型
 
-### Function Types
+メソッドに関数を渡すためには、(パラメータを宣言するときには型を宣言する必要があるため) それらの型を書ける必要があります。
 
-To pass functions to methods we need to know how to write down their types (because when we declare a parameter we have to declare its type).
+関数の型は `(A, B) => C` のように書き、このとき `A` と `B` はパラメータの型で、`C` は結果の型です。
+このパターンは引数を取らない関数から、任意の引数の関数まで一般化することができます。
 
-We write a function type like `(A, B) => C` where `A` and `B` are the types of the parameters and `C` is the result type. 
-The same pattern generalises from functions of no arguments to an arbitrary number of arguments.
-
-In our example above we want `f` to be a function that accepts two `Int`s as parameters and returns an `Int`. Thus we can write it as `(Int, Int) => Int`.
+上の例では、`f` は 2つの `Int` をパラメータとして受け取り、`Int` を返す関数である必要があります。これは、`(Int, Int) => Int` と書くことができます。
 
 <div class="callout callout-info">
-#### Function Type Declaration Syntax {-}
+#### 関数型宣言の構文 {-}
 
-To declare a function type, write
+関数型を宣言するには、以下のように書きます:
 
 ```scala
 (A, B, ...) => C
 ```
 
-where
+ここで
 
-- `A, B, ...` are the types of the input parameters; and
-- `C` is the type of the result.
+- `A, B, ...` は入力パラメータの型で
+- `C` は結果の型
 
-If a function only has one parameter the parentheses may be dropped:
+関数が 1つのパラメータのみ受け取る場合は括弧は省略することができます:
 
 ```scala
 A => B
@@ -65,16 +63,16 @@ A => B
 </div>
 
 
-### Function Literals
+### 関数リテラル
 
-There is a literal syntax for functions. 
-For example, here is a function that adds `42` to its input.
+関数にはリテラル構文があります。
+例えば、以下は入力値に `42` を加算する関数です。
 
 ```tut:book
 (x: Int) => x + 42
 ```
 
-We can apply the function to an argument in the usual way.
+関数に引数を適用するのは通常通りに書くことができます。
 
 ```tut:book
 val add42 = (x: Int) => x + 42
@@ -82,25 +80,24 @@ add42(0)
 ```
 
 <div class="callout callout-info">
-#### Function Literal Syntax {-}
+#### 関数リテラルの構文 {-}
 
-The syntax for declaring a function literal is
+関数リテラルの宣言構文は:
 
 ```scala
-(parameter: type, ...) => expression
+(parameter: type, ...) => 式
 ```
 
-where
-- the optional `parameter`s are the names given to the function parameters;
-- the `type`s are the types of the function parameters; and
-- the `expression` determines the result of the function.
+- 省略可能な `parameter` は、関数パラメータの名前
+- `type` は関数パラメータの型
+- `式` は関数の結果を決定する
 </div>
 
 
-### Functions as Objects
+### オブジェクトとしての関数
 
-Because Scala is an object oriented language, all first class values are objects.
-This means functions can have methods, including some useful means for composition:
+Scala はオブジェクト指向言語なので、全ての第1級値はオブジェクトです。
+そのため関数はメソッドを持つことができ、それらを使って関数合成を行うことができます:
 
 ```tut:book
 val addTen = (a: Int) => a + 10
@@ -109,19 +106,19 @@ val combined = addTen andThen double // this composes the two functions
 combined(5)
 ```
 
-#### Exercises {-}
+#### 練習問題 {-}
 
-##### Function Types {-}
+##### 関数型 {-}
 
-What is the type of the function `roseFn` defined above? What does this type mean?
+上で定義された `roseFn` の型はなんでしょうか? この型は何を意味するでしょう?
 
 <div class="solution">
-The type is `Angle => Point`. This means `roseFn` is a function that takes of single argument of type `Angle` and returns a value of type `Point`. In other words, `roseFn` transforms an `Angle` to a `Point`.
+型は `Angle => Point` です。これは `roseFn` が、`Angle` 型の単一のパラメータを受け取り、`Point` 型の値を返すことを意味します。別の言い方をすると、`roseFn` は `Angle` を `Point` へと変換します。
 </div>
 
-##### Function Literals {-}
+##### 関数リテラル {-}
 
-Write `roseFn` as a function literal.
+`roseFn` を関数リテラルとして書いてみましょう。
 
 <div class="solution">
 ```tut:book

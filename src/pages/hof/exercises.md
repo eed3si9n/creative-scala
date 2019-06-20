@@ -1,4 +1,4 @@
-## Exercises
+## 練習問題
 
 ```tut:invisible
 import doodle.core._
@@ -8,34 +8,34 @@ import doodle.jvm.Java2DFrame._
 import doodle.backend.StandardInterpreter._
 ```
 
-Now we are chock full of knowledge about functions, we're going to return to the problem of drawing flowers. 
-We'll be asking you to do more design work here than we have done previously.
+関数の知識をいっぱい得られたので、花を描く問題へと戻ってみます。
+今回は以前よりも多くのデザイン作業を行ってもらいます。
 
-Your task is to break down the task of drawing a flower into small functions that work together. 
-Try to give yourself as much creative freedom as possible, by breaking out each individual component of the task into a function.
+花を描くタスクを小さい関数へと分解して組み合わせるのが目標です。
+個々の構成要素を関数へと分けることで、より広い創造的自由度が得られるようにしてください。
 
-Try to do this now. If you run into problems look at our decomposition below.
+まずは、自分でこの作業を行ってみてください。詰まったら、以下に私たちが行った分解方法を参照してください。
 
-### Components
+### 構成要素
 
-We've identified two components of drawing flowers:
+私たちは、花の描画の 2つの構成要素を同定しました:
 
-- the parametric equation; and
-- the structural recursion over angles.
+- パラメトリック方程式
+- 角度に対する構造的再帰
 
-What other components might we abstract into functions? What are their types? (This is a deliberately open ended question. Explore!)
+関数へと抽象化可能な他の構成要素は何でしょう? それらの型は何でしょうか? (これは、意図的に自由回答となっています。研究してください!)
 
 <div class="solution">
-When we draw the parametric curves we probably what to change the radius of different curves.
-We could abstract this into a function. 
-What should the type of this function be? 
-Perhaps the most obvious approach is to have function with type `(Point, Double) => Point`, where the `Double` parameter is the amount by which we scale the point. 
-This is somehwat annoying to use, however. We have to continually pass around the `Double`, which never varies from its initial setting. 
+パラメトリック曲線を描くとき、異なる曲線の半径を変えたいと思うでしょう。
+これは関数へと抽象化できます。
+この関数の型はどうあるべきしょうか?
+最も明白な方法は `(Point, Double) => Point` で、`Double` パラメータが点をスケールする量とします。
+しかし、これは初期値から変わらない `Double` を渡しまわる必要があり、使いづらいものです。
 
-A better structure is to create a function with type `Double => (Point => Point)`. 
-This is a function to which we pass the scaling factor. 
-It returns a function that transforms a `Point` by the given scaling factor. 
-In this way we separate out the fixed scaling factor. The implementation could be
+より良い構造は、`Double => (Point => Point)` の型を持つ関数を作ることです。
+この関数は、スケール係数を受け取ります。
+これは、スケール係数に基づいた `Point` の変換関数を返します。
+こうすることで、固定したスケール値を分けることができます。実装は以下のようになります
 
 ```tut:silent:book
 def scale(factor: Double): Point => Point = 
@@ -44,8 +44,8 @@ def scale(factor: Double): Point => Point =
   }
 ```
 
-In our previous discussion we've said we'd like to abstract the parametric equation out from `sample`. 
-This we can easily do with
+以前に、パラメトリック方程式を `sample` から抽象化したいと言ったと思います。
+これは、以下のように簡単に行うことができます。
 
 ```tut:invisible
 def parametricCircle(angle: Angle): Point =
@@ -70,8 +70,8 @@ def sample(start: Angle, samples: Int, location: Angle => Point): Image = {
 }
 ```
 
-We might like to abstract out the choice of image primitive (`dot` or `Image.triangle` above). 
-We could change `location` to be a function `Angle => Image` to accomplish this. 
+イメージで使うプリミティブ図形の選択 (`dot` か `Image.triangle`) を抽象化したいと思うかもしれません。
+`location` を `Angle => Image` 関数へと変えることでこれが可能となります。
 
 ```tut:silent:book
 def sample(start: Angle, samples: Int, location: Angle => Image): Image = {
@@ -89,8 +89,8 @@ def sample(start: Angle, samples: Int, location: Angle => Image): Image = {
 }
 ```
 
-We could also abstract out the entire problem specific part of the structural recursion. 
-Where we had
+構造的再帰のコードから問題に特定な部分を抽象化することができます。
+今までは
 
 ```scala
 def loop(count: Int): Image = {
@@ -102,7 +102,7 @@ def loop(count: Int): Image = {
 }
 ```
 
-we could abstract out the base case (`Image.empty`) and the problem specific part on the recursion (`location(angle) on loop(n - 1)`). The former would be just an `Image` but the latter is a function with type `(Angle, Image) => Image`. The final result is
+でしたが、基底ケース (`Image.empty`) と問題に特定な再帰の部分 (`location(angle) on loop(n - 1)`) を抽出することができます。基底ケースはただの `Image` ですが、再帰の部分は `(Angle, Image) => Image` 型となります。最終結果は以下のようになります。
 
 ```tut:silent:book
 def sample(start: Angle, samples: Int, empty: Image, combine: (Angle, Image) => Image): Image = {
@@ -120,16 +120,16 @@ def sample(start: Angle, samples: Int, empty: Image, combine: (Angle, Image) => 
 }
 ```
 
-This is a very abstract function. We don't expect most people will see this abstraction, but if you're interested in exploring this idea more you might like to read about folds and monoids.
+これは、非常に抽象的な関数です。この抽象化に気づく人は多くないと私たちは思っていますが、この考え方に興味があれば、畳み込みやモノイドについて調べてみてください。
 </div>
 
 
-### Combine
+### 組み合わせ
 
-Now we've broken out the components we can combine them to create interesting results. Do this now.
+構成要素の分解ができたら、次はそれらを組み合わせて面白い結果を作ることができます。やってみましょう。
 
 <div class="solution">
-You might end up with something like.
+これは回答の一例です。
 
 ```tut:silent:book
 def parametricCircle(angle: Angle): Point =
@@ -170,10 +170,10 @@ val flower = {
 </div>
 
 
-### Experiment
+### 実験
 
-Now experiment with the creative possibilities open to you!
+色々実験して、創造的な可能性を探ってみましょう!
 
 <div class="solution">
-Our implementation used to create [@fig:hof:flower-power] is at [Flowers.scala](https://github.com/underscoreio/doodle/blob/develop/shared/src/main/scala/doodle/examples/Flowers.scala). What did you come up with? Let us know! Our email addresses are `noel@underscore.io` and `dave@underscore.io`.
+[@fig:hof:flower-power] を作った実装は [Flowers.scala](https://github.com/underscoreio/doodle/blob/develop/shared/src/main/scala/doodle/examples/Flowers.scala) に置いてあります。あなたは、どのような花を描いたでしょうか? 教えてください! 私たちの email アドレスは `noel@underscore.io` と `dave@underscore.io` です。
 </div>

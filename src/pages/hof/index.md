@@ -1,28 +1,28 @@
 # 園芸と高階関数
 
-In this chapter we're going to learn how to draw flowers and to use functions as first-class values.
+この章では、花の描き方と第1級値としての関数の使い方を習います。
 
-We know that programs work with values, but not all values are *first-class*. A first-class value is something we can pass as a parameter to a method or return as a result from a method call.
+私たちは、プログラムが値を取り扱うことは分かっていますが、全ての値が**第1級** (first-class) ではありません。第1級値はメソッドのパラメータとして渡したり、メソッド呼び出しの結果として返せるものを指します。
 
-If we pass a function as an argument to another function then:
+もしも私たちが関数を別の関数の引数として渡したら
 
-- the function that is passed is being used as a first-class value; and
-- the function that is receiving the function parameter is called a *higher-order function*.
+- 渡された関数は第1級値として使われており、また
+- 関数パラメーターを受け取った関数は**高階関数** (higher-order function) と呼ばれます。
 
-This terminology is not especially important, but you'll encounter it in other writing so it's useful to know (at least vaguely) what it means.
-It will soon become clearer when we see some examples.
+この用語は特に重要なものではありませんが、他の書物でも見かけると思うので (多少おぼろげでも) 知っておくと役に立つと思います。
+最初は何のことか分からないかもしれませんが、例を見ていくうちに分かるようになります。
 
-So far we have used the terms *function* and *method* interchangeably. 
-We'll soon see that in Scala these two terms have distinct, though related, meanings.
+これまでは**関数**と**メソッド**という用語を特に区別せずに使ってきました。
+Scala では、これら 2つの用語は関連はしますが、別々の意味を持つことを見ていきます。
 
-Enough background. Let's dive in to see:
+背景の説明はここまでにして、
 
-- how we create functions in Scala; and
-- how we use first-class functions to structure programs.
+- Scala での関数の作り方
+- 第1級関数を使ってプログラムを構造化する方法
 
-Our motivating example for this will be drawing flowers as in [@fig:hof:flower-power].
+を見ていきましょう。これを動機づける例として [@fig:hof:flower-power] にような花を描く例を使います。
 
-![A flower created using the techniques in this chapter](src/pages/hof/flower-power.pdf+svg){#fig:hof:flower-power}
+![この章で出てくるテクニックを使って作られた花](src/pages/hof/flower-power.pdf+svg){#fig:hof:flower-power}
 
 <div class="callout callout-info">
 例題を Doodle の sbt console 内で実行した場合は、何もしなくても動作するはずです。そうじゃない場合は、以下の import 文を使って Doodle を使用可能な状態にする必要があります。
