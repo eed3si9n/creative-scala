@@ -62,7 +62,7 @@ def boxes(count: Int): Image =
 ```
 
 次に新しいこととして、**構造的再帰**が来ます。
-上で `threeBoxes` が `twoBoxes` を使って、`twoBoxes` が `box` を使って定義できることに気づきました。
+上で `threeBoxes` が `twoBoxes` を使って、`twoBoxes` が `oneBox` を使って定義できることに気づきました。
 `box` も、以下のように箱が無い状態を元に定義することができます:
 
 ```tut:book
