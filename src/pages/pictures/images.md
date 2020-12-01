@@ -25,7 +25,7 @@ circle(10)
 この円を描画するためには、`draw` メソッドを呼びます。
 
 ```scala
-circle(10).draw
+circle(10).draw()
 ```
 
 [@fig:pictures:circle] のようなウィンドウが表示されるはずです。
@@ -35,7 +35,7 @@ circle(10).draw
 Doodle は、円、長方形、三角形といったいくつかの基本図形をサポートします。長方形を描いてみましょう。
 
 ```scala
-rectangle(100, 50).draw
+rectangle(100, 50).draw()
 ```
 
 結果は [@fig:pictures:rectangle] のようになります。
@@ -45,7 +45,7 @@ rectangle(100, 50).draw
 最後に、[@fig:pictures:triangle] のような三角形を描いてみましょう。
 
 ```scala
-triangle(60, 40).draw
+triangle(60, 40).draw()
 ```
 
 ![A triangle](src/pages/pictures/triangle.pdf+svg){#fig:pictures:triangle}
@@ -71,9 +71,9 @@ circle(100)
 それぞれの円の `draw` メソッドを呼ぶことで円を描画することができます。
 
 ```scala
-circle(1).draw
-circle(10).draw
-circle(100).draw
+circle(1).draw()
+circle(10).draw()
+circle(100).draw()
 ```
 </div>
 
@@ -103,7 +103,7 @@ console で確認できる通り、それらは全て `Image` 型を持ちます
 再び console でこの質問を聞いてみましょう。
 
 ```scala
-:type circle(10).draw
+:type circle(10).draw()
 // Unit
 ```
 
