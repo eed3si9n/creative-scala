@@ -75,7 +75,7 @@ sbt 内で `console` と打ち込んでみてください。
 最後に、以下を打ち込んでください:
 
 ```scala
-Example.image.draw
+Example.image.draw()
 ```
 
 3つの円の画像が現れるはずです!
@@ -138,7 +138,7 @@ sbt 内で `console` と打ち込んでみてください。
 最後に、以下を打ち込んでください:
 
 ```scala
-Example.image.draw
+Example.image.draw()
 ```
 
 3つの円の画像が現れるはずです!
